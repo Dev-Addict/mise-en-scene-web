@@ -11,6 +11,7 @@ import next from 'next';
 import logger from 'node-color-log';
 
 import {app} from './app';
+import {connectDb} from './utils';
 
 const port = process.env.PORT || 3000;
 const nextApp = next({dev});
@@ -26,6 +27,8 @@ nextApp
 
 			logger.info(`🚀 server is running at http://localhost:${port}.`);
 		});
+
+		connectDb();
 	})
 	.catch((err: any) => {
 		logger.error(err);
