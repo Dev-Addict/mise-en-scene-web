@@ -108,6 +108,7 @@ export interface NexusGenFieldTypes {
     user: NexusGenRootTypes['User']; // User!
   }
   Mutation: { // field return type
+    self: NexusGenRootTypes['User'] | null; // User
     signIn: NexusGenRootTypes['AuthResponse'] | null; // AuthResponse
     signUp: NexusGenRootTypes['AuthResponse'] | null; // AuthResponse
   }
@@ -133,6 +134,7 @@ export interface NexusGenFieldTypeNames {
     user: 'User'
   }
   Mutation: { // field return type name
+    self: 'User'
     signIn: 'AuthResponse'
     signUp: 'AuthResponse'
   }

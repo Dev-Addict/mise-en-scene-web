@@ -10,7 +10,7 @@ export const SignUpMutation = mutationField('signUp', {
 	args: {
 		data: arg({type: nonNull(SignUpData)}),
 	},
-	async resolve(_root, {data: {avatar, ...data}}, {req, models: {User}}) {
+	async resolve(_root, {data: {avatar, ...data}}, {res, models: {User}}) {
 		const avatarUrl = avatar
 			? await saveFile(avatar, 'image', 'user/avatar')
 			: undefined;
@@ -19,7 +19,7 @@ export const SignUpMutation = mutationField('signUp', {
 
 		const token = signToken(user);
 
-		signCookie(req, 'token', token);
+		signCookie(res, 'token', `Bearer ${token}`);
 
 		return {
 			user,

@@ -9,7 +9,7 @@ export const SignInMutation = mutationField('signIn', {
 	args: {
 		data: arg({type: nonNull(SignInData)}),
 	},
-	async resolve(_root, {data: {authKey, password}}, {req, models: {User}}) {
+	async resolve(_root, {data: {authKey, password}}, {res, models: {User}}) {
 		const user: any = await User.findOne({
 			$or: [
 				{
@@ -27,7 +27,7 @@ export const SignInMutation = mutationField('signIn', {
 
 		const token = signToken(user);
 
-		signCookie(req, 'token', token);
+		signCookie(res, 'token', `Bearer ${token}`);
 
 		return {
 			token,
