@@ -2,14 +2,14 @@ import {arg, mutationField, nonNull} from 'nexus';
 
 import {SignInData} from '../inputs';
 import {AuthResponse} from '../../types';
-import {AppError, signToken} from '../../../../utils';
+import {AppError, signCookie, signToken} from '../../../../utils';
 
 export const SignInMutation = mutationField('signIn', {
 	type: AuthResponse,
 	args: {
 		data: arg({type: nonNull(SignInData)}),
 	},
-	async resolve(_root, {data: {authKey, password}}, {models: {User}}) {
+	async resolve(_root, {data: {authKey, password}}, {req, models: {User}}) {
 		const user: any = await User.findOne({
 			$or: [
 				{
@@ -26,6 +26,8 @@ export const SignInMutation = mutationField('signIn', {
 			throw new AppError('0xE00000A', 400);
 
 		const token = signToken(user);
+
+		signCookie(req, 'token', token);
 
 		return {
 			token,
