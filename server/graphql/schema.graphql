@@ -2,6 +2,17 @@
 ### Do not make changes to this file directly
 
 
+scalar Date
+
+scalar Email
+
+scalar JSON
+
+scalar Name
+
 type Query {
   ok: Boolean!
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload

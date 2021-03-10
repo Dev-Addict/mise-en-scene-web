@@ -1,1 +1,2 @@
-export const hello = {};
+export * from './enums';
+export * from './scalars';

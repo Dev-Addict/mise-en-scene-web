@@ -1,5 +1,6 @@
 import {Document, model, Schema} from 'mongoose';
 import {compare, hash} from 'bcrypt';
+import {emailValidator, nameValidator, passwordValidator, usernameValidator} from '../../../utils';
 
 export enum Gender {
 	MALE = 'MALE',
@@ -11,30 +12,21 @@ const userSchema = new Schema({
 	firstname: {
 		type: String,
 		validate: {
-			validator: (value: string): boolean =>
-				/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆŠŽ∂ð ,.'-]+$/u.test(
-					value
-				),
+			validator: (value: string): boolean => !!nameValidator(value, false),
 			message: '0xE000001',
 		},
 	},
 	lastname: {
 		type: String,
 		validate: {
-			validator: (value: string): boolean =>
-				/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆŠŽ∂ð ,.'-]+$/u.test(
-					value
-				),
+			validator: (value: string): boolean => !!nameValidator(value, false),
 			message: '0xE000002',
 		},
 	},
 	email: {
 		type: String,
 		validate: {
-			validator: (value: string): boolean =>
-				/^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i.test(
-					value
-				),
+			validator: (value: string): boolean => !!emailValidator(value, false),
 			message: '0xE000003',
 		},
 		required: [true, '0xE000004'],
@@ -45,10 +37,7 @@ const userSchema = new Schema({
 		required: [true, '0xE000006'],
 		select: false,
 		validate: {
-			validator: (value: string) =>
-				/^(?=.*([@#$%~`!^&*()\-_+=}{\[\]|\\/:;"'<>,.?]))(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm.test(
-					value
-				),
+			validator: (value: string) => !!passwordValidator(value),
 			message: '0xE000007',
 		},
 	},
@@ -62,7 +51,7 @@ const userSchema = new Schema({
 	gender: {
 		type: String,
 		enum: {
-			values: [Gender.MALE, Gender.FEMALE, Gender.CUSTOM],
+			values: Object.values(Gender),
 			message: '0xE000008',
 		},
 	},
@@ -71,7 +60,7 @@ const userSchema = new Schema({
 		lowercase: true,
 		required: [true, '0xE000009'],
 		validate: {
-			validator: (value: string) => /^[a-z0-9_]{4,}$/.test(value),
+			validator: (value: string) => !!usernameValidator(value, false),
 			message: '0xE00000A'
 		}
 	},
