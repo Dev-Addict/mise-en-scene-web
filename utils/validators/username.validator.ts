@@ -1,5 +1,5 @@
 export const usernameValidator = (value: any, throwError = true) => {
-	if (typeof value === 'string') {
+	if (typeof value !== 'string') {
 		if (throwError)
 			throw new TypeError(`Value is not string: ${value}`);
 		else

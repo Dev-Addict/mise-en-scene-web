@@ -1,3 +1,4 @@
+export * from './auth-key.validator';
 export * from './date.scalar';
 export * from './email.scalar';
 export * from './json.scalar';

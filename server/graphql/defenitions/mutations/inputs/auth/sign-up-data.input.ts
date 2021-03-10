@@ -1,7 +1,7 @@
 import {inputObjectType} from 'nexus';
 
-import {DateScalar, EmailScalar, NameScalar, PasswordScalar, UploadScalar, UsernameScalar} from '../../scalars';
-import {GenderEnum} from '../../enums';
+import {DateScalar, EmailScalar, NameScalar, PasswordScalar, UploadScalar, UsernameScalar} from '../../../scalars';
+import {GenderEnum} from '../../../enums';
 
 export const SignUpData = inputObjectType({
 	name: 'SignUpData',

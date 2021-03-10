@@ -1,1 +1,1 @@
-export * from './sign-up-data.input';
+export * from './auth';

@@ -62,12 +62,13 @@ const userSchema = new Schema({
 		validate: {
 			validator: (value: string) => !!usernameValidator(value, false),
 			message: '0xE00000A'
-		}
+		},
+		unique: [true, '0xE00000C']
 	},
 	bio: {
 		type: String,
 		max: [200, '0xE00000B']
-	}
+	},
 });
 
 export interface UserModel {
