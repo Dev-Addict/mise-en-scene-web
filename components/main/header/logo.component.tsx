@@ -5,8 +5,13 @@ import styled, {useTheme} from 'styled-components';
 
 import {Theme} from '../../../types';
 
-const Container = styled.a`
-	margin-left: 10px;
+const Container = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+`;
+
+const LogoContainer = styled.a`
 	width: 60px;
 	height: 60px;
 	cursor: pointer;
@@ -21,17 +26,30 @@ const Container = styled.a`
 	}
 `;
 
+const HeaderText = styled.a`
+	font-size: 20px;
+	text-decoration: none;
+	margin-right: 10px;
+
+	&:hover {
+		opacity: 0.5;
+	}
+`;
+
 export const Logo = () => {
 	const theme = useTheme() as Theme;
 
 	return (
 		<Link href="/">
 			<Container>
-				<Image
-					src={`/assets/logo/mes-${theme.mode.toLowerCase()}.svg`}
-					width="60px"
-					height="60px"
-				/>
+				<LogoContainer>
+					<Image
+						src={`/assets/logo/mes-${theme.mode.toLowerCase()}.svg`}
+						width="60px"
+						height="60px"
+					/>
+				</LogoContainer>
+				<HeaderText>میزانسن</HeaderText>
 			</Container>
 		</Link>
 	);

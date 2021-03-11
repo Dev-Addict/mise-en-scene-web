@@ -33,5 +33,9 @@ export const Button = styled.div<StyledProps & Props>`
 		primary &&
 		css`
 			background-color: ${({theme: {primary}}) => primary};
+
+			&:hover {
+				box-shadow: 0 0 5px 0 ${({theme: {primary}}) => primary};
+			}
 		`}
 `;
