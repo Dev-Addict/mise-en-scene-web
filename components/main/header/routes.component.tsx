@@ -4,15 +4,24 @@ import styled, {css} from 'styled-components';
 
 import {headerRoutes} from '../../../data';
 import {useRouter} from 'next/router';
-import {Theme} from '../../../types';
+import {StyledProps, Theme} from '../../../types';
 
-const Container = styled.div`
+const Container = styled.div<StyledProps>`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+
+	@media only screen and (max-width: 1000px) {
+		width: 100%;
+		flex-direction: column;
+	}
 `;
 
-const Route = styled.a`
+interface RouteProps {
+	active?: boolean;
+}
+
+const Route = styled.a<RouteProps>`
 	display: block;
 	margin: 0 20px;
 	padding: 0 5px;
@@ -24,6 +33,23 @@ const Route = styled.a`
 
 	&:hover {
 		opacity: 0.7;
+	}
+
+	@media only screen and (max-width: 1000px) {
+		text-align: center;
+		font-size: 24px;
+		margin: 8px 0;
+		width: 100%;
+
+		&:hover {
+			background-color: ${({theme: {accent}}) => accent}B3;
+		}
+
+		${({active}) =>
+			active &&
+			css`
+				background-color: ${({theme: {accent}}) => accent}B3;
+			`}
 	}
 `;
 
@@ -38,6 +64,10 @@ const Pointer = styled.div<PointerProps>`
 	height: 15px;
 	border: 2px solid ${({theme: {accent}}) => accent};
 	transition: all 336ms;
+
+	@media only screen and (max-width: 1000px) {
+		display: none;
+	}
 
 	${({active}) =>
 		!active &&
@@ -77,7 +107,10 @@ export const Routes = () => {
 
 			return (
 				<Link href={path} key={path}>
-					<Route onMouseEnter={onMouseEnter()} onMouseLeave={onMouseLeave()}>
+					<Route
+						onMouseEnter={onMouseEnter()}
+						onMouseLeave={onMouseLeave()}
+						active={activeRoute.path === path}>
 						<TopPointer active={activeRoute.path === path || isHovered} />
 						<BottomPointer active={activeRoute.path === path || isHovered} />
 						{name}
