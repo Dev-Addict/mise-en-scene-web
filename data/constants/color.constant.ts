@@ -1,0 +1,7 @@
+export enum Color {
+	GHOST_WHITE = '#F8F7FF',
+	SUN_GLOW = '#FFC53A',
+	JET = '#363636',
+	BLUE_JEANS = '#00AEFF',
+	IMPERIAL_RED = '#F71735',
+}
