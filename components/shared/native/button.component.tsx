@@ -15,7 +15,7 @@ export const Button = styled.div<StyledProps & Props>`
 	color: ${({theme: {foreground}, color}) => color || foreground};
 	font-size: 16px;
 	padding: 8px 20px;
-	border-radius: 10px;
+	border-radius: 4px;
 	cursor: pointer;
 
 	&:hover {

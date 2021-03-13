@@ -1,6 +1,11 @@
 import {Document, model, Schema} from 'mongoose';
 import {compare, hash} from 'bcrypt';
-import {emailValidator, nameValidator, passwordValidator, usernameValidator} from '../../../utils';
+import {
+	emailValidator,
+	nameValidator,
+	passwordValidator,
+	usernameValidator,
+} from '../../../utils';
 
 export enum Gender {
 	MALE = 'MALE',
@@ -13,32 +18,32 @@ const userSchema = new Schema({
 		type: String,
 		validate: {
 			validator: (value: string): boolean => !!nameValidator(value, false),
-			message: '0xE000001',
+			message: '0xE000000',
 		},
 	},
 	lastname: {
 		type: String,
 		validate: {
 			validator: (value: string): boolean => !!nameValidator(value, false),
-			message: '0xE000002',
+			message: '0xE000001',
 		},
 	},
 	email: {
 		type: String,
 		validate: {
 			validator: (value: string): boolean => !!emailValidator(value, false),
-			message: '0xE000003',
+			message: '0xE000002',
 		},
-		required: [true, '0xE000004'],
-		unique: [true, '0xE000005'],
+		required: [true, '0xE000003'],
+		unique: [true, '0xE000004'],
 	},
 	password: {
 		type: String,
-		required: [true, '0xE000006'],
+		required: [true, '0xE000005'],
 		select: false,
 		validate: {
 			validator: (value: string) => !!passwordValidator(value),
-			message: '0xE000007',
+			message: '0xE000006',
 		},
 	},
 	avatar: {
@@ -52,22 +57,27 @@ const userSchema = new Schema({
 		type: String,
 		enum: {
 			values: Object.values(Gender),
-			message: '0xE000008',
+			message: '0xE000007',
 		},
 	},
 	username: {
 		type: String,
 		lowercase: true,
-		required: [true, '0xE000009'],
+		required: [true, '0xE000008'],
 		validate: {
 			validator: (value: string) => !!usernameValidator(value, false),
-			message: '0xE00000A'
+			message: '0xE000009',
 		},
-		unique: [true, '0xE00000C']
+		unique: [true, '0xE00000A'],
 	},
 	bio: {
 		type: String,
-		max: [200, '0xE00000B']
+		max: [200, '0xE00000B'],
+	},
+	displayName: {
+		type: String,
+		max: [20, '0xE00000C'],
+		min: [4, '0xE00000C'],
 	},
 });
 
@@ -81,6 +91,7 @@ export interface UserModel {
 	gender?: Gender;
 	username: string;
 	bio?: string;
+	displayName?: string;
 }
 
 userSchema.methods.correctPassword = async function (

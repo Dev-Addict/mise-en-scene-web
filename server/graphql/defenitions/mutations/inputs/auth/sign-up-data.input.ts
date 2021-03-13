@@ -1,6 +1,13 @@
 import {inputObjectType} from 'nexus';
 
-import {DateScalar, EmailScalar, NameScalar, PasswordScalar, UploadScalar, UsernameScalar} from '../../../scalars';
+import {
+	DateScalar,
+	EmailScalar,
+	NameScalar,
+	PasswordScalar,
+	UploadScalar,
+	UsernameScalar,
+} from '../../../scalars';
 import {GenderEnum} from '../../../enums';
 
 export const SignUpData = inputObjectType({
@@ -15,5 +22,6 @@ export const SignUpData = inputObjectType({
 		t.nonNull.field('password', {type: PasswordScalar});
 		t.nonNull.field('username', {type: UsernameScalar});
 		t.string('bio');
+		t.string('displayName');
 	},
 });

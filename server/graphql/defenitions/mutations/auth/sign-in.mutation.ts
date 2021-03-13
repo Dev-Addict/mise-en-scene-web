@@ -21,9 +21,9 @@ export const SignInMutation = mutationField('signIn', {
 			],
 		}).select('+password');
 
-		if (!user) throw new AppError('0xE00000A', 400);
+		if (!user) throw new AppError('0xE00000D', 400);
 		if (!(await user.correctPassword(password, user.password)))
-			throw new AppError('0xE00000A', 400);
+			throw new AppError('0xE00000D', 400);
 
 		const token = signToken(user);
 

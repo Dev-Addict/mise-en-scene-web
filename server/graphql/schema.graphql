@@ -44,6 +44,7 @@ input SignUpData {
   avatar: Upload
   bio: String
   birthday: Date
+  displayName: String
   email: Email!
   firstname: Name
   gender: Gender
@@ -59,6 +60,7 @@ type User {
   avatar: String!
   bio: String
   birthday: Date
+  displayName: String
   email: Email!
   firstname: Name
   gender: Gender

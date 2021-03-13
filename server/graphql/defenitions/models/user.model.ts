@@ -15,5 +15,6 @@ export const User = objectType({
 		t.field('gender', {type: GenderEnum});
 		t.nonNull.field('username', {type: UsernameScalar});
 		t.string('bio');
+		t.string('displayName');
 	},
 });

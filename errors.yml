@@ -1,0 +1,14 @@
+0xE000000: user `firstname` is invalid.
+0xE000001: user `lastname` is invalid.
+0xE000002: user `email` is invalid.
+0xE000003: user `email` is required.
+0xE000004: user `email` is taken.
+0xE000005: user `password` is required.
+0xE000006: user `password` is invalid.
+0xE000007: user `gender` is invalid.
+0xE000008: user `username` is required.
+0xE000009: user `uesrname` is ivalid.
+0xE00000A: user `uesrname` is taken.
+0xE00000B: user `bio` is invalid.
+0xE00000C: user `displayName` is invalid.
+0xE00000D: sign in `authKey` or `password` doesn't match.

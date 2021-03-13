@@ -43,6 +43,7 @@ export interface NexusGenInputs {
     avatar?: NexusGenScalars['Upload'] | null; // Upload
     bio?: string | null; // String
     birthday?: NexusGenScalars['Date'] | null; // Date
+    displayName?: string | null; // String
     email: NexusGenScalars['Email']; // Email!
     firstname?: NexusGenScalars['Name'] | null; // Name
     gender?: NexusGenEnums['Gender'] | null; // Gender
@@ -83,6 +84,7 @@ export interface NexusGenObjects {
     avatar: string; // String!
     bio?: string | null; // String
     birthday?: NexusGenScalars['Date'] | null; // Date
+    displayName?: string | null; // String
     email: NexusGenScalars['Email']; // Email!
     firstname?: NexusGenScalars['Name'] | null; // Name
     gender?: NexusGenEnums['Gender'] | null; // Gender
@@ -119,6 +121,7 @@ export interface NexusGenFieldTypes {
     avatar: string; // String!
     bio: string | null; // String
     birthday: NexusGenScalars['Date'] | null; // Date
+    displayName: string | null; // String
     email: NexusGenScalars['Email']; // Email!
     firstname: NexusGenScalars['Name'] | null; // Name
     gender: NexusGenEnums['Gender'] | null; // Gender
@@ -145,6 +148,7 @@ export interface NexusGenFieldTypeNames {
     avatar: 'String'
     bio: 'String'
     birthday: 'Date'
+    displayName: 'String'
     email: 'Email'
     firstname: 'Name'
     gender: 'Gender'
