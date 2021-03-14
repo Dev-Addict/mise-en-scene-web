@@ -11,5 +11,6 @@ export interface Theme {
 	accent: Color;
 	primary: Color;
 	error: Color;
+	link: Color;
 	mode: ThemeMode;
 }

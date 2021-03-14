@@ -1,9 +1,9 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import styled, {useTheme} from 'styled-components';
+import styled from 'styled-components';
 
-import {Theme} from '../../../types';
+import {useThemeImage} from '../../../hooks';
 
 const Container = styled.div`
 	display: flex;
@@ -37,17 +37,13 @@ const HeaderText = styled.a`
 `;
 
 export const Logo = () => {
-	const theme = useTheme() as Theme;
+	const logo = useThemeImage('/assets/logo/mes-$mode.svg');
 
 	return (
 		<Link href="/">
 			<Container>
 				<LogoContainer>
-					<Image
-						src={`/assets/logo/mes-${theme.mode.toLowerCase()}.svg`}
-						width="60px"
-						height="60px"
-					/>
+					<Image src={logo} width="60px" height="60px" />
 				</LogoContainer>
 				<HeaderText>میزانسن</HeaderText>
 			</Container>

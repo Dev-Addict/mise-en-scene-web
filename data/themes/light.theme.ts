@@ -7,5 +7,6 @@ export const lightTheme: Theme = {
 	accent: Color.SUN_GLOW,
 	primary: Color.BLUE_JEANS,
 	error: Color.IMPERIAL_RED,
+	link: Color.BLUE_MUNSELL,
 	mode: ThemeMode.LIGHT,
 };

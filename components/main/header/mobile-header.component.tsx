@@ -1,10 +1,11 @@
-import React, {Dispatch, FC, SetStateAction, useState} from 'react';
-import styled, {useTheme} from 'styled-components';
-import {StyledProps, Theme} from '../../../types';
+import React, {Dispatch, FC, SetStateAction} from 'react';
+import styled from 'styled-components';
+import {StyledProps} from '../../../types';
 import Image from 'next/image';
 import {Button, Filler} from '../../shared';
 import Link from 'next/link';
 import {Color} from '../../../data';
+import {useThemeImage} from '../../../hooks';
 
 const MenuButtonContainer = styled.div`
 	display: none;
@@ -60,7 +61,10 @@ interface Props {
 }
 
 export const MobileHeader: FC<Props> = ({isOpen, setOpen}) => {
-	const {mode} = useTheme() as Theme;
+	const menuBar = useThemeImage('/assets/icons/menu/menu-bar-$mode.svg');
+	const arrowLeft = useThemeImage(
+		'/assets/icons/arrows/left/arrow-left-$mode.svg'
+	);
 
 	const onMenuBarClick = () => () => setOpen(true);
 	const onCloseClick = () => () => setOpen(false);
@@ -68,22 +72,14 @@ export const MobileHeader: FC<Props> = ({isOpen, setOpen}) => {
 	return (
 		<>
 			<MenuButtonContainer onClick={onMenuBarClick()}>
-				<Image
-					src={`/assets/icons/menu/menu-bar-${mode.toLowerCase()}.svg`}
-					width="40px"
-					height="40px"
-				/>
+				<Image src={menuBar} width="40px" height="40px" />
 			</MenuButtonContainer>
 			<MobileHeaderContainer isOpen={isOpen}>
 				<ArrowContainer onClick={onCloseClick()}>
-					<Image
-						src={`/assets/icons/arrows/left/arrow-left-${mode.toLowerCase()}.svg`}
-						width="40px"
-						height="40px"
-					/>
+					<Image src={arrowLeft} width="40px" height="40px" />
 				</ArrowContainer>
 				<Filler />
-				<Link href="/sign-up">
+				<Link href="/sign">
 					<Button circular color={Color.GHOST_WHITE} primary>
 						ورود/ثبت نام
 					</Button>

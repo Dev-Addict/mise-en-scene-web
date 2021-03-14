@@ -1,14 +1,12 @@
 import React, {Dispatch, FC, SetStateAction, useState} from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import styled, {useTheme} from 'styled-components';
+import styled from 'styled-components';
 
-import {Routes} from './routes.component';
 import {Logo} from './logo.component';
 import {ThemeSwitch} from './theme-switch.component';
 import {MobileHeader} from './mobile-header.component';
-import {Button, Filler} from '../../shared';
-import {StyledProps, Theme, ThemeMode} from '../../../types';
+import {Button} from '../../shared';
+import {ThemeMode} from '../../../types';
 import {Color} from '../../../data';
 import {HeaderBody} from './header-body.component';
 
@@ -18,41 +16,6 @@ const Container = styled.div`
 	flex-direction: row;
 	align-items: center;
 	direction: rtl;
-`;
-
-interface BodyContainerProps {
-	isOpen?: boolean;
-}
-
-const BodyContainer = styled.div<StyledProps & BodyContainerProps>`
-	flex: 1;
-
-	@media only screen and (max-width: 1000px) {
-		background-color: ${({theme: {foreground}}) => foreground};
-		position: fixed;
-		top: 80px;
-		left: ${({isOpen}) => (isOpen ? 0 : -100)}%;
-		width: 100vw;
-		height: 100vh;
-	}
-`;
-
-const Body = styled.div<StyledProps>`
-	width: 100%;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-
-	@media only screen and (max-width: 1000px) {
-		flex-direction: column;
-		background-color: ${({theme: {background}}) => background}F3;
-		width: 100vw;
-		height: 100vh;
-
-		& > * {
-			flex: none;
-		}
-	}
 `;
 
 const BodyFiller = styled.div`
@@ -82,7 +45,7 @@ export const Header: FC<Props> = ({setTheme}) => {
 			<BodyFiller />
 			<HeaderBody isOpen={isOpen} />
 			<ThemeSwitch setTheme={setTheme} />
-			<Link href="/sign-up">
+			<Link href="/sign">
 				<SignButtonContainer>
 					<Button circular color={Color.GHOST_WHITE} primary>
 						ورود/ثبت نام

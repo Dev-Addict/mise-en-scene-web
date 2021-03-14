@@ -4,4 +4,5 @@ export enum Color {
 	JET = '#363636',
 	BLUE_JEANS = '#00AEFF',
 	IMPERIAL_RED = '#F71735',
+	BLUE_MUNSELL = '#009FB7',
 }
