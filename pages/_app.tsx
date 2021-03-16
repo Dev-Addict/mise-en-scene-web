@@ -1,54 +1,38 @@
-import {FC, useEffect, useState} from 'react';
+import {useState} from 'react';
 import {AppProps} from 'next/app';
-import Cookie from 'js-cookie';
-import {createGlobalStyle, ThemeProvider, useTheme} from 'styled-components';
-import useDarkMode from 'use-dark-mode';
+import {ApolloProvider} from '@apollo/client';
+import {ThemeProvider} from 'styled-components';
+import 'nprogress/nprogress.css';
 
-import {StyledProps, ThemeMode} from '../types';
+import {GlobalStyle, Loading} from '../components';
+import {ThemeMode} from '../types';
 import {darkTheme, lightTheme} from '../data/themes';
+import {apolloClient} from '../api';
+import {AuthProvider} from '../contexts';
+import {useForceUpdate, useModeTheme, useProgressBar} from '../hooks';
 
-const Style = createGlobalStyle<StyledProps>`
-  * {
-    font-family: 'Lalezar', cursive;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    color: ${({theme: {foreground}}) => foreground};
-		user-select: none;
-		transition: all 336ms;
-  }
-	
-	html, body {
-		background-color: ${({theme: {background}}) => background};
-		height: 100vh;
-	}
-`;
+const App = ({Component, pageProps}: AppProps) => {
+	const [theme, setTheme] = useState(useModeTheme());
 
-const App: FC<AppProps> = ({Component, pageProps}) => {
-	const cookieTheme = Cookie.get('theme');
+	const isMounted = useForceUpdate();
 
-	const {value: isDarkMode} = useDarkMode(false, {
-		storageKey: undefined,
-		onChange: undefined,
-	});
-
-	const [theme, setTheme] = useState(
-		(cookieTheme && cookieTheme === ThemeMode.DARK) ||
-			(isDarkMode && cookieTheme !== ThemeMode.LIGHT)
-			? ThemeMode.DARK
-			: ThemeMode.LIGHT
-	);
-	const [isMounted, setMounted] = useState(false);
-
-	useEffect(() => {
-		setMounted(true);
-	}, []);
+	useProgressBar();
 
 	return (
-		<ThemeProvider theme={theme === ThemeMode.DARK ? darkTheme : lightTheme}>
-			<Style />
-			{isMounted && <Component {...pageProps} setTheme={setTheme} />}
-		</ThemeProvider>
+		<ApolloProvider client={apolloClient}>
+			<AuthProvider>
+				<ThemeProvider
+					theme={theme === ThemeMode.DARK ? darkTheme : lightTheme}>
+					<GlobalStyle />
+					{isMounted && (
+						<>
+							<Component {...pageProps} setTheme={setTheme} />
+							<Loading />
+						</>
+					)}
+				</ThemeProvider>
+			</AuthProvider>
+		</ApolloProvider>
 	);
 };
 

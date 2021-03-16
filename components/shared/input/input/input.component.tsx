@@ -1,8 +1,15 @@
-import React, {FC, useRef, useState} from 'react';
+import React, {
+	FC,
+	FocusEventHandler,
+	InputHTMLAttributes,
+	useRef,
+	useState,
+} from 'react';
 import Image from 'next/image';
 import {useThemeImage} from '../../../../hooks';
 import {
 	Container,
+	Error,
 	Icon,
 	Label,
 	TextInput,
@@ -14,17 +21,23 @@ interface Props {
 	placeholder?: string;
 	icon?: string;
 	primary?: boolean;
-	type?: string;
-	name?: string;
+	touched?: boolean;
+	error?: string;
+	showError?: boolean;
 }
 
-export const Input: FC<Props> = ({
+export const Input: FC<InputHTMLAttributes<HTMLInputElement> & Props> = ({
 	label,
-	placeholder,
 	icon,
 	primary,
 	type,
 	name,
+	onBlur,
+	onFocus,
+	showError = false,
+	error,
+	disabled,
+	...props
 }) => {
 	const [isFocus, setFocus] = useState(false);
 	const [localType, setLocalType] = useState(type);
@@ -37,8 +50,14 @@ export const Input: FC<Props> = ({
 
 	const textInputRef = useRef<HTMLInputElement>(null);
 
-	const onFocus = () => () => setFocus(true);
-	const onBlur = () => () => setFocus(false);
+	const onInputFocus: FocusEventHandler<HTMLInputElement> = (...args) => {
+		setFocus(true);
+		onFocus && onFocus(...args);
+	};
+	const onInputBlur: FocusEventHandler<HTMLInputElement> = (...args) => {
+		setFocus(false);
+		onBlur && onBlur(...args);
+	};
 	const onTextInputContainerClick = () => () => textInputRef.current?.focus();
 	const onEyeClick = () => () =>
 		setLocalType(localType === 'password' ? 'text' : 'password');
@@ -49,16 +68,17 @@ export const Input: FC<Props> = ({
 			<TextInputContainer
 				isFocus={isFocus}
 				onClick={onTextInputContainerClick()}
-				primary={primary}>
+				primary={primary}
+				disabled={disabled}>
 				<TextInput
-					placeholder={placeholder}
 					icon={!!icon}
-					onFocus={onFocus()}
-					onBlur={onBlur()}
+					onFocus={onInputFocus}
+					onBlur={onInputBlur}
 					ref={textInputRef}
 					type={localType}
 					autoComplete="off"
-					name={name}
+					{...props}
+					disabled={disabled}
 				/>
 				{icon && (
 					<Icon>
@@ -71,6 +91,7 @@ export const Input: FC<Props> = ({
 					</Icon>
 				)}
 			</TextInputContainer>
+			<Error show={showError}>{error || <>&nbsp;</>}</Error>
 		</Container>
 	);
 };

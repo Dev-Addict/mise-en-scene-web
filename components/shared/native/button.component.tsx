@@ -9,7 +9,7 @@ interface Props {
 	primary?: boolean;
 }
 
-export const Button = styled.div<StyledProps & Props>`
+export const Button = styled.button<StyledProps & Props>`
 	display: inline-block;
 	background-color: ${({theme: {accent}}) => accent};
 	color: ${({theme: {foreground}, color}) => color || foreground};
@@ -17,10 +17,17 @@ export const Button = styled.div<StyledProps & Props>`
 	padding: 8px 20px;
 	border-radius: 4px;
 	cursor: pointer;
+	border: none;
+	outline: none;
 
 	&:hover {
 		opacity: 0.5;
 		box-shadow: 0 0 5px 0 ${({theme: {accent}}) => accent};
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: default;
 	}
 
 	${({circular}) =>

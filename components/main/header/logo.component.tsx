@@ -9,6 +9,10 @@ const Container = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+
+	&:hover {
+		opacity: 0.5;
+	}
 `;
 
 const LogoContainer = styled.a`
@@ -20,20 +24,12 @@ const LogoContainer = styled.a`
 		width: 60px;
 		height: 60px;
 	}
-
-	&:hover {
-		opacity: 0.5;
-	}
 `;
 
 const HeaderText = styled.a`
 	font-size: 20px;
 	text-decoration: none;
 	margin-right: 10px;
-
-	&:hover {
-		opacity: 0.5;
-	}
 `;
 
 export const Logo = () => {

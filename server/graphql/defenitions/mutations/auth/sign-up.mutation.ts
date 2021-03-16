@@ -19,7 +19,7 @@ export const SignUpMutation = mutationField('signUp', {
 
 		const token = signToken(user);
 
-		signCookie(res, 'token', `Bearer ${token}`);
+		signCookie(res, 'token', token);
 
 		return {
 			user,

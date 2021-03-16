@@ -10,12 +10,13 @@ export const Container = styled.div`
 `;
 
 export const Label = styled.div`
-	margin-right: 5px;
+	margin-right: 10px;
 `;
 
 interface TextInputContainerProps {
 	isFocus?: boolean;
 	primary?: boolean;
+	disabled?: boolean;
 }
 
 export const TextInputContainer = styled.div<
@@ -38,6 +39,12 @@ export const TextInputContainer = styled.div<
 			border-color: ${primary ? primaryColor : accent}4C;
 			box-shadow: 3px 0 6px 0 ${primary ? primaryColor : accent}29;
 		`}
+
+	${({disabled}) =>
+		disabled &&
+		css`
+			opacity: 0.5;
+		`}
 `;
 
 interface TextInputProps {
@@ -51,10 +58,32 @@ export const TextInput = styled.input<StyledProps & TextInputProps>`
 	outline: none;
 	padding: 10px 20px 10px ${({icon}) => (icon ? 0 : 20)}px;
 	font-size: 18px;
+	user-select: auto;
+
+	&:disabled {
+		opacity: 0.5;
+	}
 `;
 
 export const Icon = styled.div`
 	width: 28px;
 	height: 28px;
 	margin: 10px;
+`;
+
+interface ErrorProps {
+	show?: boolean;
+}
+
+export const Error = styled.div<StyledProps & ErrorProps>`
+	width: 100%;
+	direction: rtl;
+	color: ${({theme: {error}}) => error};
+	font-size: 14px;
+
+	${({show}) =>
+		!show &&
+		css`
+			display: none;
+		`}
 `;

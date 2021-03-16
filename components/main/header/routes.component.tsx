@@ -26,7 +26,9 @@ export const Routes = () => {
 	const activePath = activeRoutes[activeRoutes.length - 1].path;
 
 	const renderRoutes = () =>
-		headerRoutes.map((route) => <Route {...route} activePath={activePath} />);
+		headerRoutes.map((route) => (
+			<Route {...route} activePath={activePath} key={route.path} />
+		));
 
 	return <Container>{renderRoutes()}</Container>;
 };

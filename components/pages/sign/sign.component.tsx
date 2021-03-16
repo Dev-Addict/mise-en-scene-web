@@ -33,6 +33,8 @@ export const Sign: FC<Props> = ({state}) => {
 	const onSignItemClick = () => ({value}: SwitchItem) =>
 		setLocalState(value as SignState);
 
+	const switchSign = (state: SignState) => () => setLocalState(state);
+
 	return (
 		<div>
 			<Header>
@@ -57,7 +59,11 @@ export const Sign: FC<Props> = ({state}) => {
 					onClick={onSignItemClick()}
 				/>
 			</Header>
-			{localState === SignState.SIGN_UP ? <SignUpBody /> : <SignInBody />}
+			{localState === SignState.SIGN_UP ? (
+				<SignUpBody switchSign={switchSign(SignState.SIGN_IN)} />
+			) : (
+				<SignInBody switchSign={switchSign(SignState.SIGN_UP)} />
+			)}
 		</div>
 	);
 };

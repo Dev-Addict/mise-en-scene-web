@@ -22,7 +22,6 @@ enum Gender {
 scalar JSON
 
 type Mutation {
-  self: User
   signIn(data: SignInData!): AuthResponse
   signUp(data: SignUpData!): AuthResponse
 }
@@ -32,7 +31,7 @@ scalar Name
 scalar Password
 
 type Query {
-  ok: Boolean!
+  self: User
 }
 
 input SignInData {

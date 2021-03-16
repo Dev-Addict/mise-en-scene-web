@@ -1,7 +1,9 @@
 import styled from 'styled-components';
+import {Form} from 'formik';
+
 import {StyledProps} from '../../../types';
 
-export const Body = styled.div`
+export const Body = styled(Form)`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -25,7 +27,7 @@ export const ProfileHeader = styled.div`
 
 export const InputContainer = styled.div`
 	width: 100%;
-	margin: 10px 0;
+	margin: 0 0 10px 0;
 `;
 
 export const ConvertText = styled.div`

@@ -110,12 +110,11 @@ export interface NexusGenFieldTypes {
     user: NexusGenRootTypes['User']; // User!
   }
   Mutation: { // field return type
-    self: NexusGenRootTypes['User'] | null; // User
     signIn: NexusGenRootTypes['AuthResponse'] | null; // AuthResponse
     signUp: NexusGenRootTypes['AuthResponse'] | null; // AuthResponse
   }
   Query: { // field return type
-    ok: boolean; // Boolean!
+    self: NexusGenRootTypes['User'] | null; // User
   }
   User: { // field return type
     avatar: string; // String!
@@ -137,12 +136,11 @@ export interface NexusGenFieldTypeNames {
     user: 'User'
   }
   Mutation: { // field return type name
-    self: 'User'
     signIn: 'AuthResponse'
     signUp: 'AuthResponse'
   }
   Query: { // field return type name
-    ok: 'Boolean'
+    self: 'User'
   }
   User: { // field return type name
     avatar: 'String'
