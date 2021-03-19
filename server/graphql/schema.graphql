@@ -9,6 +9,14 @@ type AuthResponse {
   user: User!
 }
 
+input CheckEmailData {
+  email: Email!
+}
+
+input CheckUsernameData {
+  username: Username!
+}
+
 scalar Date
 
 scalar Email
@@ -22,6 +30,8 @@ enum Gender {
 scalar JSON
 
 type Mutation {
+  checkEmail(data: CheckEmailData!): Boolean
+  checkUsername(data: CheckUsernameData!): Boolean
   signIn(data: SignInData!): AuthResponse
   signUp(data: SignUpData!): AuthResponse
 }

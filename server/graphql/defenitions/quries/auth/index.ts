@@ -1,1 +1,1 @@
-export * from './self.mutation';
+export * from './self.query';

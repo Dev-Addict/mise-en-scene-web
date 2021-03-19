@@ -35,6 +35,12 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  CheckEmailData: { // input type
+    email: NexusGenScalars['Email']; // Email!
+  }
+  CheckUsernameData: { // input type
+    username: NexusGenScalars['Username']; // Username!
+  }
   SignInData: { // input type
     authKey: NexusGenScalars['AuthKey']; // AuthKey!
     password: NexusGenScalars['Password']; // Password!
@@ -110,6 +116,8 @@ export interface NexusGenFieldTypes {
     user: NexusGenRootTypes['User']; // User!
   }
   Mutation: { // field return type
+    checkEmail: boolean | null; // Boolean
+    checkUsername: boolean | null; // Boolean
     signIn: NexusGenRootTypes['AuthResponse'] | null; // AuthResponse
     signUp: NexusGenRootTypes['AuthResponse'] | null; // AuthResponse
   }
@@ -136,6 +144,8 @@ export interface NexusGenFieldTypeNames {
     user: 'User'
   }
   Mutation: { // field return type name
+    checkEmail: 'Boolean'
+    checkUsername: 'Boolean'
     signIn: 'AuthResponse'
     signUp: 'AuthResponse'
   }
@@ -158,6 +168,12 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    checkEmail: { // args
+      data: NexusGenInputs['CheckEmailData']; // CheckEmailData!
+    }
+    checkUsername: { // args
+      data: NexusGenInputs['CheckUsernameData']; // CheckUsernameData!
+    }
     signIn: { // args
       data: NexusGenInputs['SignInData']; // SignInData!
     }
