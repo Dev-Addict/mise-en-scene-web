@@ -12,3 +12,8 @@
 0xE00000B: user `bio` is invalid.
 0xE00000C: user `displayName` is invalid.
 0xE00000D: sign in `authKey` or `password` doesn't match.
+0xE00000E: invalid cast by mongoose.
+0xE00000F: duplicate value error.
+0xE000010: invalid login information.
+0xE000011: token has expired.
+0xE000012: something went wrong.

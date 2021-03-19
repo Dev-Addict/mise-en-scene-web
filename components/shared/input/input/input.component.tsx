@@ -35,6 +35,7 @@ export const Input: FC<InputHTMLAttributes<HTMLInputElement> & Props> = ({
 	onBlur,
 	onFocus,
 	showError = false,
+	touched,
 	error,
 	disabled,
 	...props
@@ -91,7 +92,7 @@ export const Input: FC<InputHTMLAttributes<HTMLInputElement> & Props> = ({
 					</Icon>
 				)}
 			</TextInputContainer>
-			<Error show={showError}>{error || <>&nbsp;</>}</Error>
+			<Error show={showError}>{(touched && error) || <>&nbsp;</>}</Error>
 		</Container>
 	);
 };

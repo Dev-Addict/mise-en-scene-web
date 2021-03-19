@@ -6,9 +6,9 @@ import 'nprogress/nprogress.css';
 
 import {GlobalStyle, Loading} from '../components';
 import {ThemeMode} from '../types';
-import {darkTheme, lightTheme} from '../data/themes';
+import {darkTheme, lightTheme} from '../data';
 import {apolloClient} from '../api';
-import {AuthProvider} from '../contexts';
+import {AuthProvider} from '../components';
 import {useForceUpdate, useModeTheme, useProgressBar} from '../hooks';
 
 const App = ({Component, pageProps}: AppProps) => {

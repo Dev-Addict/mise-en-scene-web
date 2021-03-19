@@ -1,14 +1,12 @@
 import React, {Dispatch, FC, SetStateAction, useState} from 'react';
-import Link from 'next/link';
 import styled from 'styled-components';
 
 import {Logo} from './logo.component';
 import {ThemeSwitch} from './theme-switch.component';
 import {MobileHeader} from './mobile-header.component';
-import {Button} from '../../shared';
 import {ThemeMode} from '../../../types';
-import {Color} from '../../../data';
 import {HeaderBody} from './header-body.component';
+import {Sign} from './sign.component';
 
 const Container = styled.div`
 	padding: 10px 20px;
@@ -21,14 +19,6 @@ const Container = styled.div`
 const BodyFiller = styled.div`
 	@media only screen and (max-width: 1000px) {
 		flex: 1;
-	}
-`;
-
-const SignButtonContainer = styled.a`
-	margin-right: 10px;
-
-	@media only screen and (max-width: 1000px) {
-		display: none;
 	}
 `;
 
@@ -45,13 +35,7 @@ export const Header: FC<Props> = ({setTheme}) => {
 			<BodyFiller />
 			<HeaderBody isOpen={isOpen} />
 			<ThemeSwitch setTheme={setTheme} />
-			<Link href="/sign">
-				<SignButtonContainer>
-					<Button circular color={Color.GHOST_WHITE} primary>
-						ورود/ثبت نام
-					</Button>
-				</SignButtonContainer>
-			</Link>
+			<Sign />
 			<MobileHeader isOpen={isOpen} setOpen={setOpen} />
 		</Container>
 	);

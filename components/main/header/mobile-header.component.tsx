@@ -1,11 +1,11 @@
 import React, {Dispatch, FC, SetStateAction} from 'react';
-import styled from 'styled-components';
-import {StyledProps} from '../../../types';
 import Image from 'next/image';
-import {Button, Filler} from '../../shared';
-import Link from 'next/link';
-import {Color} from '../../../data';
+import styled from 'styled-components';
+
+import {Sign} from './sign.component';
+import {Filler} from '../../shared';
 import {useThemeImage} from '../../../hooks';
+import {StyledProps} from '../../../types';
 
 const MenuButtonContainer = styled.div`
 	display: none;
@@ -79,11 +79,7 @@ export const MobileHeader: FC<Props> = ({isOpen, setOpen}) => {
 					<Image src={arrowLeft} width="40px" height="40px" />
 				</ArrowContainer>
 				<Filler />
-				<Link href="/sign">
-					<Button circular color={Color.GHOST_WHITE} primary>
-						ورود/ثبت نام
-					</Button>
-				</Link>
+				<Sign mobile />
 			</MobileHeaderContainer>
 		</>
 	);

@@ -1,17 +1,13 @@
 import {Document, model, Schema} from 'mongoose';
 import {compare, hash} from 'bcrypt';
+
 import {
 	emailValidator,
 	nameValidator,
 	passwordValidator,
 	usernameValidator,
 } from '../../../utils';
-
-export enum Gender {
-	MALE = 'MALE',
-	FEMALE = 'FEMALE',
-	CUSTOM = 'CUSTOM',
-}
+import {Gender} from '../../../types';
 
 const userSchema = new Schema({
 	firstname: {
@@ -48,7 +44,7 @@ const userSchema = new Schema({
 	},
 	avatar: {
 		type: String,
-		default: 'default.jpg',
+		default: 'default.svg',
 	},
 	birthday: {
 		type: Date,

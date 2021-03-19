@@ -1,6 +1,6 @@
 import {enumType} from 'nexus';
 
-import {Gender} from '../../../models';
+import {Gender} from '../../../../types';
 
 export const GenderEnum = enumType({
 	name: 'Gender',
