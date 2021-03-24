@@ -17,3 +17,50 @@
 0xE000010: invalid login information.
 0xE000011: token has expired.
 0xE000012: something went wrong.
+0xE000013: cast `firstnameEn` is required.
+0xE000014: cast `lastnameEn` is required.
+0xE000015: cast `firstnameFa` is required.
+0xE000016: cast `lastnameFa` is required.
+0xE000017: cast `firstnameLocal` is required.
+0xE000018: cast `lastnameLocal` is required.
+0xE000019: cast `nationality` is invalid.
+0xE00001A: cast image `title` is required.
+0xE00001B: cast image `description` is too large.
+0xE00001C: cast image `cast` is required.
+0xE00001D: cast image `image` is required.
+0xE00001E: cast video `title` is required.
+0xE00001F: cast video `description` is too large.
+0xE000020: cast video `cast` is required.
+0xE000021: cast video `video` is required.
+0xE000022: company `name` is required.
+0xE000023: point `type` is invalid.
+0xE000024: point `type` is required.
+0xE000025: movie `nameLocal` is required.
+0xE000026: movie `nameFa` is required.
+0xE000027: movie `nameEn` is required.
+0xE000028: movie `ageRating` is invalid.
+0xE000029: movie `description` is too long.
+0xE00002A: movie `description` is too short.
+0xE00002B: movie `genres` is invalid.
+0xE00002C: movie `countries` is invalid.
+0xE00002D: movie `languages` is invalid.
+0xE00002E: movie `originalCountry` is invalid.
+0xE00002F: movie `mainLanguage` is invalid.
+0xE000030: movie award `award` is required.
+0xE000031: movie award `name` is required.
+0xE000032: movie image `title` is required.
+0xE000033: movie image `description` is too large.
+0xE000034: movie image `movie` is required.
+0xE000035: movie image `image` is required.
+0xE000036: movie rating `user` is required.
+0xE000037: movie rating `rating` is required.
+0xE000038: movie rating `rating` is too low.
+0xE000039: movie rating `rating` is too high.
+0xE00003A: movie rating `rating` is invalid.
+0xE00003B: movie role `role` is required.
+0xE00003C: movie role `actor` is required.
+0xE00003D: movie role `movie` is required.
+0xE00003E: movie video `title` is required.
+0xE00003F: movie video `description` is too large.
+0xE000040: movie video `movie` is required.
+0xE000041: movie video `video` is required.
