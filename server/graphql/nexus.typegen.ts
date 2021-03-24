@@ -41,6 +41,9 @@ export interface NexusGenInputs {
   CheckUsernameData: { // input type
     username: NexusGenScalars['Username']; // Username!
   }
+  FollowData: { // input type
+    following: string; // ID!
+  }
   SignInData: { // input type
     authKey: NexusGenScalars['AuthKey']; // AuthKey!
     password: NexusGenScalars['Password']; // Password!
@@ -98,6 +101,11 @@ export interface NexusGenObjects {
     lastname?: NexusGenScalars['Name'] | null; // Name
     username: NexusGenScalars['Username']; // Username!
   }
+  UserFollow: { // root type
+    follower: string; // ID!
+    following: string; // ID!
+    id: string; // ID!
+  }
 }
 
 export interface NexusGenInterfaces {
@@ -118,6 +126,7 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     checkEmail: boolean | null; // Boolean
     checkUsername: boolean | null; // Boolean
+    follow: NexusGenRootTypes['UserFollow'] | null; // UserFollow
     signIn: NexusGenRootTypes['AuthResponse'] | null; // AuthResponse
     signUp: NexusGenRootTypes['AuthResponse'] | null; // AuthResponse
   }
@@ -131,10 +140,21 @@ export interface NexusGenFieldTypes {
     displayName: string | null; // String
     email: NexusGenScalars['Email']; // Email!
     firstname: NexusGenScalars['Name'] | null; // Name
+    followers: number; // Int!
+    followersData: NexusGenRootTypes['UserFollow']; // UserFollow!
+    followings: number; // Int!
+    followingsData: NexusGenRootTypes['UserFollow']; // UserFollow!
     gender: NexusGenEnums['Gender'] | null; // Gender
     id: string; // ID!
     lastname: NexusGenScalars['Name'] | null; // Name
     username: NexusGenScalars['Username']; // Username!
+  }
+  UserFollow: { // field return type
+    follower: string; // ID!
+    followerData: NexusGenRootTypes['User']; // User!
+    following: string; // ID!
+    followingData: NexusGenRootTypes['User']; // User!
+    id: string; // ID!
   }
 }
 
@@ -146,6 +166,7 @@ export interface NexusGenFieldTypeNames {
   Mutation: { // field return type name
     checkEmail: 'Boolean'
     checkUsername: 'Boolean'
+    follow: 'UserFollow'
     signIn: 'AuthResponse'
     signUp: 'AuthResponse'
   }
@@ -159,10 +180,21 @@ export interface NexusGenFieldTypeNames {
     displayName: 'String'
     email: 'Email'
     firstname: 'Name'
+    followers: 'Int'
+    followersData: 'UserFollow'
+    followings: 'Int'
+    followingsData: 'UserFollow'
     gender: 'Gender'
     id: 'ID'
     lastname: 'Name'
     username: 'Username'
+  }
+  UserFollow: { // field return type name
+    follower: 'ID'
+    followerData: 'User'
+    following: 'ID'
+    followingData: 'User'
+    id: 'ID'
   }
 }
 
@@ -173,6 +205,9 @@ export interface NexusGenArgTypes {
     }
     checkUsername: { // args
       data: NexusGenInputs['CheckUsernameData']; // CheckUsernameData!
+    }
+    follow: { // args
+      data: NexusGenInputs['FollowData']; // FollowData!
     }
     signIn: { // args
       data: NexusGenInputs['SignInData']; // SignInData!

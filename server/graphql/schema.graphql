@@ -21,6 +21,10 @@ scalar Date
 
 scalar Email
 
+input FollowData {
+  following: ID!
+}
+
 enum Gender {
   CUSTOM
   FEMALE
@@ -32,6 +36,7 @@ scalar JSON
 type Mutation {
   checkEmail(data: CheckEmailData!): Boolean
   checkUsername(data: CheckUsernameData!): Boolean
+  follow(data: FollowData!): UserFollow
   signIn(data: SignInData!): AuthResponse
   signUp(data: SignUpData!): AuthResponse
 }
@@ -72,10 +77,22 @@ type User {
   displayName: String
   email: Email!
   firstname: Name
+  followers: Int!
+  followersData: UserFollow!
+  followings: Int!
+  followingsData: UserFollow!
   gender: Gender
   id: ID!
   lastname: Name
   username: Username!
+}
+
+type UserFollow {
+  follower: ID!
+  followerData: User!
+  following: ID!
+  followingData: User!
+  id: ID!
 }
 
 scalar Username
