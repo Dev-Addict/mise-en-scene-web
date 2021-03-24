@@ -19,6 +19,7 @@ import {
 	IMovieRole,
 	IMovieVideo,
 	IUser,
+	IUserFollow,
 	Movie,
 	MovieAward,
 	MovieImage,
@@ -26,6 +27,7 @@ import {
 	MovieRole,
 	MovieVideo,
 	User,
+	UserFollow,
 } from '../models';
 import {Request} from '../types';
 
@@ -44,6 +46,7 @@ export interface MainContext {
 		MovieRole: Model<IMovieRole>;
 		MovieVideo: Model<IMovieVideo>;
 		User: Model<IUser>;
+		UserFollow: Model<IUserFollow>;
 	};
 }
 
@@ -65,5 +68,6 @@ export const mainContext: ContextFunction<ExpressContext, MainContext> = ({
 		MovieRole,
 		MovieVideo,
 		User,
+		UserFollow,
 	},
 });
