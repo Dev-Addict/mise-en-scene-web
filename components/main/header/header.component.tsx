@@ -33,7 +33,7 @@ export const Header: FC<Props> = ({setTheme}) => {
 		<Container>
 			<Logo />
 			<BodyFiller />
-			<HeaderBody isOpen={isOpen} />
+			<HeaderBody isOpen={isOpen} setOpen={setOpen} />
 			<ThemeSwitch setTheme={setTheme} />
 			<Sign />
 			<MobileHeader isOpen={isOpen} setOpen={setOpen} />

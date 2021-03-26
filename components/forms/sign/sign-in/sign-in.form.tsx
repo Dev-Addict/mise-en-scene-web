@@ -64,7 +64,7 @@ export const SignInForm: FC<Props> = ({
 				<Errors errors={errors} />
 				<SubmitContainer>
 					<Button primary color={Color.GHOST_WHITE} type="submit">
-						ثبت نام
+						ورود
 					</Button>
 				</SubmitContainer>
 			</Body>

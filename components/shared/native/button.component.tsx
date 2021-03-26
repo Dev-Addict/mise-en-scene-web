@@ -7,6 +7,10 @@ interface Props {
 	color?: Color;
 	circular?: boolean;
 	primary?: boolean;
+	danger?: boolean;
+	outline?: boolean;
+	fill?: boolean;
+	disabled?: boolean;
 }
 
 export const Button = styled.button<StyledProps & Props>`
@@ -19,6 +23,7 @@ export const Button = styled.button<StyledProps & Props>`
 	cursor: pointer;
 	border: none;
 	outline: none;
+	text-align: center;
 
 	&:hover {
 		opacity: 0.5;
@@ -30,13 +35,20 @@ export const Button = styled.button<StyledProps & Props>`
 		cursor: default;
 	}
 
+	${({disabled}) =>
+		disabled &&
+		css`
+			opacity: 0.5;
+			cursor: default;
+		`}
+
 	${({circular}) =>
 		circular &&
 		css`
 			border-radius: 100px;
 		`}
 
-	${({primary}) =>
+  ${({primary}) =>
 		primary &&
 		css`
 			background-color: ${({theme: {primary}}) => primary};
@@ -44,5 +56,38 @@ export const Button = styled.button<StyledProps & Props>`
 			&:hover {
 				box-shadow: 0 0 5px 0 ${({theme: {primary}}) => primary};
 			}
+		`}
+
+  ${({danger, theme: {error}}) =>
+		danger &&
+		css`
+			background-color: ${error};
+
+			&:hover {
+				box-shadow: 0 0 5px 0 ${error};
+			}
+		`}
+
+  ${({outline, theme: {background, accent}, primary, danger}) =>
+		outline &&
+		css`
+			background-color: ${background};
+			border: 3px solid ${accent};
+
+			${primary &&
+			css`
+				border-color: ${({theme: {primary}}) => primary};
+			`}
+
+			${danger &&
+			css`
+				border-color: ${({theme: {error}}) => error};
+			`}
+		`}
+
+  ${({fill}) =>
+		fill &&
+		css`
+			width: 100%;
 		`}
 `;

@@ -3,13 +3,14 @@ import Cookie from 'js-cookie';
 
 import {apolloClient, SELF_QUERY} from '../../../api';
 import {AuthContext} from './auth.context';
-import {signIn, signUp} from './helpers';
+import {signIn, signOut, signUp} from './helpers';
 import {User} from '../../../types';
 
 export const AuthProvider: FC = ({children}) => {
 	const [user, setUser] = useState<User | null>(null);
 	const [isSigned, setSigned] = useState(false);
 	const [isLoading, setLoading] = useState(true);
+	const [token, setToken] = useState<string | undefined>(undefined);
 
 	useEffect(() => {
 		const loadUser = async () => {
@@ -26,6 +27,7 @@ export const AuthProvider: FC = ({children}) => {
 						},
 					});
 
+					setToken(token);
 					setUser(data?.self);
 					setSigned(true);
 				} catch (error) {}
@@ -43,8 +45,10 @@ export const AuthProvider: FC = ({children}) => {
 				isSigned,
 				isLoading,
 				user,
-				signIn: signIn({setUser, setSigned}),
-				signUp: signUp({setUser, setSigned}),
+				signIn: signIn({setUser, setSigned, setToken}),
+				signUp: signUp({setUser, setSigned, setToken}),
+				signOut: signOut({setUser, setSigned, setToken}),
+				token,
 			}}>
 			{children}
 		</AuthContext.Provider>

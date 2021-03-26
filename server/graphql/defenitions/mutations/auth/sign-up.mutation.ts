@@ -6,7 +6,7 @@ import {saveFile} from '../../../utils';
 import {signCookie, signToken} from '../../../../utils';
 
 export const SignUpMutation = mutationField('signUp', {
-	type: AuthResponse,
+	type: nonNull(AuthResponse),
 	args: {
 		data: arg({type: nonNull(SignUpData)}),
 	},

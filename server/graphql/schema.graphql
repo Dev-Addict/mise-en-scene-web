@@ -34,11 +34,12 @@ enum Gender {
 scalar JSON
 
 type Mutation {
-  checkEmail(data: CheckEmailData!): Boolean
-  checkUsername(data: CheckUsernameData!): Boolean
-  follow(data: FollowData!): UserFollow
-  signIn(data: SignInData!): AuthResponse
-  signUp(data: SignUpData!): AuthResponse
+  checkEmail(data: CheckEmailData!): Boolean!
+  checkUsername(data: CheckUsernameData!): Boolean!
+  follow(data: FollowData!): UserFollow!
+  signIn(data: SignInData!): AuthResponse!
+  signUp(data: SignUpData!): AuthResponse!
+  unfollow(data: FollowData!): UserFollow
 }
 
 scalar Name
@@ -46,7 +47,10 @@ scalar Name
 scalar Password
 
 type Query {
-  self: User
+  findUser(filter: JSON): User
+  self: User!
+  userById(id: ID): User
+  users(filter: JSON, limit: Int, page: Int, sort: String): UsersResponse
 }
 
 input SignInData {
@@ -83,6 +87,7 @@ type User {
   followingsData: UserFollow!
   gender: Gender
   id: ID!
+  isFollowed: Boolean!
   lastname: Name
   username: Username!
 }
@@ -96,3 +101,10 @@ type UserFollow {
 }
 
 scalar Username
+
+type UsersResponse {
+  docs: [User!]!
+  limit: Int!
+  page: Int!
+  results: Int!
+}

@@ -2,7 +2,7 @@ import {arg, mutationField, nonNull} from 'nexus';
 import {CheckUsernameData} from '../inputs';
 
 export const CheckUsernameMutation = mutationField('checkUsername', {
-	type: 'Boolean',
+	type: nonNull('Boolean'),
 	args: {
 		data: arg({type: nonNull(CheckUsernameData)}),
 	},

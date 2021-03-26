@@ -8,6 +8,7 @@ import {
 } from '../../scalars';
 import {GenderEnum} from '../../enums';
 import {UserFollow} from './user-follow.model';
+import {protect} from '../../../../utils';
 
 export const User = objectType({
 	name: 'User',
@@ -42,6 +43,15 @@ export const User = objectType({
 			type: UserFollow,
 			resolve({id}, _args, {models: {UserFollow}}) {
 				return <any>UserFollow.find({follower: id});
+			},
+		});
+		t.nonNull.boolean('isFollowed', {
+			async resolve({id}, _args, {req, models: {User, UserFollow}}) {
+				const user = req.user || (await protect(req, User, false));
+
+				return user
+					? await UserFollow.exists({following: id, follower: user.id})
+					: false;
 			},
 		});
 	},

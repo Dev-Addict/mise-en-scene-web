@@ -2,7 +2,7 @@ import React, {FC, useEffect, useState} from 'react';
 import {useRouter} from 'next/router';
 import {FormikHelpers} from 'formik/dist/types';
 
-import {useAuth} from '../../../hooks/auth.hook';
+import {useAuth} from '../../../hooks';
 import {SignInForm, SignInFields} from '../../forms';
 
 const initialValues: SignInFields = {
@@ -17,6 +17,8 @@ interface Props {
 export const SignInBody: FC<Props> = ({switchSign}) => {
 	const router = useRouter();
 
+	const {callback} = router.query;
+
 	const [errors, setErrors] = useState<string[]>([]);
 
 	const {isSigned, signIn} = useAuth();
@@ -29,14 +31,14 @@ export const SignInBody: FC<Props> = ({switchSign}) => {
 
 		const response = await signIn(values);
 
-		if (response.success) await router.push('/');
+		if (response.success) await router.push(callback?.toString() || '/');
 		else setErrors(response.errors);
 
 		setSubmitting(false);
 	};
 
 	useEffect(() => {
-		if (isSigned) router.push('/');
+		if (isSigned) router.push(callback?.toString() || '/');
 	}, []);
 
 	return (

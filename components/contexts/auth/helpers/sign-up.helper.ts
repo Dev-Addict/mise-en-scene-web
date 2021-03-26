@@ -10,9 +10,10 @@ import {SignResponse, SignUpData} from '../auth.context';
 interface Props {
 	setUser: Dispatch<SetStateAction<User | null>>;
 	setSigned: Dispatch<SetStateAction<boolean>>;
+	setToken: Dispatch<SetStateAction<string | undefined>>;
 }
 
-export const signUp = ({setUser, setSigned}: Props) => async (
+export const signUp = ({setUser, setSigned, setToken}: Props) => async (
 	variables: SignUpData
 ): Promise<SignResponse> => {
 	try {
@@ -23,6 +24,7 @@ export const signUp = ({setUser, setSigned}: Props) => async (
 
 		setUser(data?.signUp?.user);
 		Cookie.set('auth-token', data?.signUp?.token);
+		setToken(data?.signUp?.token);
 
 		setSigned(true);
 

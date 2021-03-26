@@ -6,6 +6,11 @@ interface FillerProps {
 	minHeight?: number;
 }
 
+export const Row = styled.div`
+	display: flex;
+	flex-direction: row;
+`;
+
 export const Filler = styled.div<FillerProps>`
 	flex: ${({flex}) => flex || 1};
 	min-height: ${({minHeight}) => minHeight}px;

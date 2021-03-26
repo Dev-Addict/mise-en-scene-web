@@ -5,7 +5,7 @@ import {Filler} from '../../shared';
 import {Routes} from './routes.component';
 import Link from 'next/link';
 import Image from 'next/image';
-import React, {FC} from 'react';
+import React, {Dispatch, FC, SetStateAction} from 'react';
 import {useThemeImage} from '../../../hooks';
 
 interface BodyContainerProps {
@@ -22,6 +22,7 @@ const BodyContainer = styled.div<StyledProps & BodyContainerProps>`
 		left: ${({isOpen}) => (isOpen ? 0 : -100)}%;
 		width: 100vw;
 		height: 100vh;
+		z-index: 100;
 	}
 `;
 
@@ -60,9 +61,10 @@ const MagnifierContainer = styled.a<StyledProps>`
 
 interface Props {
 	isOpen: boolean;
+	setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export const HeaderBody: FC<Props> = ({isOpen}) => {
+export const HeaderBody: FC<Props> = ({isOpen, setOpen}) => {
 	const magnifier = useThemeImage(
 		'/assets/icons/magnifier/magnifier-$mode.svg'
 	);
@@ -71,7 +73,7 @@ export const HeaderBody: FC<Props> = ({isOpen}) => {
 		<BodyContainer isOpen={isOpen}>
 			<Body>
 				<Filler flex={1} minWidth={50} />
-				<Routes />
+				<Routes setOpen={setOpen} />
 				<Filler flex={5} minWidth={50} />
 				<Link href="/search">
 					<MagnifierContainer>

@@ -10,9 +10,10 @@ import {errorParser} from '../../../../utils';
 interface Props {
 	setUser: Dispatch<SetStateAction<User | null>>;
 	setSigned: Dispatch<SetStateAction<boolean>>;
+	setToken: Dispatch<SetStateAction<string | undefined>>;
 }
 
-export const signIn = ({setUser, setSigned}: Props) => async (
+export const signIn = ({setUser, setSigned, setToken}: Props) => async (
 	variables: SignInData
 ): Promise<SignResponse> => {
 	try {
@@ -23,6 +24,7 @@ export const signIn = ({setUser, setSigned}: Props) => async (
 
 		setUser(data?.signIn?.user || null);
 		Cookie.set('auth-token', data?.signIn?.token);
+		setToken(data?.signIn?.token);
 
 		setSigned(true);
 

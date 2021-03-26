@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {Dispatch, FC, SetStateAction, useState} from 'react';
 import Link from 'next/link';
 import styled, {css} from 'styled-components';
 
@@ -44,19 +44,22 @@ interface Props {
 	name: string;
 	path: string;
 	activePath: string;
+	setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export const Route: FC<Props> = ({path, name, activePath}) => {
+export const Route: FC<Props> = ({path, name, activePath, setOpen}) => {
 	const [isHovered, setHovered] = useState(false);
 
 	const onMouseEnter = () => () => setHovered(true);
 	const onMouseLeave = () => () => setHovered(false);
+	const onLinkClick = () => () => setOpen(false);
 
 	return (
 		<Link href={path} key={path}>
 			<Container
 				onMouseEnter={onMouseEnter()}
 				onMouseLeave={onMouseLeave()}
+				onClick={onLinkClick()}
 				active={activePath === path}>
 				<TopPointer active={activePath === path || isHovered} />
 				<BottomPointer active={activePath === path || isHovered} />

@@ -1,5 +1,6 @@
-import {compileError} from './compile-error.util';
 import {ApolloError} from 'apollo-server-errors';
+
+import {compileError} from './compile-error.util';
 import {ErrorStatus} from '../../utils';
 
 export const formatError = (error: any) => {

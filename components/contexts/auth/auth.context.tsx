@@ -27,7 +27,9 @@ export interface AuthContextType {
 	isLoading: boolean;
 	signIn: (variables: SignInData) => Promise<SignResponse>;
 	signUp: (variables: SignUpData) => Promise<SignResponse>;
+	signOut: () => void;
 	user: User | null;
+	token?: string;
 }
 
 export const AuthContext = createContext<AuthContextType>({
@@ -35,5 +37,7 @@ export const AuthContext = createContext<AuthContextType>({
 	isLoading: true,
 	signIn: async () => ({success: false, errors: ['سیستم آماده نیست.']}),
 	signUp: async () => ({success: false, errors: ['سیستم آماده نیست.']}),
+	signOut: () => {},
 	user: null,
+	token: undefined,
 });

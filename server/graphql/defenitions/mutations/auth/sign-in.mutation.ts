@@ -5,7 +5,7 @@ import {AuthResponse} from '../../types';
 import {AppError, signCookie, signToken} from '../../../../utils';
 
 export const SignInMutation = mutationField('signIn', {
-	type: AuthResponse,
+	type: nonNull(AuthResponse),
 	args: {
 		data: arg({type: nonNull(SignInData)}),
 	},

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Dispatch, FC, SetStateAction} from 'react';
 import styled from 'styled-components';
 import {useRouter} from 'next/router';
 
@@ -17,17 +17,16 @@ const Container = styled.div<StyledProps>`
 	}
 `;
 
-export const Routes = () => {
-	const {pathname} = useRouter();
+interface Props {
+	setOpen: Dispatch<SetStateAction<boolean>>;
+}
 
-	const activeRoutes = headerRoutes.filter(({path}) =>
-		pathname.startsWith(path)
-	);
-	const activePath = activeRoutes[activeRoutes.length - 1].path;
+export const Routes: FC<Props> = (props) => {
+	const {pathname} = useRouter();
 
 	const renderRoutes = () =>
 		headerRoutes.map((route) => (
-			<Route {...route} activePath={activePath} key={route.path} />
+			<Route {...route} {...props} activePath={pathname} key={route.path} />
 		));
 
 	return <Container>{renderRoutes()}</Container>;

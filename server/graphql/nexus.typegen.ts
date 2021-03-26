@@ -106,6 +106,12 @@ export interface NexusGenObjects {
     following: string; // ID!
     id: string; // ID!
   }
+  UsersResponse: { // root type
+    docs: NexusGenRootTypes['User'][]; // [User!]!
+    limit: number; // Int!
+    page: number; // Int!
+    results: number; // Int!
+  }
 }
 
 export interface NexusGenInterfaces {
@@ -124,14 +130,18 @@ export interface NexusGenFieldTypes {
     user: NexusGenRootTypes['User']; // User!
   }
   Mutation: { // field return type
-    checkEmail: boolean | null; // Boolean
-    checkUsername: boolean | null; // Boolean
-    follow: NexusGenRootTypes['UserFollow'] | null; // UserFollow
-    signIn: NexusGenRootTypes['AuthResponse'] | null; // AuthResponse
-    signUp: NexusGenRootTypes['AuthResponse'] | null; // AuthResponse
+    checkEmail: boolean; // Boolean!
+    checkUsername: boolean; // Boolean!
+    follow: NexusGenRootTypes['UserFollow']; // UserFollow!
+    signIn: NexusGenRootTypes['AuthResponse']; // AuthResponse!
+    signUp: NexusGenRootTypes['AuthResponse']; // AuthResponse!
+    unfollow: NexusGenRootTypes['UserFollow'] | null; // UserFollow
   }
   Query: { // field return type
-    self: NexusGenRootTypes['User'] | null; // User
+    findUser: NexusGenRootTypes['User'] | null; // User
+    self: NexusGenRootTypes['User']; // User!
+    userById: NexusGenRootTypes['User'] | null; // User
+    users: NexusGenRootTypes['UsersResponse'] | null; // UsersResponse
   }
   User: { // field return type
     avatar: string; // String!
@@ -146,6 +156,7 @@ export interface NexusGenFieldTypes {
     followingsData: NexusGenRootTypes['UserFollow']; // UserFollow!
     gender: NexusGenEnums['Gender'] | null; // Gender
     id: string; // ID!
+    isFollowed: boolean; // Boolean!
     lastname: NexusGenScalars['Name'] | null; // Name
     username: NexusGenScalars['Username']; // Username!
   }
@@ -155,6 +166,12 @@ export interface NexusGenFieldTypes {
     following: string; // ID!
     followingData: NexusGenRootTypes['User']; // User!
     id: string; // ID!
+  }
+  UsersResponse: { // field return type
+    docs: NexusGenRootTypes['User'][]; // [User!]!
+    limit: number; // Int!
+    page: number; // Int!
+    results: number; // Int!
   }
 }
 
@@ -169,9 +186,13 @@ export interface NexusGenFieldTypeNames {
     follow: 'UserFollow'
     signIn: 'AuthResponse'
     signUp: 'AuthResponse'
+    unfollow: 'UserFollow'
   }
   Query: { // field return type name
+    findUser: 'User'
     self: 'User'
+    userById: 'User'
+    users: 'UsersResponse'
   }
   User: { // field return type name
     avatar: 'String'
@@ -186,6 +207,7 @@ export interface NexusGenFieldTypeNames {
     followingsData: 'UserFollow'
     gender: 'Gender'
     id: 'ID'
+    isFollowed: 'Boolean'
     lastname: 'Name'
     username: 'Username'
   }
@@ -195,6 +217,12 @@ export interface NexusGenFieldTypeNames {
     following: 'ID'
     followingData: 'User'
     id: 'ID'
+  }
+  UsersResponse: { // field return type name
+    docs: 'User'
+    limit: 'Int'
+    page: 'Int'
+    results: 'Int'
   }
 }
 
@@ -214,6 +242,23 @@ export interface NexusGenArgTypes {
     }
     signUp: { // args
       data: NexusGenInputs['SignUpData']; // SignUpData!
+    }
+    unfollow: { // args
+      data: NexusGenInputs['FollowData']; // FollowData!
+    }
+  }
+  Query: {
+    findUser: { // args
+      filter?: NexusGenScalars['JSON'] | null; // JSON
+    }
+    userById: { // args
+      id?: string | null; // ID
+    }
+    users: { // args
+      filter?: NexusGenScalars['JSON'] | null; // JSON
+      limit?: number | null; // Int
+      page?: number | null; // Int
+      sort?: string | null; // String
     }
   }
 }

@@ -10,13 +10,22 @@ interface TokenData {
 	id: string;
 }
 
-export const protect = async (req: Request, User: Model<IUser>) => {
+export const protect = async (
+	req: Request,
+	User: Model<IUser>,
+	throwError = true
+) => {
 	const bearerToken = req.headers.authorization || getCookie(req, 'token');
 
-	if (!bearerToken) throw new AppError('0xE00000A', 401);
+	if (!bearerToken) {
+		if (throwError) throw new AppError('0xE00000A', 401);
+		else return;
+	}
 
-	if (!bearerToken.startsWith('Bearer ')) throw new AppError('0xE00000C', 401);
-
+	if (!bearerToken.startsWith('Bearer ')) {
+		if (throwError) throw new AppError('0xE00000C', 401);
+		else return;
+	}
 	const token = bearerToken.split(' ')[1];
 
 	const {id} = await verify<TokenData>(
@@ -26,8 +35,10 @@ export const protect = async (req: Request, User: Model<IUser>) => {
 
 	const user = await User.findById(id);
 
-	if (!user) throw new AppError('0xE00000D', 401);
-
+	if (!user) {
+		if (throwError) throw new AppError('0xE00000D', 401);
+		else return;
+	}
 	req.user = user;
 
 	return user;
