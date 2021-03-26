@@ -4,7 +4,7 @@ import {ApolloProvider} from '@apollo/client';
 import {ThemeProvider} from 'styled-components';
 import 'nprogress/nprogress.css';
 
-import {GlobalStyle, Loading} from '../components';
+import {FloatingPen, GlobalStyle, Loading} from '../components';
 import {ThemeMode} from '../types';
 import {darkTheme, lightTheme} from '../data';
 import {apolloClient} from '../api';
@@ -27,6 +27,7 @@ const App = ({Component, pageProps}: AppProps) => {
 					{isMounted && (
 						<>
 							<Component {...pageProps} setTheme={setTheme} />
+							<FloatingPen />
 							<Loading />
 						</>
 					)}

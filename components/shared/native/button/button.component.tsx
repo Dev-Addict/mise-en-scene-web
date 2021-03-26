@@ -1,7 +1,7 @@
 import styled, {css} from 'styled-components';
 
-import {Color} from '../../../data';
-import {StyledProps} from '../../../types';
+import {Color} from '../../../../data';
+import {StyledProps} from '../../../../types';
 
 interface Props {
 	color?: Color;
@@ -11,6 +11,11 @@ interface Props {
 	outline?: boolean;
 	fill?: boolean;
 	disabled?: boolean;
+	floating?: boolean;
+	top?: number;
+	right?: number;
+	bottom?: number;
+	left?: number;
 }
 
 export const Button = styled.button<StyledProps & Props>`
@@ -89,5 +94,15 @@ export const Button = styled.button<StyledProps & Props>`
 		fill &&
 		css`
 			width: 100%;
+		`}
+	
+	${({floating, top, right, bottom, left}) =>
+		floating &&
+		css`
+			position: fixed;
+			top: ${top}px;
+			right: ${right}px;
+			bottom: ${bottom}px;
+			left: ${left}px;
 		`}
 `;

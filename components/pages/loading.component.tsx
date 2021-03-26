@@ -3,7 +3,7 @@ import styled, {css, useTheme} from 'styled-components';
 
 import {movieLoaderDark, movieLoaderLight} from '../../assets';
 import {StyledProps, Theme, ThemeMode} from '../../types';
-import {useAuth} from '../../hooks/auth.hook';
+import {useAuth} from '../../hooks';
 
 interface ContainerProps {
 	isActive?: boolean;

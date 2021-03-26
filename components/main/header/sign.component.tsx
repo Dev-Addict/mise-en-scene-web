@@ -1,9 +1,9 @@
 import React, {FC} from 'react';
-import Image from 'next/image';
-
-import {useAuth} from '../../../hooks/auth.hook';
-import styled, {css} from 'styled-components';
 import Link from 'next/link';
+import Image from 'next/image';
+import styled, {css} from 'styled-components';
+
+import {useAuth} from '../../../hooks';
 import {Button} from '../../shared';
 import {Color} from '../../../data';
 import {StyledProps} from '../../../types';
