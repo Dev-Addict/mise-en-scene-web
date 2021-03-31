@@ -1,5 +1,24 @@
 import styled, {css} from 'styled-components';
+
 import {StyledProps} from '../../../../types';
+
+interface InputStyleProps {
+	icon?: boolean;
+}
+
+const inputStyle = css<InputStyleProps>`
+	flex: 1;
+	border: none;
+	background-color: transparent;
+	outline: none;
+	padding: 10px 20px 10px ${({icon}) => (icon ? 0 : 20)}px;
+	font-size: 18px;
+	user-select: auto;
+
+	&:disabled {
+		opacity: 0.5;
+	}
+`;
 
 export const Container = styled.div`
 	direction: rtl;
@@ -52,17 +71,7 @@ interface TextInputProps {
 }
 
 export const TextInput = styled.input<StyledProps & TextInputProps>`
-	flex: 1;
-	border: none;
-	background-color: transparent;
-	outline: none;
-	padding: 10px 20px 10px ${({icon}) => (icon ? 0 : 20)}px;
-	font-size: 18px;
-	user-select: auto;
-
-	&:disabled {
-		opacity: 0.5;
-	}
+	${inputStyle}
 `;
 
 export const Icon = styled.div`
@@ -86,4 +95,21 @@ export const Error = styled.div<StyledProps & ErrorProps>`
 		css`
 			display: none;
 		`}
+`;
+
+export const EditorContainer = styled(TextInputContainer)`
+	& .DraftEditor-root {
+		${inputStyle}
+		& * {
+			user-select: auto;
+		}
+	}
+
+	& .public-DraftEditorPlaceholder-root .public-DraftEditorPlaceholder-inner {
+		color: ${({theme: {foreground}}) => foreground}80;
+	}
+
+	& .public-DraftEditor-content {
+		min-height: 140px;
+	}
 `;

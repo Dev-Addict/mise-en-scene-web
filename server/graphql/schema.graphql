@@ -31,6 +31,15 @@ enum Gender {
   MALE
 }
 
+type Gif {
+  giphyId: ID!
+  height: Int!
+  id: ID!
+  title: String!
+  url: String!
+  width: Int!
+}
+
 scalar JSON
 
 type Mutation {
@@ -47,8 +56,10 @@ scalar Name
 scalar Password
 
 type Query {
+  findGifs(limit: Int, page: Int, query: String!): [Gif!]!
   findUser(filter: JSON): User
   self: User!
+  trendingGifs(limit: Int, page: Int): [Gif!]!
   userById(id: ID): User
   users(filter: JSON, limit: Int, page: Int, sort: String): UsersResponse
 }

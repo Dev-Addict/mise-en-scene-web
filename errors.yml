@@ -64,3 +64,7 @@
 0xE00003F: movie video `description` is too large.
 0xE000040: movie video `movie` is required.
 0xE000041: movie video `video` is required.
+0xE000042: gif `giphyId` is required.
+0xE000043: gif `giphyId` is taken.
+0xE000044: gif `title` is required.
+0xE000045: gif `url` is required.

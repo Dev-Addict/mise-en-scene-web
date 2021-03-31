@@ -8,10 +8,12 @@ import {
 	CastImage,
 	CastVideo,
 	Company,
+	Gif,
 	ICast,
 	ICastImage,
 	ICastVideo,
 	ICompany,
+	IGif,
 	IMovie,
 	IMovieAward,
 	IMovieImage,
@@ -47,6 +49,7 @@ export interface MainContext {
 		MovieVideo: Model<IMovieVideo>;
 		User: Model<IUser>;
 		UserFollow: Model<IUserFollow>;
+		Gif: Model<IGif>;
 	};
 }
 
@@ -69,5 +72,6 @@ export const mainContext: ContextFunction<ExpressContext, MainContext> = ({
 		MovieVideo,
 		User,
 		UserFollow,
+		Gif,
 	},
 });

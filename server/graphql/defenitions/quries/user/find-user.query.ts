@@ -1,4 +1,5 @@
 import {queryField} from 'nexus';
+
 import {User} from '../../models';
 import {JSONScalar} from '../../scalars';
 

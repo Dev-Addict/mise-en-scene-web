@@ -1,7 +1,7 @@
 import React, {ChangeEventHandler, FC} from 'react';
 import {FieldProps} from 'formik';
 
-import {Input} from './input';
+import {Input} from '../index';
 
 interface Props {
 	label?: string;

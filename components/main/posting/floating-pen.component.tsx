@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import {Button} from '../../shared';
 import {useAuth} from '../../../hooks';
+import {useRouter} from 'next/router';
 
 const Container = styled(Button)`
 	width: 50px;
@@ -26,23 +27,30 @@ const Feather = styled.div`
 `;
 
 export const FloatingPen = () => {
+	const router = useRouter();
+	const {asPath} = router;
+
 	const {isSigned} = useAuth();
 
 	const link = isSigned ? '/write' : '/sign?callback=/write';
 
 	return (
-		<Link href={link}>
-			<Container floating circular right={20} bottom={20} primary>
-				<FeatherContainer>
-					<Feather>
-						<Image
-							src="/assets/icons/feather/feather-dark.svg"
-							width="30px"
-							height="30px"
-						/>
-					</Feather>
-				</FeatherContainer>
-			</Container>
-		</Link>
+		<>
+			{asPath !== '/write' && (
+				<Link href={link}>
+					<Container floating circular right={20} bottom={20} primary>
+						<FeatherContainer>
+							<Feather>
+								<Image
+									src="/assets/icons/feather/feather-dark.svg"
+									width="30px"
+									height="30px"
+								/>
+							</Feather>
+						</FeatherContainer>
+					</Container>
+				</Link>
+			)}
+		</>
 	);
 };

@@ -87,6 +87,14 @@ export interface NexusGenObjects {
     token: string; // String!
     user: NexusGenRootTypes['User']; // User!
   }
+  Gif: { // root type
+    giphyId: string; // ID!
+    height: number; // Int!
+    id: string; // ID!
+    title: string; // String!
+    url: string; // String!
+    width: number; // Int!
+  }
   Mutation: {};
   Query: {};
   User: { // root type
@@ -129,6 +137,14 @@ export interface NexusGenFieldTypes {
     token: string; // String!
     user: NexusGenRootTypes['User']; // User!
   }
+  Gif: { // field return type
+    giphyId: string; // ID!
+    height: number; // Int!
+    id: string; // ID!
+    title: string; // String!
+    url: string; // String!
+    width: number; // Int!
+  }
   Mutation: { // field return type
     checkEmail: boolean; // Boolean!
     checkUsername: boolean; // Boolean!
@@ -138,8 +154,10 @@ export interface NexusGenFieldTypes {
     unfollow: NexusGenRootTypes['UserFollow'] | null; // UserFollow
   }
   Query: { // field return type
+    findGifs: NexusGenRootTypes['Gif'][]; // [Gif!]!
     findUser: NexusGenRootTypes['User'] | null; // User
     self: NexusGenRootTypes['User']; // User!
+    trendingGifs: NexusGenRootTypes['Gif'][]; // [Gif!]!
     userById: NexusGenRootTypes['User'] | null; // User
     users: NexusGenRootTypes['UsersResponse'] | null; // UsersResponse
   }
@@ -180,6 +198,14 @@ export interface NexusGenFieldTypeNames {
     token: 'String'
     user: 'User'
   }
+  Gif: { // field return type name
+    giphyId: 'ID'
+    height: 'Int'
+    id: 'ID'
+    title: 'String'
+    url: 'String'
+    width: 'Int'
+  }
   Mutation: { // field return type name
     checkEmail: 'Boolean'
     checkUsername: 'Boolean'
@@ -189,8 +215,10 @@ export interface NexusGenFieldTypeNames {
     unfollow: 'UserFollow'
   }
   Query: { // field return type name
+    findGifs: 'Gif'
     findUser: 'User'
     self: 'User'
+    trendingGifs: 'Gif'
     userById: 'User'
     users: 'UsersResponse'
   }
@@ -248,8 +276,17 @@ export interface NexusGenArgTypes {
     }
   }
   Query: {
+    findGifs: { // args
+      limit?: number | null; // Int
+      page?: number | null; // Int
+      query: string; // String!
+    }
     findUser: { // args
       filter?: NexusGenScalars['JSON'] | null; // JSON
+    }
+    trendingGifs: { // args
+      limit?: number | null; // Int
+      page?: number | null; // Int
     }
     userById: { // args
       id?: string | null; // ID

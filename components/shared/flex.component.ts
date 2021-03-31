@@ -12,7 +12,7 @@ export const Row = styled.div`
 `;
 
 export const Filler = styled.div<FillerProps>`
-	flex: ${({flex}) => flex || 1};
+	flex: ${({flex = 1}) => flex};
 	min-height: ${({minHeight}) => minHeight}px;
 	min-width: ${({minWidth}) => minWidth}px;
 `;
