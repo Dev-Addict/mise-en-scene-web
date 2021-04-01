@@ -68,3 +68,17 @@
 0xE000043: gif `giphyId` is taken.
 0xE000044: gif `title` is required.
 0xE000045: gif `url` is required.
+0xE000046: image `image` is required.
+0xE000047: image `directory` is required.
+0xE000048: image `width` is required.
+0xE000049: image `height` is required.
+0xE00004A: announcement `text` is required.
+0xE00004B: announcement `text` is too large.
+0xE00004C: announcement dislike `announcement` is required.
+0xE00004D: announcement dislike `user` is required.
+0xE00004E: announcement like `announcement` is required.
+0xE00004F: announcement like `user` is required.
+0xE000050: announcement poll `question` is required.
+0xE000051: announcement poll result `poll` is required.
+0xE000052: announcement poll result `user` is required.
+0xE000053: announcement poll result `option` is required.

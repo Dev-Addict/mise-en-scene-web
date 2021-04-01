@@ -1,8 +1,8 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
 import Image from 'next/image';
+import styled, {css} from 'styled-components';
 
 import {FileInput, FileInputProps} from './file-input.component';
-import styled, {css} from 'styled-components';
 import {FileImage} from '../../view';
 import {useThemeImage} from '../../../../hooks';
 
@@ -58,7 +58,7 @@ export const OpenGalleryInput: FC<Props> = ({
 
 	const [galleryFiles, setGalleryFiles] = useState<File[]>(files || []);
 
-	const onDeleteClick = (index: number) => () => {
+	const onDelete = (index: number) => () => {
 		const newFiles = [...galleryFiles];
 		newFiles.splice(index, 1);
 
@@ -66,7 +66,7 @@ export const OpenGalleryInput: FC<Props> = ({
 		setFiles && setFiles(newFiles);
 	};
 	const onPlusClick = () => () => inputRef.current?.click();
-	const onFileSelect = () => (files: File[]) => {
+	const onSelect = () => (files: File[]) => {
 		if (files[0]) {
 			setGalleryFiles([...galleryFiles, files[0]]);
 			setFiles && setFiles([...galleryFiles, files[0]]);
@@ -75,12 +75,7 @@ export const OpenGalleryInput: FC<Props> = ({
 
 	const renderFiles = () =>
 		galleryFiles.map((file, i) => (
-			<FileImage
-				disabled={disabled}
-				controls
-				file={file}
-				onDeleteClick={onDeleteClick(i)}
-			/>
+			<FileImage disabled={disabled} file={file} onDeleteClick={onDelete(i)} />
 		));
 
 	useEffect(() => {
@@ -89,11 +84,7 @@ export const OpenGalleryInput: FC<Props> = ({
 
 	return (
 		<Container>
-			<FileInput
-				onFilesSelect={onFileSelect()}
-				{...props}
-				inputRef={inputRef}
-			/>
+			<FileInput onFilesSelect={onSelect()} {...props} inputRef={inputRef} />
 			{renderFiles()}
 			{galleryFiles.length < (maxLength || Infinity) && (
 				<Plus onClick={onPlusClick()} disabled={disabled}>

@@ -1,70 +1,12 @@
 import React, {ChangeEventHandler, FC, useEffect, useState} from 'react';
 import Image from 'next/image';
-import styled, {css} from 'styled-components';
 
-import {Input} from './input';
-import {Poll, StyledProps} from '../../../types';
-import {useThemeImage} from '../../../hooks';
-import {Row} from '..';
-
-const Container = styled.div<StyledProps>`
-	direction: rtl;
-	border-right: 3px solid ${({theme: {foreground}}) => foreground}4C;
-	padding-right: 10px;
-`;
-
-const Option = styled.div`
-	display: flex;
-	flex-direction: row;
-`;
-
-interface CloseProps {
-	disabled?: boolean;
-}
-
-const Close = styled.div<CloseProps>`
-	width: 24px;
-	height: 24px;
-	cursor: pointer;
-	margin: 0 10px;
-
-	&:hover {
-		opacity: 0.5;
-	}
-
-	${({disabled}) =>
-		disabled &&
-		css`
-			opacity: 0.5;
-			cursor: default;
-		`}
-`;
-
-interface PlusProps {
-	disabled?: boolean;
-}
-
-const Plus = styled.div<PlusProps>`
-	width: 24px;
-	height: 24px;
-	cursor: pointer;
-	margin: 0 10px 20px;
-
-	& > * {
-		transform: rotate(45deg);
-	}
-
-	&:hover {
-		opacity: 0.5;
-	}
-
-	${({disabled}) =>
-		disabled &&
-		css`
-			opacity: 0.5;
-			cursor: default;
-		`}
-`;
+import {Input} from '../input';
+import {Poll} from '../../../../types';
+import {useThemeImage} from '../../../../hooks';
+import {Row} from '../../index';
+import {Container, Plus} from './poll-input-components.component';
+import {PollInputOption} from './poll-input-option.component';
 
 export interface PollError {
 	question?: string;
@@ -86,12 +28,12 @@ export const PollInput: FC<Props> = ({
 	touched,
 	onChange,
 }) => {
+	const close = useThemeImage('/assets/icons/close/close-$mode.svg');
+
 	const [poll, setPoll] = useState<Poll>({
 		question: '',
 		options: [''],
 	});
-
-	const close = useThemeImage('/assets/icons/close/close-$mode.svg');
 
 	const onPollChange = (poll: Poll) => {
 		if (disabled) return;
@@ -127,21 +69,15 @@ export const PollInput: FC<Props> = ({
 
 	const renderOptions = () =>
 		poll.options.map((option, i) => (
-			<Option>
-				<Close onClick={onCloseOptionClick(i)} disabled={disabled}>
-					{i !== 0 && <Image src={close} width="24px" height="24px" />}
-				</Close>
-				<Input
-					value={option}
-					primary
-					placeholder={`گزینه ${i + 1}`}
-					showError
-					touched={touched}
-					error={error?.options ? error.options[i] : undefined}
-					onChange={onOptionChange(i)}
-					disabled={disabled}
-				/>
-			</Option>
+			<PollInputOption
+				disabled={disabled}
+				onChange={onOptionChange(i)}
+				onCloseClick={onCloseOptionClick(i)}
+				value={option}
+				error={error?.options ? error.options[i] : undefined}
+				touched={touched}
+				index={i}
+			/>
 		));
 
 	useEffect(() => {

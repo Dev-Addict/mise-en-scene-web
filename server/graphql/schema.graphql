@@ -2,6 +2,63 @@
 ### Do not make changes to this file directly
 
 
+type Announcement {
+  dislike: Int!
+  dislikeData: [AnnouncementDislike!]!
+  gif: ID
+  gifData: Gif
+  images: [ID]!
+  imagesData: [Image]!
+  like: Int!
+  likeData: [AnnouncementLike!]!
+  poll: ID
+  pollData: AnnouncementPoll
+  publishAt: Date
+  text: String!
+}
+
+type AnnouncementDislike {
+  announcement: ID!
+  announcementData: Announcement!
+  id: ID!
+  user: ID!
+  userData: User!
+}
+
+type AnnouncementLike {
+  announcement: ID!
+  announcementData: Announcement!
+  id: ID!
+  user: ID!
+  userData: User!
+}
+
+type AnnouncementPoll {
+  id: ID!
+  options: [String]!
+  optionsData: [AnnouncementPollOption!]!
+  question: String!
+  votes: Int!
+  votesData: [AnnouncementPollResult!]!
+}
+
+type AnnouncementPollOption {
+  index: Int!
+  option: String!
+  poll: ID!
+  votes: Int!
+  votesData: [AnnouncementPollResult!]!
+}
+
+type AnnouncementPollResult {
+  id: ID!
+  option: Int!
+  poll: ID!
+  pollData: AnnouncementPoll!
+  user: ID!
+  userData: User!
+}
+
 scalar AuthKey
 
 type AuthResponse {
@@ -38,6 +95,15 @@ type Gif {
   title: String!
   url: String!
   width: Int!
+}
+
+type Image {
+  alt: String
+  directory: String!
+  height: Float!
+  id: ID!
+  image: String!
+  width: Float!
 }
 
 scalar JSON

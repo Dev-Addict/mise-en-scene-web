@@ -4,16 +4,28 @@ import {ExpressContext} from 'apollo-server-express';
 import {ContextFunction} from 'apollo-server-core';
 
 import {
+	Announcement,
+	AnnouncementDislike,
+	AnnouncementLike,
+	AnnouncementPoll,
+	AnnouncementPollResult,
 	Cast,
 	CastImage,
 	CastVideo,
 	Company,
 	Gif,
+	IAnnouncement,
+	IAnnouncementDislike,
+	IAnnouncementLike,
+	IAnnouncementPoll,
+	IAnnouncementPollResult,
 	ICast,
 	ICastImage,
 	ICastVideo,
 	ICompany,
 	IGif,
+	IImage,
+	Image,
 	IMovie,
 	IMovieAward,
 	IMovieImage,
@@ -37,10 +49,17 @@ export interface MainContext {
 	req: Request;
 	res: Response;
 	models: {
+		Announcement: Model<IAnnouncement>;
+		AnnouncementDislike: Model<IAnnouncementDislike>;
+		AnnouncementLike: Model<IAnnouncementLike>;
+		AnnouncementPoll: Model<IAnnouncementPoll>;
+		AnnouncementPollResult: Model<IAnnouncementPollResult>;
 		Cast: Model<ICast>;
 		CastImage: Model<ICastImage>;
 		CastVideo: Model<ICastVideo>;
 		Company: Model<ICompany>;
+		Gif: Model<IGif>;
+		Image: Model<IImage>;
 		Movie: Model<IMovie>;
 		MovieAward: Model<IMovieAward>;
 		MovieImage: Model<IMovieImage>;
@@ -49,7 +68,6 @@ export interface MainContext {
 		MovieVideo: Model<IMovieVideo>;
 		User: Model<IUser>;
 		UserFollow: Model<IUserFollow>;
-		Gif: Model<IGif>;
 	};
 }
 
@@ -60,10 +78,17 @@ export const mainContext: ContextFunction<ExpressContext, MainContext> = ({
 	req,
 	res,
 	models: {
+		Announcement,
+		AnnouncementDislike,
+		AnnouncementLike,
+		AnnouncementPoll,
+		AnnouncementPollResult,
 		Cast,
 		CastImage,
 		CastVideo,
 		Company,
+		Gif,
+		Image,
 		Movie,
 		MovieAward,
 		MovieImage,
@@ -72,6 +97,5 @@ export const mainContext: ContextFunction<ExpressContext, MainContext> = ({
 		MovieVideo,
 		User,
 		UserFollow,
-		Gif,
 	},
 });

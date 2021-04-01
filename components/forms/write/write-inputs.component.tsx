@@ -1,12 +1,9 @@
 import React, {FC, ReactNode} from 'react';
-import Image from 'next/image';
 import {Field} from 'formik';
-import styled, {css} from 'styled-components';
 
 import {
 	Errors,
 	Filler,
-	FormikDateTimeInput,
 	FormikEmojiPicker,
 	FormikGalleryInput,
 	FormikGif,
@@ -15,35 +12,13 @@ import {
 	FormikPollInput,
 	FormikPollTrigger,
 	FormikTextEditor,
-	Row,
 } from '../../shared';
 import {WriteFields} from './write.form';
-import {useThemeImage} from '../../../hooks';
-
-const ControlRow = styled(Row)`
-	align-items: center;
-	margin: 10px 0;
-`;
-
-interface CalendarProps {
-	disabled?: boolean;
-}
-
-const Calendar = styled.div<CalendarProps>`
-	width: 40px;
-	height: 40px;
-	cursor: pointer;
-
-	&:hover {
-		opacity: 0.5;
-	}
-
-	${({disabled}) =>
-		disabled &&
-		css`
-			opacity: 0.5;
-		`}
-`;
+import {
+	ControlRow,
+	DateTimeField,
+	OpenFieldContainer,
+} from './write-components.component';
 
 const fields: {
 	[key in keyof WriteFields]: string;
@@ -58,7 +33,7 @@ const fields: {
 interface Props {
 	submitButton: ReactNode;
 	errors: string[];
-	isSubmitting?: boolean;
+	isSubmitting: boolean;
 }
 
 export const WriteInputs: FC<Props> = ({
@@ -66,8 +41,6 @@ export const WriteInputs: FC<Props> = ({
 	errors,
 	isSubmitting,
 }) => {
-	const calendar = useThemeImage('/assets/icons/calendar/calendar-$mode.svg');
-
 	return (
 		<>
 			<Field
@@ -76,50 +49,24 @@ export const WriteInputs: FC<Props> = ({
 				placeholder="چه شده است؟"
 				primary
 			/>
-			<Row>
-				<Filler flex={0} minWidth={10} />
-				<Filler>
-					<Field name={fields.gif} component={FormikGif} />
-				</Filler>
-				<Filler flex={0} minWidth={10} />
-			</Row>
-			<Row>
-				<Filler flex={0} minWidth={10} />
-				<Filler>
-					<Field name={fields.poll} component={FormikPollInput} />
-				</Filler>
-				<Filler flex={0} minWidth={10} />
-			</Row>
-			<Row>
-				<Filler flex={0} minWidth={10} />
-				<Filler>
-					<Field
-						name={fields.gallery}
-						component={FormikOpenGalleryInput}
-						maxLength={10}
-					/>
-				</Filler>
-				<Filler flex={0} minWidth={10} />
-			</Row>
+			<OpenFieldContainer>
+				<Field name={fields.gif} component={FormikGif} />
+			</OpenFieldContainer>
+			<OpenFieldContainer>
+				<Field name={fields.poll} component={FormikPollInput} />
+			</OpenFieldContainer>
+			<OpenFieldContainer>
+				<Field
+					name={fields.gallery}
+					component={FormikOpenGalleryInput}
+					maxLength={10}
+				/>
+			</OpenFieldContainer>
 			<Errors errors={errors} />
 			<ControlRow>
 				{submitButton}
 				<Filler />
-				<Field
-					name={fields.publishAt}
-					component={FormikDateTimeInput}
-					width="40px"
-					height="40px"
-					isClearable
-					minDate={new Date()}
-					showTimeSelect
-					timeFormat="HH:mm"
-					customInput={
-						<Calendar disabled={isSubmitting}>
-							<Image src={calendar} width={40} height={40} />
-						</Calendar>
-					}
-				/>
+				<DateTimeField name={fields.publishAt} isSubmitting={isSubmitting} />
 				<Filler flex={0} minWidth={20} />
 				<Field name={fields.poll} component={FormikPollTrigger} />
 				<Filler flex={0} minWidth={20} />

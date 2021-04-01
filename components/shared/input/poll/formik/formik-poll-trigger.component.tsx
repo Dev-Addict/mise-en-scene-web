@@ -1,10 +1,10 @@
 import React, {FC} from 'react';
 import Image from 'next/image';
 
-import {useThemeImage} from '../../../../hooks';
+import {useThemeImage} from '../../../../../hooks';
 import styled, {css} from 'styled-components';
 import {FieldProps} from 'formik';
-import {Poll} from '../../../../types';
+import {Poll} from '../../../../../types';
 
 interface ContainerProps {
 	disabled?: boolean;

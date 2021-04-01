@@ -3,9 +3,9 @@ import Image from 'next/image';
 import {FieldProps} from 'formik';
 import styled from 'styled-components';
 
-import {PollError, PollInput} from '..';
-import {Poll, StyledProps} from '../../../../types';
-import {useThemeImage} from '../../../../hooks';
+import {PollError, PollInput} from '../../index';
+import {Poll, StyledProps} from '../../../../../types';
+import {useThemeImage} from '../../../../../hooks';
 
 const CloseContainer = styled.div`
 	direction: rtl;

@@ -83,6 +83,39 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  Announcement: { // root type
+    gif?: string | null; // ID
+    images: Array<string | null>; // [ID]!
+    poll?: string | null; // ID
+    publishAt?: NexusGenScalars['Date'] | null; // Date
+    text: string; // String!
+  }
+  AnnouncementDislike: { // root type
+    announcement: string; // ID!
+    id: string; // ID!
+    user: string; // ID!
+  }
+  AnnouncementLike: { // root type
+    announcement: string; // ID!
+    id: string; // ID!
+    user: string; // ID!
+  }
+  AnnouncementPoll: { // root type
+    id: string; // ID!
+    options: Array<string | null>; // [String]!
+    question: string; // String!
+  }
+  AnnouncementPollOption: { // root type
+    index: number; // Int!
+    option: string; // String!
+    poll: string; // ID!
+  }
+  AnnouncementPollResult: { // root type
+    id: string; // ID!
+    option: number; // Int!
+    poll: string; // ID!
+    user: string; // ID!
+  }
   AuthResponse: { // root type
     token: string; // String!
     user: NexusGenRootTypes['User']; // User!
@@ -94,6 +127,14 @@ export interface NexusGenObjects {
     title: string; // String!
     url: string; // String!
     width: number; // Int!
+  }
+  Image: { // root type
+    alt?: string | null; // String
+    directory: string; // String!
+    height: number; // Float!
+    id: string; // ID!
+    image: string; // String!
+    width: number; // Float!
   }
   Mutation: {};
   Query: {};
@@ -133,6 +174,57 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
+  Announcement: { // field return type
+    dislike: number; // Int!
+    dislikeData: NexusGenRootTypes['AnnouncementDislike'][]; // [AnnouncementDislike!]!
+    gif: string | null; // ID
+    gifData: NexusGenRootTypes['Gif'] | null; // Gif
+    images: Array<string | null>; // [ID]!
+    imagesData: Array<NexusGenRootTypes['Image'] | null>; // [Image]!
+    like: number; // Int!
+    likeData: NexusGenRootTypes['AnnouncementLike'][]; // [AnnouncementLike!]!
+    poll: string | null; // ID
+    pollData: NexusGenRootTypes['AnnouncementPoll'] | null; // AnnouncementPoll
+    publishAt: NexusGenScalars['Date'] | null; // Date
+    text: string; // String!
+  }
+  AnnouncementDislike: { // field return type
+    announcement: string; // ID!
+    announcementData: NexusGenRootTypes['Announcement']; // Announcement!
+    id: string; // ID!
+    user: string; // ID!
+    userData: NexusGenRootTypes['User']; // User!
+  }
+  AnnouncementLike: { // field return type
+    announcement: string; // ID!
+    announcementData: NexusGenRootTypes['Announcement']; // Announcement!
+    id: string; // ID!
+    user: string; // ID!
+    userData: NexusGenRootTypes['User']; // User!
+  }
+  AnnouncementPoll: { // field return type
+    id: string; // ID!
+    options: Array<string | null>; // [String]!
+    optionsData: NexusGenRootTypes['AnnouncementPollOption'][]; // [AnnouncementPollOption!]!
+    question: string; // String!
+    votes: number; // Int!
+    votesData: NexusGenRootTypes['AnnouncementPollResult'][]; // [AnnouncementPollResult!]!
+  }
+  AnnouncementPollOption: { // field return type
+    index: number; // Int!
+    option: string; // String!
+    poll: string; // ID!
+    votes: number; // Int!
+    votesData: NexusGenRootTypes['AnnouncementPollResult'][]; // [AnnouncementPollResult!]!
+  }
+  AnnouncementPollResult: { // field return type
+    id: string; // ID!
+    option: number; // Int!
+    poll: string; // ID!
+    pollData: NexusGenRootTypes['AnnouncementPoll']; // AnnouncementPoll!
+    user: string; // ID!
+    userData: NexusGenRootTypes['User']; // User!
+  }
   AuthResponse: { // field return type
     token: string; // String!
     user: NexusGenRootTypes['User']; // User!
@@ -144,6 +236,14 @@ export interface NexusGenFieldTypes {
     title: string; // String!
     url: string; // String!
     width: number; // Int!
+  }
+  Image: { // field return type
+    alt: string | null; // String
+    directory: string; // String!
+    height: number; // Float!
+    id: string; // ID!
+    image: string; // String!
+    width: number; // Float!
   }
   Mutation: { // field return type
     checkEmail: boolean; // Boolean!
@@ -194,6 +294,57 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenFieldTypeNames {
+  Announcement: { // field return type name
+    dislike: 'Int'
+    dislikeData: 'AnnouncementDislike'
+    gif: 'ID'
+    gifData: 'Gif'
+    images: 'ID'
+    imagesData: 'Image'
+    like: 'Int'
+    likeData: 'AnnouncementLike'
+    poll: 'ID'
+    pollData: 'AnnouncementPoll'
+    publishAt: 'Date'
+    text: 'String'
+  }
+  AnnouncementDislike: { // field return type name
+    announcement: 'ID'
+    announcementData: 'Announcement'
+    id: 'ID'
+    user: 'ID'
+    userData: 'User'
+  }
+  AnnouncementLike: { // field return type name
+    announcement: 'ID'
+    announcementData: 'Announcement'
+    id: 'ID'
+    user: 'ID'
+    userData: 'User'
+  }
+  AnnouncementPoll: { // field return type name
+    id: 'ID'
+    options: 'String'
+    optionsData: 'AnnouncementPollOption'
+    question: 'String'
+    votes: 'Int'
+    votesData: 'AnnouncementPollResult'
+  }
+  AnnouncementPollOption: { // field return type name
+    index: 'Int'
+    option: 'String'
+    poll: 'ID'
+    votes: 'Int'
+    votesData: 'AnnouncementPollResult'
+  }
+  AnnouncementPollResult: { // field return type name
+    id: 'ID'
+    option: 'Int'
+    poll: 'ID'
+    pollData: 'AnnouncementPoll'
+    user: 'ID'
+    userData: 'User'
+  }
   AuthResponse: { // field return type name
     token: 'String'
     user: 'User'
@@ -205,6 +356,14 @@ export interface NexusGenFieldTypeNames {
     title: 'String'
     url: 'String'
     width: 'Int'
+  }
+  Image: { // field return type name
+    alt: 'String'
+    directory: 'String'
+    height: 'Float'
+    id: 'ID'
+    image: 'String'
+    width: 'Float'
   }
   Mutation: { // field return type name
     checkEmail: 'Boolean'
