@@ -2,19 +2,30 @@
 ### Do not make changes to this file directly
 
 
+input AnnounceData {
+  gif: ID
+  images: [Upload!]
+  poll: AnnouncementPollData
+  publishAt: Date
+  text: String!
+}
+
 type Announcement {
   dislike: Int!
   dislikeData: [AnnouncementDislike!]!
   gif: ID
   gifData: Gif
+  id: ID!
   images: [ID]!
-  imagesData: [Image]!
+  imagesData: [Image!]!
   like: Int!
   likeData: [AnnouncementLike!]!
   poll: ID
   pollData: AnnouncementPoll
   publishAt: Date
   text: String!
+  user: ID!
+  userData: User!
 }
 
 type AnnouncementDislike {
@@ -40,6 +51,11 @@ type AnnouncementPoll {
   question: String!
   votes: Int!
   votesData: [AnnouncementPollResult!]!
+}
+
+input AnnouncementPollData {
+  options: [String!]!
+  question: String!
 }
 
 type AnnouncementPollOption {
@@ -109,6 +125,7 @@ type Image {
 scalar JSON
 
 type Mutation {
+  announce(data: AnnounceData!): Announcement
   checkEmail(data: CheckEmailData!): Boolean!
   checkUsername(data: CheckUsernameData!): Boolean!
   follow(data: FollowData!): UserFollow!
@@ -148,7 +165,6 @@ input SignUpData {
   username: Username!
 }
 
-"""The `Upload` scalar type represents a file upload."""
 scalar Upload
 
 type User {

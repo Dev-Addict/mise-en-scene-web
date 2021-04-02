@@ -2,7 +2,10 @@ import React, {Dispatch, FC, SetStateAction} from 'react';
 import styled from 'styled-components';
 
 import {UserDetail} from './user-detail';
+import {Announce} from '../announce';
 import {FindUserQueryDataFindUser} from '../../../api';
+import {useAuth} from '../../../hooks';
+import {useRouter} from 'next/router';
 
 const Container = styled.div`
 	margin: 20px 100px;
@@ -23,15 +26,37 @@ const Container = styled.div`
 	}
 `;
 
+const Body = styled.div`
+	flex: 1;
+	padding: 0 20px;
+	direction: ltr;
+
+	@media only screen and (max-width: 1000px) {
+		padding: 20px 0 0 0;
+	}
+`;
+
 interface Props {
 	user: FindUserQueryDataFindUser;
 	setUser: Dispatch<SetStateAction<FindUserQueryDataFindUser | undefined>>;
 }
 
 export const User: FC<Props> = ({user, setUser}) => {
+	const router = useRouter();
+	const {asPath} = router;
+
+	const {user: authUser} = useAuth();
+
+	const onAnnounce = () => () => router.push(asPath);
+
 	return (
 		<Container>
 			<UserDetail user={user} setUser={setUser} />
+			<Body>
+				{authUser?.username === user.username && (
+					<Announce onAnnounce={onAnnounce()} />
+				)}
+			</Body>
 		</Container>
 	);
 };

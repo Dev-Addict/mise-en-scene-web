@@ -16,7 +16,6 @@ interface Props {
 
 export const SignInBody: FC<Props> = ({switchSign}) => {
 	const router = useRouter();
-
 	const {callback} = router.query;
 
 	const [errors, setErrors] = useState<string[]>([]);

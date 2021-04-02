@@ -1,10 +1,9 @@
 import React, {useEffect} from 'react';
 import {NextPage} from 'next';
 import {useRouter} from 'next/router';
-import {EditorState} from 'draft-js';
 import styled from 'styled-components';
 
-import {Header, WriteFields, WriteForm} from '../components';
+import {Announce, Header} from '../components';
 import {Props} from '../types';
 import {useAuth, useWindowSize} from '../hooks';
 
@@ -20,20 +19,14 @@ const Container = styled.div<ContainerProps>`
 	flex-direction: column;
 `;
 
-const initialValues: WriteFields = {
-	text: EditorState.createEmpty(),
-	gif: undefined,
-	poll: undefined,
-	publishAt: undefined,
-	gallery: undefined,
-};
-
 const Write: NextPage<Props> = ({setTheme}) => {
 	const router = useRouter();
 
-	const {isSigned, isLoading} = useAuth();
+	const {isSigned, isLoading, user} = useAuth();
 
 	const {height} = useWindowSize();
+
+	const onAnnounce = () => () => router.push(`/users/${user?.username}`);
 
 	useEffect(() => {
 		if (!isLoading && !isSigned) router.push('/sign?callback=/write');
@@ -43,11 +36,7 @@ const Write: NextPage<Props> = ({setTheme}) => {
 		<div>
 			<Header setTheme={setTheme} />
 			<Container height={height}>
-				<WriteForm
-					onSubmit={() => {}}
-					errors={[]}
-					initialValues={initialValues}
-				/>
+				<Announce onAnnounce={onAnnounce()} />
 			</Container>
 		</div>
 	);

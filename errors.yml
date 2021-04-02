@@ -82,3 +82,4 @@
 0xE000051: announcement poll result `poll` is required.
 0xE000052: announcement poll result `user` is required.
 0xE000053: announcement poll result `option` is required.
+0xE000054: announcement `user` is required.

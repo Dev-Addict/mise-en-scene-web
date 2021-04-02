@@ -8,6 +8,7 @@ import {WriteInputs} from './write-inputs.component';
 import {Color} from '../../../data';
 import {GifResult} from '../../../api';
 import {Poll} from '../../../types';
+import {writeValidator} from '../validators/write/write.validator';
 
 export interface WriteFields {
 	text: EditorState;
@@ -28,7 +29,10 @@ interface Props {
 
 export const WriteForm: FC<Props> = ({onSubmit, initialValues, errors}) => {
 	return (
-		<Formik initialValues={initialValues} onSubmit={onSubmit}>
+		<Formik
+			initialValues={initialValues}
+			onSubmit={onSubmit}
+			validate={writeValidator}>
 			{({isSubmitting}: FormikProps<WriteFields>) => (
 				<Form>
 					<WriteInputs

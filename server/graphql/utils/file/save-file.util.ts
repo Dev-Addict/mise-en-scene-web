@@ -2,7 +2,7 @@ import {join} from 'path';
 import {createWriteStream, existsSync, mkdirSync} from 'fs';
 import {FileUpload} from 'graphql-upload';
 
-import {AppError, getExtension} from '../../utils';
+import {AppError, getExtension} from '../../../utils';
 
 export const saveFile = async (
 	file: Promise<FileUpload> | string,
@@ -23,7 +23,10 @@ export const saveFile = async (
 	)}-${Date.now()}-${Math.random().toString(16)}.${getExtension(
 		clientFilename
 	)}`;
-	const directoryPath = join(__dirname, `../../../public/${type}/${directory}`);
+	const directoryPath = join(
+		__dirname,
+		`../../../../public/${type}/${directory}`
+	);
 	const path = join(directoryPath, filename);
 	if (!existsSync(directoryPath)) mkdirSync(directoryPath);
 	await stream.pipe(createWriteStream(path));

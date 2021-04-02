@@ -14,6 +14,7 @@ declare global {
     json<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "JSON";
     name<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "Name";
     password<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "Password";
+    upload<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "Upload";
     username<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "Username";
   }
 }
@@ -25,6 +26,7 @@ declare global {
     json<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "JSON";
     name<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Name";
     password<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Password";
+    upload<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Upload";
     username<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "Username";
   }
 }
@@ -35,6 +37,17 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  AnnounceData: { // input type
+    gif?: string | null; // ID
+    images?: NexusGenScalars['Upload'][] | null; // [Upload!]
+    poll?: NexusGenInputs['AnnouncementPollData'] | null; // AnnouncementPollData
+    publishAt?: NexusGenScalars['Date'] | null; // Date
+    text: string; // String!
+  }
+  AnnouncementPollData: { // input type
+    options: string[]; // [String!]!
+    question: string; // String!
+  }
   CheckEmailData: { // input type
     email: NexusGenScalars['Email']; // Email!
   }
@@ -85,10 +98,12 @@ export interface NexusGenScalars {
 export interface NexusGenObjects {
   Announcement: { // root type
     gif?: string | null; // ID
+    id: string; // ID!
     images: Array<string | null>; // [ID]!
     poll?: string | null; // ID
     publishAt?: NexusGenScalars['Date'] | null; // Date
     text: string; // String!
+    user: string; // ID!
   }
   AnnouncementDislike: { // root type
     announcement: string; // ID!
@@ -179,14 +194,17 @@ export interface NexusGenFieldTypes {
     dislikeData: NexusGenRootTypes['AnnouncementDislike'][]; // [AnnouncementDislike!]!
     gif: string | null; // ID
     gifData: NexusGenRootTypes['Gif'] | null; // Gif
+    id: string; // ID!
     images: Array<string | null>; // [ID]!
-    imagesData: Array<NexusGenRootTypes['Image'] | null>; // [Image]!
+    imagesData: NexusGenRootTypes['Image'][]; // [Image!]!
     like: number; // Int!
     likeData: NexusGenRootTypes['AnnouncementLike'][]; // [AnnouncementLike!]!
     poll: string | null; // ID
     pollData: NexusGenRootTypes['AnnouncementPoll'] | null; // AnnouncementPoll
     publishAt: NexusGenScalars['Date'] | null; // Date
     text: string; // String!
+    user: string; // ID!
+    userData: NexusGenRootTypes['User']; // User!
   }
   AnnouncementDislike: { // field return type
     announcement: string; // ID!
@@ -246,6 +264,7 @@ export interface NexusGenFieldTypes {
     width: number; // Float!
   }
   Mutation: { // field return type
+    announce: NexusGenRootTypes['Announcement'] | null; // Announcement
     checkEmail: boolean; // Boolean!
     checkUsername: boolean; // Boolean!
     follow: NexusGenRootTypes['UserFollow']; // UserFollow!
@@ -299,6 +318,7 @@ export interface NexusGenFieldTypeNames {
     dislikeData: 'AnnouncementDislike'
     gif: 'ID'
     gifData: 'Gif'
+    id: 'ID'
     images: 'ID'
     imagesData: 'Image'
     like: 'Int'
@@ -307,6 +327,8 @@ export interface NexusGenFieldTypeNames {
     pollData: 'AnnouncementPoll'
     publishAt: 'Date'
     text: 'String'
+    user: 'ID'
+    userData: 'User'
   }
   AnnouncementDislike: { // field return type name
     announcement: 'ID'
@@ -366,6 +388,7 @@ export interface NexusGenFieldTypeNames {
     width: 'Float'
   }
   Mutation: { // field return type name
+    announce: 'Announcement'
     checkEmail: 'Boolean'
     checkUsername: 'Boolean'
     follow: 'UserFollow'
@@ -415,6 +438,9 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
+    announce: { // args
+      data: NexusGenInputs['AnnounceData']; // AnnounceData!
+    }
     checkEmail: { // args
       data: NexusGenInputs['CheckEmailData']; // CheckEmailData!
     }

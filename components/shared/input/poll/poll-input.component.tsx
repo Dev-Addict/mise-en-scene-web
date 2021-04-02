@@ -94,6 +94,7 @@ export const PollInput: FC<Props> = ({
 				onChange={onQuestionChange()}
 				primary
 				disabled={disabled}
+				touched={touched}
 			/>
 			{renderOptions()}
 			{poll.options.length < 10 && (

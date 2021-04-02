@@ -1,6 +1,10 @@
 import {Document, model, Schema, Types} from 'mongoose';
 
 const announcementSchema = new Schema({
+	user: {
+		type: Types.ObjectId,
+		required: [true, '0xE000054'],
+	},
 	text: {
 		type: String,
 		required: [true, '0xE00004A'],

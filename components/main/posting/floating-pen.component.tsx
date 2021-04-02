@@ -30,13 +30,15 @@ export const FloatingPen = () => {
 	const router = useRouter();
 	const {asPath} = router;
 
-	const {isSigned} = useAuth();
+	const {isSigned, user} = useAuth();
 
 	const link = isSigned ? '/write' : '/sign?callback=/write';
 
+	const writingPaths = ['/write', `/users/${user?.username || 'no'}`];
+
 	return (
 		<>
-			{asPath !== '/write' && (
+			{!writingPaths.includes(asPath) && (
 				<Link href={link}>
 					<Container floating circular right={20} bottom={20} primary>
 						<FeatherContainer>
