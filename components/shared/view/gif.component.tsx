@@ -2,8 +2,7 @@ import React, {FC, useRef} from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import {GifResult} from '../../../api';
-import {StyledProps} from '../../../types';
+import {Gif as GifModel, StyledProps} from '../../../types';
 import {useComponentSize} from '../../../hooks';
 
 const Container = styled.div<StyledProps>`
@@ -32,7 +31,7 @@ const Close = styled.div`
 `;
 
 interface Props {
-	gif: GifResult;
+	gif: GifModel;
 	disabled?: boolean;
 	controls?: boolean;
 	onDelete?: () => void;
@@ -53,7 +52,7 @@ export const Gif: FC<Props> = ({
 			<Image
 				src={`/image/gif/${url}`}
 				width={containerWidth}
-				height={(containerWidth / width) * height}
+				height={(containerWidth / (width || 0)) * (height || 0)}
 			/>
 			{controls && (
 				<Close onClick={disabled ? undefined : onDelete}>

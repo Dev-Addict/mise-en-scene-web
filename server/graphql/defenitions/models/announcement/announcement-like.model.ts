@@ -10,14 +10,14 @@ export const AnnouncementLike = objectType({
 		t.nonNull.field('announcementData', {
 			type: Announcement,
 			resolve({announcement}, _args, {models: {Announcement}}) {
-				return Announcement.findById(announcement);
+				return <any>Announcement.findById(announcement);
 			},
 		});
 		t.nonNull.id('user');
 		t.nonNull.field('userData', {
 			type: User,
 			resolve({user}, _args, {models: {User}}) {
-				return User.findById(user);
+				return <any>User.findById(user);
 			},
 		});
 	},

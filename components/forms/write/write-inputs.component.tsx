@@ -28,6 +28,7 @@ const fields: {
 	poll: 'poll',
 	publishAt: 'publishAt',
 	gallery: 'gallery',
+	reAnnouncement: 'reAnnouncement',
 };
 
 interface Props {

@@ -3,7 +3,7 @@ import {mutationField, nonNull} from 'nexus';
 import {Announcement} from '../../models';
 import {AnnounceData} from '../inputs';
 import {saveImage} from '../../../utils';
-import {protect} from '../../../../utils';
+import {AppError, protect} from '../../../../utils';
 
 export const AnnounceMutation = mutationField('announce', {
 	type: Announcement,
@@ -12,9 +12,11 @@ export const AnnounceMutation = mutationField('announce', {
 	},
 	async resolve(
 		_root,
-		{data: {text, images, gif, poll, publishAt}},
+		{data: {text, images, gif, poll, publishAt, reAnnouncement}},
 		{models: {Announcement, AnnouncementPoll, Image, User}, req}
 	) {
+		if (!reAnnouncement && !text) throw new AppError('0xE00004A', 400);
+
 		const {id: user} = (await protect(req, User))!;
 
 		const imagesIds: string[] = [];
@@ -45,6 +47,8 @@ export const AnnounceMutation = mutationField('announce', {
 			images: imagesIds,
 			poll: pollId,
 			publishAt,
+			publish: !publishAt,
+			reAnnouncement,
 		});
 	},
 });

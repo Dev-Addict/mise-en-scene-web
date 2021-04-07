@@ -83,14 +83,16 @@ export const OpenGalleryInput: FC<Props> = ({
 	}, [files]);
 
 	return (
-		<Container>
+		<>
 			<FileInput onFilesSelect={onSelect()} {...props} inputRef={inputRef} />
-			{renderFiles()}
-			{galleryFiles.length < (maxLength || Infinity) && (
-				<Plus onClick={onPlusClick()} disabled={disabled}>
-					<Image src={close} width={40} height={40} />
-				</Plus>
-			)}
-		</Container>
+			<Container>
+				{renderFiles()}
+				{galleryFiles.length < (maxLength || Infinity) && (
+					<Plus onClick={onPlusClick()} disabled={disabled}>
+						<Image src={close} width={40} height={40} />
+					</Plus>
+				)}
+			</Container>
+		</>
 	);
 };

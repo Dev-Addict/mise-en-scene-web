@@ -16,7 +16,7 @@ export const AnnouncementPollOption = objectType({
 		t.nonNull.field('votesData', {
 			type: list(nonNull(AnnouncementPollResult)),
 			resolve({poll, index}, _args, {models: {AnnouncementPollResult}}) {
-				return AnnouncementPollResult.find({poll, option: index});
+				return <any>AnnouncementPollResult.find({poll, option: index});
 			},
 		});
 	},

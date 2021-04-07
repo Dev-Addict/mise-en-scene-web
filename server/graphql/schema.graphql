@@ -7,7 +7,8 @@ input AnnounceData {
   images: [Upload!]
   poll: AnnouncementPollData
   publishAt: Date
-  text: String!
+  reAnnouncement: ID
+  text: String
 }
 
 type Announcement {
@@ -18,12 +19,19 @@ type Announcement {
   id: ID!
   images: [ID]!
   imagesData: [Image!]!
+  isDisliked: Boolean!
+  isLiked: Boolean!
   like: Int!
   likeData: [AnnouncementLike!]!
   poll: ID
   pollData: AnnouncementPoll
   publishAt: Date
-  text: String!
+  published: Boolean!
+  publishedAt: Date!
+  reAnnouncement: ID
+  reAnnouncementData: Announcement
+  reAnnouncements: Int!
+  text: String
   user: ID!
   userData: User!
 }
@@ -46,6 +54,7 @@ type AnnouncementLike {
 
 type AnnouncementPoll {
   id: ID!
+  myVote: AnnouncementPollResult
   options: [String]!
   optionsData: [AnnouncementPollOption!]!
   question: String!
@@ -73,6 +82,13 @@ type AnnouncementPollResult {
   pollData: AnnouncementPoll!
   user: ID!
   userData: User!
+}
+
+type AnnouncementsResponse {
+  docs: [Announcement!]!
+  limit: Int!
+  page: Int!
+  results: Int!
 }
 
 scalar AuthKey
@@ -128,10 +144,13 @@ type Mutation {
   announce(data: AnnounceData!): Announcement
   checkEmail(data: CheckEmailData!): Boolean!
   checkUsername(data: CheckUsernameData!): Boolean!
+  dislike(announcement: ID!): AnnouncementDislike!
   follow(data: FollowData!): UserFollow!
+  like(announcement: ID!): AnnouncementLike!
   signIn(data: SignInData!): AuthResponse!
   signUp(data: SignUpData!): AuthResponse!
   unfollow(data: FollowData!): UserFollow
+  vote(data: VoteData!): AnnouncementPollResult
 }
 
 scalar Name
@@ -139,12 +158,14 @@ scalar Name
 scalar Password
 
 type Query {
+  announcement(id: ID!): Announcement
+  announcements(filter: JSON, limit: Int, page: Int, sort: JSON): AnnouncementsResponse
   findGifs(limit: Int, page: Int, query: String!): [Gif!]!
-  findUser(filter: JSON): User
+  findUser(filter: JSON!): User
   self: User!
   trendingGifs(limit: Int, page: Int): [Gif!]!
-  userById(id: ID): User
-  users(filter: JSON, limit: Int, page: Int, sort: String): UsersResponse
+  userById(id: ID!): User
+  users(filter: JSON, limit: Int, page: Int, sort: JSON): UsersResponse
 }
 
 input SignInData {
@@ -168,6 +189,8 @@ input SignUpData {
 scalar Upload
 
 type User {
+  announcements: Int!
+  announcementsData: [Announcement!]!
   avatar: String!
   bio: String
   birthday: Date
@@ -200,4 +223,9 @@ type UsersResponse {
   limit: Int!
   page: Int!
   results: Int!
+}
+
+input VoteData {
+  option: Int!
+  poll: ID!
 }

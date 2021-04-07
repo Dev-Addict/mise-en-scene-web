@@ -1,9 +1,11 @@
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import {Size, StyledProps} from '../../types';
 
 interface TextProps {
 	size?: Size;
 	lowOpacity?: boolean;
+	hover?: boolean;
+	center?: boolean;
 }
 
 export const Text = styled.div<StyledProps & TextProps>`
@@ -16,4 +18,18 @@ export const Text = styled.div<StyledProps & TextProps>`
 		)
 			? 'rtl'
 			: 'ltr'};
+
+	${({hover}) =>
+		hover &&
+		css`
+			&:hover {
+				opacity: 0.5;
+			}
+		`}
+
+	${({center}) =>
+		center &&
+		css`
+			text-align: center;
+		`}
 `;

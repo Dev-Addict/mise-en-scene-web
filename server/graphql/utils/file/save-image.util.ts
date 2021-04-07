@@ -1,6 +1,5 @@
 import {join} from 'path';
 import {createWriteStream, existsSync, mkdirSync} from 'fs';
-import sharp from 'sharp';
 import {FileUpload} from 'graphql-upload';
 
 import {AppError, getExtension} from '../../../utils';
@@ -29,19 +28,9 @@ export const saveImage = async (
 	const path = join(directoryPath, filename);
 	if (!existsSync(directoryPath)) mkdirSync(directoryPath);
 
-	const transformer = sharp().jpeg({
-		quality: 90,
-		trellisQuantisation: true,
-		overshootDeringing: true,
-		optimiseScans: true,
-		quantisationTable: 3,
-	});
+	stream.pipe(createWriteStream(path));
 
 	const {width, height} = await imageSize(stream);
-
-	const transformedStream = await stream.pipe(transformer);
-
-	transformedStream.pipe(createWriteStream(path));
 
 	return {
 		filename,

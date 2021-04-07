@@ -10,10 +10,18 @@ export const UsersQuery = queryField('users', {
 	args: {
 		page: 'Int',
 		limit: 'Int',
-		sort: 'String',
+		sort: JSONScalar,
 		filter: JSONScalar,
 	},
-	resolve(_root, _args, {models: {User}}) {
-		return <any>findModels<IUser>(User);
+	resolve(_root, {page, limit, sort, filter}, {models: {User}}) {
+		return <any>(
+			findModels<IUser>(
+				User,
+				page || 1,
+				limit || 1,
+				sort || '-createdAt',
+				filter
+			)
+		);
 	},
 });

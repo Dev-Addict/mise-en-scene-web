@@ -35,11 +35,8 @@ export const GifsContainer = styled.div`
 
 export const Gif = styled.div`
 	position: relative;
-	height: 144px;
-	margin: 4px;
-	border-radius: 5px;
+	height: 152px;
 	overflow: hidden;
-	border: 2px solid ${({theme: {foreground}}) => foreground}4C;
 
 	& > div:last-child {
 		opacity: 0;
@@ -47,7 +44,6 @@ export const Gif = styled.div`
 
 	&:hover {
 		box-shadow: 3px 0 6px 0 ${({theme: {primary}}) => primary}29;
-		border-color: ${({theme: {primary}}) => primary}4C;
 
 		& > div:last-child {
 			opacity: 1;

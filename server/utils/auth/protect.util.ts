@@ -15,31 +15,35 @@ export const protect = async (
 	User: Model<IUser>,
 	throwError = true
 ) => {
-	const bearerToken = req.headers.authorization || getCookie(req, 'token');
+	try {
+		const bearerToken = req.headers.authorization || getCookie(req, 'token');
 
-	if (!bearerToken) {
-		if (throwError) throw new AppError('0xE00000A', 401);
-		else return;
+		if (!bearerToken) {
+			if (throwError) throw new AppError('0xE00000A', 401);
+			else return;
+		}
+
+		if (!bearerToken.startsWith('Bearer ')) {
+			if (throwError) throw new AppError('0xE00000C', 401);
+			else return;
+		}
+		const token = bearerToken.split(' ')[1];
+
+		const {id} = await verify<TokenData>(
+			token,
+			process.env.JSON_WEB_TOKEN_SECRET || ''
+		);
+
+		const user = await User.findById(id);
+
+		if (!user) {
+			if (throwError) throw new AppError('0xE00000D', 401);
+			else return;
+		}
+		req.user = user;
+
+		return user;
+	} catch (error) {
+		if (throwError) throw error;
 	}
-
-	if (!bearerToken.startsWith('Bearer ')) {
-		if (throwError) throw new AppError('0xE00000C', 401);
-		else return;
-	}
-	const token = bearerToken.split(' ')[1];
-
-	const {id} = await verify<TokenData>(
-		token,
-		process.env.JSON_WEB_TOKEN_SECRET || ''
-	);
-
-	const user = await User.findById(id);
-
-	if (!user) {
-		if (throwError) throw new AppError('0xE00000D', 401);
-		else return;
-	}
-	req.user = user;
-
-	return user;
 };

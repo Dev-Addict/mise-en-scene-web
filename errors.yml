@@ -72,8 +72,8 @@
 0xE000047: image `directory` is required.
 0xE000048: image `width` is required.
 0xE000049: image `height` is required.
-0xE00004A: announcement `text` is required.
-0xE00004B: announcement `text` is too large.
+0xE00004A: announcement text or reAnnounce is required.
+0xE00004B: announcement `copy` is too large.
 0xE00004C: announcement dislike `announcement` is required.
 0xE00004D: announcement dislike `user` is required.
 0xE00004E: announcement like `announcement` is required.

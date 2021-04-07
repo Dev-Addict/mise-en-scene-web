@@ -6,7 +6,8 @@ import {AnnouncementPollData} from '../../../inputs';
 export const AnnounceData = inputObjectType({
 	name: 'AnnounceData',
 	definition(t) {
-		t.nonNull.string('text');
+		t.id('reAnnouncement');
+		t.string('text');
 		t.id('gif');
 		t.field('images', {
 			type: list(nonNull(UploadScalar)),

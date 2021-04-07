@@ -1,4 +1,4 @@
-import {objectType} from 'nexus';
+import {list, nonNull, objectType} from 'nexus';
 
 import {
 	DateScalar,
@@ -9,6 +9,7 @@ import {
 import {GenderEnum} from '../../enums';
 import {UserFollow} from './user-follow.model';
 import {protect} from '../../../../utils';
+import {Announcement} from '../announcement';
 
 export const User = objectType({
 	name: 'User',
@@ -52,6 +53,17 @@ export const User = objectType({
 				return user
 					? await UserFollow.exists({following: id, follower: user.id})
 					: false;
+			},
+		});
+		t.nonNull.int('announcements', {
+			resolve({id}, _args, {models: {Announcement}}) {
+				return Announcement.countDocuments({user: id});
+			},
+		});
+		t.nonNull.field('announcementsData', {
+			type: list(nonNull(Announcement)),
+			resolve({id}, _args, {models: {Announcement}}) {
+				return <any>Announcement.find({user: id});
 			},
 		});
 	},

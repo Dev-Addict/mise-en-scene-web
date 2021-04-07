@@ -3,7 +3,11 @@ import {NextPage} from 'next';
 import Error from 'next/error';
 import Cookie from 'js-cookie';
 
-import {Header, User as UserDetail} from '../../components';
+import {
+	AnnouncementProvider,
+	Header,
+	User as UserDetail,
+} from '../../components';
 import {cookieParser} from '../../utils';
 import {
 	apolloClient,
@@ -28,18 +32,20 @@ const User: NextPage<Props & InitialProps, InitialProps> = ({
 		setUserState(user);
 	}, [user]);
 
-	if (!userState) return <Error statusCode={404} title="User not found." />;
+	if (!userState) return <Error statusCode={404} title="کاربر پیدا نشد!" />;
 
 	return (
-		<div>
-			<Header setTheme={setTheme} />
-			<UserDetail user={userState} setUser={setUserState} />
-		</div>
+		<AnnouncementProvider filter={{user: userState.id}}>
+			<div>
+				<Header setTheme={setTheme} />
+				<UserDetail user={userState} setUser={setUserState} />
+			</div>
+		</AnnouncementProvider>
 	);
 };
 
 User.getInitialProps = async ({query: {username}, req}) => {
-	let user: FindUserQueryDataFindUser | undefined;
+	let user: FindUserQueryDataFindUser | undefined = undefined;
 
 	const token =
 		cookieParser(req?.headers?.cookie || '')['auth-token'] ||

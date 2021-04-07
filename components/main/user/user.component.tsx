@@ -1,11 +1,12 @@
 import React, {Dispatch, FC, SetStateAction} from 'react';
+import {useRouter} from 'next/router';
 import styled from 'styled-components';
 
 import {UserDetail} from './user-detail';
 import {Announce} from '../announce';
 import {FindUserQueryDataFindUser} from '../../../api';
 import {useAuth} from '../../../hooks';
-import {useRouter} from 'next/router';
+import {Announcements} from './announcements';
 
 const Container = styled.div`
 	margin: 20px 100px;
@@ -56,6 +57,7 @@ export const User: FC<Props> = ({user, setUser}) => {
 				{authUser?.username === user.username && (
 					<Announce onAnnounce={onAnnounce()} />
 				)}
+				<Announcements />
 			</Body>
 		</Container>
 	);

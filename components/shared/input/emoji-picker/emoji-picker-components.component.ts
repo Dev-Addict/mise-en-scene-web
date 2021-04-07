@@ -35,6 +35,7 @@ export const PickerContainer = styled.div<StyledProps & PickerContainerProps>`
 	display: none;
 	right: 50%;
 	direction: rtl;
+	z-index: 20;
 
 	& * {
 		direction: rtl;

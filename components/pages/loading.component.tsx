@@ -1,9 +1,10 @@
-import Lottie from 'react-lottie';
+import React from 'react';
 import styled, {css, useTheme} from 'styled-components';
 
 import {movieLoaderDark, movieLoaderLight} from '../../assets';
 import {StyledProps, Theme, ThemeMode} from '../../types';
 import {useAuth} from '../../hooks';
+import {Animation} from '../shared';
 
 interface ContainerProps {
 	isActive?: boolean;
@@ -53,18 +54,7 @@ export const Loading = () => {
 
 	return (
 		<Container isActive={isLoading}>
-			<Lottie
-				options={{
-					autoplay: true,
-					loop: true,
-					animationData: animationData,
-					rendererSettings: {
-						preserveAspectRatio: 'xMidYMid slice',
-					},
-				}}
-				width={200}
-				height={200}
-			/>
+			<Animation data={animationData} />
 			<Title>میزانسن</Title>
 			<Header>در حال بارگذاری...</Header>
 		</Container>

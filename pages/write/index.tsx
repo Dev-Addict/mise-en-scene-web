@@ -3,9 +3,9 @@ import {NextPage} from 'next';
 import {useRouter} from 'next/router';
 import styled from 'styled-components';
 
-import {Announce, Header} from '../components';
-import {Props} from '../types';
-import {useAuth, useWindowSize} from '../hooks';
+import {Announce, Header} from '../../components';
+import {Props} from '../../types';
+import {useAuth, useWindowSize} from '../../hooks';
 
 interface ContainerProps {
 	height: number;

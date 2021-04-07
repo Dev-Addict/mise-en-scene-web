@@ -10,14 +10,14 @@ export const AnnouncementPollResult = objectType({
 		t.nonNull.field('pollData', {
 			type: AnnouncementPoll,
 			resolve({poll}, _args, {models: {AnnouncementPoll}}) {
-				return AnnouncementPoll.findById(poll);
+				return <any>AnnouncementPoll.findById(poll);
 			},
 		});
 		t.nonNull.id('user');
 		t.nonNull.field('userData', {
 			type: User,
 			resolve({user}, _args, {models: {User}}) {
-				return User.findById(user);
+				return <any>User.findById(user);
 			},
 		});
 		t.nonNull.int('option');

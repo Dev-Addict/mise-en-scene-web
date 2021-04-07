@@ -4,7 +4,7 @@ import {ApolloProvider} from '@apollo/client';
 import {ThemeProvider} from 'styled-components';
 import 'nprogress/nprogress.css';
 
-import {FloatingPen, GlobalStyle, Loading} from '../components';
+import {CopyProvider, FloatingPen, GlobalStyle, Loading} from '../components';
 import {ThemeMode} from '../types';
 import {darkTheme, lightTheme} from '../data';
 import {apolloClient} from '../api';
@@ -19,21 +19,23 @@ const App = ({Component, pageProps}: AppProps) => {
 	useProgressBar();
 
 	return (
-		<ApolloProvider client={apolloClient}>
-			<AuthProvider>
-				<ThemeProvider
-					theme={theme === ThemeMode.DARK ? darkTheme : lightTheme}>
-					<GlobalStyle />
-					{isMounted && (
-						<>
-							<Component {...pageProps} setTheme={setTheme} />
-							<FloatingPen />
-							<Loading />
-						</>
-					)}
-				</ThemeProvider>
-			</AuthProvider>
-		</ApolloProvider>
+		<CopyProvider>
+			<ApolloProvider client={apolloClient}>
+				<AuthProvider>
+					<ThemeProvider
+						theme={theme === ThemeMode.DARK ? darkTheme : lightTheme}>
+						<GlobalStyle />
+						{isMounted && (
+							<>
+								<Component {...pageProps} setTheme={setTheme} />
+								<FloatingPen />
+								<Loading />
+							</>
+						)}
+					</ThemeProvider>
+				</AuthProvider>
+			</ApolloProvider>
+		</CopyProvider>
 	);
 };
 

@@ -38,7 +38,10 @@ export const FloatingPen = () => {
 
 	return (
 		<>
-			{!writingPaths.includes(asPath) && (
+			{!(
+				writingPaths.includes(asPath) ||
+				writingPaths.some((path) => asPath.startsWith(path))
+			) && (
 				<Link href={link}>
 					<Container floating circular right={20} bottom={20} primary>
 						<FeatherContainer>

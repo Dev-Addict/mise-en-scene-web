@@ -5,10 +5,12 @@ import {editorStateToRawText} from '../../../../utils';
 export const writeValidator = ({
 	text,
 	poll,
+	announcement
 }: WriteFields): FormikErrors<WriteFields> => {
 	const errors: FormikErrors<WriteFields> = {};
 
 	if (
+		!announcement &&
 		!editorStateToRawText(text)
 			.split('\n')
 			.map((row) => row.trim())

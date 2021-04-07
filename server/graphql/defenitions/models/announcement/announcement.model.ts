@@ -7,6 +7,7 @@ import {AnnouncementPoll} from './announcement-poll.model';
 import {AnnouncementLike} from './announcement-like.model';
 import {AnnouncementDislike} from './announcement-dislike.model';
 import {User} from '../user';
+import {protect} from '../../../../utils';
 
 export const Announcement = objectType({
 	name: 'Announcement',
@@ -19,7 +20,7 @@ export const Announcement = objectType({
 				return <any>User.findById(user);
 			},
 		});
-		t.nonNull.string('text');
+		t.string('text');
 		t.field('publishAt', {type: DateScalar});
 		t.id('gif');
 		t.field('gifData', {
@@ -32,7 +33,7 @@ export const Announcement = objectType({
 		t.nonNull.list.field('imagesData', {
 			type: nonNull(Image),
 			resolve({images}, _args, {models: {Image}}) {
-				return <any>Image.find({id: images});
+				return <any>Image.find({_id: {$in: images}});
 			},
 		});
 		t.id('poll');
@@ -42,6 +43,8 @@ export const Announcement = objectType({
 				return <any>AnnouncementPoll.findById(poll);
 			},
 		});
+		t.nonNull.boolean('published');
+		t.nonNull.field('publishedAt', {type: DateScalar});
 		t.nonNull.int('like', {
 			resolve({id}, _args, {models: {AnnouncementLike}}) {
 				return AnnouncementLike.countDocuments({announcement: id});
@@ -62,6 +65,36 @@ export const Announcement = objectType({
 			type: list(nonNull(AnnouncementDislike)),
 			resolve({id}, _args, {models: {AnnouncementDislike}}) {
 				return <any>AnnouncementDislike.find({announcement: id});
+			},
+		});
+		t.nonNull.boolean('isLiked', {
+			async resolve({id}, _args, {req, models: {User, AnnouncementLike}}) {
+				const user = req.user || (await protect(req, User, false));
+
+				return user
+					? await AnnouncementLike.exists({announcement: id, user: user.id})
+					: false;
+			},
+		});
+		t.nonNull.boolean('isDisliked', {
+			async resolve({id}, _args, {req, models: {User, AnnouncementDislike}}) {
+				const user = req.user || (await protect(req, User, false));
+
+				return user
+					? await AnnouncementDislike.exists({announcement: id, user: user.id})
+					: false;
+			},
+		});
+		t.id('reAnnouncement');
+		t.field('reAnnouncementData', {
+			type: Announcement,
+			resolve({reAnnouncement}, _args, {models: {Announcement}}) {
+				return <any>Announcement.findById(reAnnouncement);
+			},
+		});
+		t.nonNull.int('reAnnouncements', {
+			resolve({id}, _args, {models: {Announcement}}) {
+				return Announcement.countDocuments({reAnnouncement: id});
 			},
 		});
 	},

@@ -9,7 +9,7 @@ export const headerRoutes = [
 	},
 	{
 		name: 'گفت و گو ها',
-		path: '/chat',
+		path: '/conversations',
 	},
 	{
 		name: 'انتخاب روز',

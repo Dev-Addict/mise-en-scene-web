@@ -40,6 +40,7 @@ const GifsContainer = styled.div<GifsContainerProps>`
 	display: none;
 	right: 50%;
 	direction: rtl;
+	z-index: 20;
 
 	${({active}) =>
 		active &&

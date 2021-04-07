@@ -42,7 +42,8 @@ export interface NexusGenInputs {
     images?: NexusGenScalars['Upload'][] | null; // [Upload!]
     poll?: NexusGenInputs['AnnouncementPollData'] | null; // AnnouncementPollData
     publishAt?: NexusGenScalars['Date'] | null; // Date
-    text: string; // String!
+    reAnnouncement?: string | null; // ID
+    text?: string | null; // String
   }
   AnnouncementPollData: { // input type
     options: string[]; // [String!]!
@@ -73,6 +74,10 @@ export interface NexusGenInputs {
     password: NexusGenScalars['Password']; // Password!
     username: NexusGenScalars['Username']; // Username!
   }
+  VoteData: { // input type
+    option: number; // Int!
+    poll: string; // ID!
+  }
 }
 
 export interface NexusGenEnums {
@@ -102,7 +107,10 @@ export interface NexusGenObjects {
     images: Array<string | null>; // [ID]!
     poll?: string | null; // ID
     publishAt?: NexusGenScalars['Date'] | null; // Date
-    text: string; // String!
+    published: boolean; // Boolean!
+    publishedAt: NexusGenScalars['Date']; // Date!
+    reAnnouncement?: string | null; // ID
+    text?: string | null; // String
     user: string; // ID!
   }
   AnnouncementDislike: { // root type
@@ -130,6 +138,12 @@ export interface NexusGenObjects {
     option: number; // Int!
     poll: string; // ID!
     user: string; // ID!
+  }
+  AnnouncementsResponse: { // root type
+    docs: NexusGenRootTypes['Announcement'][]; // [Announcement!]!
+    limit: number; // Int!
+    page: number; // Int!
+    results: number; // Int!
   }
   AuthResponse: { // root type
     token: string; // String!
@@ -197,12 +211,19 @@ export interface NexusGenFieldTypes {
     id: string; // ID!
     images: Array<string | null>; // [ID]!
     imagesData: NexusGenRootTypes['Image'][]; // [Image!]!
+    isDisliked: boolean; // Boolean!
+    isLiked: boolean; // Boolean!
     like: number; // Int!
     likeData: NexusGenRootTypes['AnnouncementLike'][]; // [AnnouncementLike!]!
     poll: string | null; // ID
     pollData: NexusGenRootTypes['AnnouncementPoll'] | null; // AnnouncementPoll
     publishAt: NexusGenScalars['Date'] | null; // Date
-    text: string; // String!
+    published: boolean; // Boolean!
+    publishedAt: NexusGenScalars['Date']; // Date!
+    reAnnouncement: string | null; // ID
+    reAnnouncementData: NexusGenRootTypes['Announcement'] | null; // Announcement
+    reAnnouncements: number; // Int!
+    text: string | null; // String
     user: string; // ID!
     userData: NexusGenRootTypes['User']; // User!
   }
@@ -222,6 +243,7 @@ export interface NexusGenFieldTypes {
   }
   AnnouncementPoll: { // field return type
     id: string; // ID!
+    myVote: NexusGenRootTypes['AnnouncementPollResult'] | null; // AnnouncementPollResult
     options: Array<string | null>; // [String]!
     optionsData: NexusGenRootTypes['AnnouncementPollOption'][]; // [AnnouncementPollOption!]!
     question: string; // String!
@@ -242,6 +264,12 @@ export interface NexusGenFieldTypes {
     pollData: NexusGenRootTypes['AnnouncementPoll']; // AnnouncementPoll!
     user: string; // ID!
     userData: NexusGenRootTypes['User']; // User!
+  }
+  AnnouncementsResponse: { // field return type
+    docs: NexusGenRootTypes['Announcement'][]; // [Announcement!]!
+    limit: number; // Int!
+    page: number; // Int!
+    results: number; // Int!
   }
   AuthResponse: { // field return type
     token: string; // String!
@@ -267,12 +295,17 @@ export interface NexusGenFieldTypes {
     announce: NexusGenRootTypes['Announcement'] | null; // Announcement
     checkEmail: boolean; // Boolean!
     checkUsername: boolean; // Boolean!
+    dislike: NexusGenRootTypes['AnnouncementDislike']; // AnnouncementDislike!
     follow: NexusGenRootTypes['UserFollow']; // UserFollow!
+    like: NexusGenRootTypes['AnnouncementLike']; // AnnouncementLike!
     signIn: NexusGenRootTypes['AuthResponse']; // AuthResponse!
     signUp: NexusGenRootTypes['AuthResponse']; // AuthResponse!
     unfollow: NexusGenRootTypes['UserFollow'] | null; // UserFollow
+    vote: NexusGenRootTypes['AnnouncementPollResult'] | null; // AnnouncementPollResult
   }
   Query: { // field return type
+    announcement: NexusGenRootTypes['Announcement'] | null; // Announcement
+    announcements: NexusGenRootTypes['AnnouncementsResponse'] | null; // AnnouncementsResponse
     findGifs: NexusGenRootTypes['Gif'][]; // [Gif!]!
     findUser: NexusGenRootTypes['User'] | null; // User
     self: NexusGenRootTypes['User']; // User!
@@ -281,6 +314,8 @@ export interface NexusGenFieldTypes {
     users: NexusGenRootTypes['UsersResponse'] | null; // UsersResponse
   }
   User: { // field return type
+    announcements: number; // Int!
+    announcementsData: NexusGenRootTypes['Announcement'][]; // [Announcement!]!
     avatar: string; // String!
     bio: string | null; // String
     birthday: NexusGenScalars['Date'] | null; // Date
@@ -321,11 +356,18 @@ export interface NexusGenFieldTypeNames {
     id: 'ID'
     images: 'ID'
     imagesData: 'Image'
+    isDisliked: 'Boolean'
+    isLiked: 'Boolean'
     like: 'Int'
     likeData: 'AnnouncementLike'
     poll: 'ID'
     pollData: 'AnnouncementPoll'
     publishAt: 'Date'
+    published: 'Boolean'
+    publishedAt: 'Date'
+    reAnnouncement: 'ID'
+    reAnnouncementData: 'Announcement'
+    reAnnouncements: 'Int'
     text: 'String'
     user: 'ID'
     userData: 'User'
@@ -346,6 +388,7 @@ export interface NexusGenFieldTypeNames {
   }
   AnnouncementPoll: { // field return type name
     id: 'ID'
+    myVote: 'AnnouncementPollResult'
     options: 'String'
     optionsData: 'AnnouncementPollOption'
     question: 'String'
@@ -366,6 +409,12 @@ export interface NexusGenFieldTypeNames {
     pollData: 'AnnouncementPoll'
     user: 'ID'
     userData: 'User'
+  }
+  AnnouncementsResponse: { // field return type name
+    docs: 'Announcement'
+    limit: 'Int'
+    page: 'Int'
+    results: 'Int'
   }
   AuthResponse: { // field return type name
     token: 'String'
@@ -391,12 +440,17 @@ export interface NexusGenFieldTypeNames {
     announce: 'Announcement'
     checkEmail: 'Boolean'
     checkUsername: 'Boolean'
+    dislike: 'AnnouncementDislike'
     follow: 'UserFollow'
+    like: 'AnnouncementLike'
     signIn: 'AuthResponse'
     signUp: 'AuthResponse'
     unfollow: 'UserFollow'
+    vote: 'AnnouncementPollResult'
   }
   Query: { // field return type name
+    announcement: 'Announcement'
+    announcements: 'AnnouncementsResponse'
     findGifs: 'Gif'
     findUser: 'User'
     self: 'User'
@@ -405,6 +459,8 @@ export interface NexusGenFieldTypeNames {
     users: 'UsersResponse'
   }
   User: { // field return type name
+    announcements: 'Int'
+    announcementsData: 'Announcement'
     avatar: 'String'
     bio: 'String'
     birthday: 'Date'
@@ -447,8 +503,14 @@ export interface NexusGenArgTypes {
     checkUsername: { // args
       data: NexusGenInputs['CheckUsernameData']; // CheckUsernameData!
     }
+    dislike: { // args
+      announcement: string; // ID!
+    }
     follow: { // args
       data: NexusGenInputs['FollowData']; // FollowData!
+    }
+    like: { // args
+      announcement: string; // ID!
     }
     signIn: { // args
       data: NexusGenInputs['SignInData']; // SignInData!
@@ -459,28 +521,40 @@ export interface NexusGenArgTypes {
     unfollow: { // args
       data: NexusGenInputs['FollowData']; // FollowData!
     }
+    vote: { // args
+      data: NexusGenInputs['VoteData']; // VoteData!
+    }
   }
   Query: {
+    announcement: { // args
+      id: string; // ID!
+    }
+    announcements: { // args
+      filter?: NexusGenScalars['JSON'] | null; // JSON
+      limit?: number | null; // Int
+      page?: number | null; // Int
+      sort?: NexusGenScalars['JSON'] | null; // JSON
+    }
     findGifs: { // args
       limit?: number | null; // Int
       page?: number | null; // Int
       query: string; // String!
     }
     findUser: { // args
-      filter?: NexusGenScalars['JSON'] | null; // JSON
+      filter: NexusGenScalars['JSON']; // JSON!
     }
     trendingGifs: { // args
       limit?: number | null; // Int
       page?: number | null; // Int
     }
     userById: { // args
-      id?: string | null; // ID
+      id: string; // ID!
     }
     users: { // args
       filter?: NexusGenScalars['JSON'] | null; // JSON
       limit?: number | null; // Int
       page?: number | null; // Int
-      sort?: string | null; // String
+      sort?: NexusGenScalars['JSON'] | null; // JSON
     }
   }
 }
