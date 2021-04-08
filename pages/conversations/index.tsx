@@ -17,6 +17,11 @@ import {conversationsTabs} from '../../data';
 const Body = styled.div`
 	width: 1000px;
 	margin: auto auto 70px;
+
+	@media only screen and (max-width: 1000px) {
+		width: auto;
+		margin: auto 10px 70px;
+	}
 `;
 
 const Controller = styled.div`
@@ -55,7 +60,13 @@ const Conversations: NextPage<
 	}, [my]);
 
 	return (
-		<AnnouncementProvider my={isMy}>
+		<AnnouncementProvider
+			my={isMy}
+			filter={{
+				comment: {
+					exists: false,
+				},
+			}}>
 			<div>
 				<Header setTheme={setTheme} />
 				<Body>

@@ -1,15 +1,17 @@
 import React, {FC, useEffect, useState} from 'react';
 import Link from 'next/link';
 
-import {Announcement, Size} from '../../../../types';
+import {Announcement} from '../../../../types';
 import {Avatar, Gif, Images, Poll} from '../../view';
 import {Text} from '../../text.component';
 import {
 	Body,
 	Container,
+	SideAvatar,
+	SmallAvatar,
 	UserDetails,
 } from './announcement-card-components.component';
-import {useDate, useUserDisplayName} from '../../../../hooks';
+import {useDate, useUserDisplayName, useWindowSize} from '../../../../hooks';
 import {AnnouncementCardActions} from './announcement-card-actions.component';
 
 interface Props {
@@ -29,6 +31,8 @@ export const AnnouncementCard: FC<Props> = ({announcement, border = false}) => {
 		publishedAt,
 	} = localAnnouncement;
 
+	const {width} = useWindowSize();
+
 	const displayName = userData && useUserDisplayName(userData);
 	const date = useDate(publishedAt);
 
@@ -45,20 +49,23 @@ export const AnnouncementCard: FC<Props> = ({announcement, border = false}) => {
 
 	return (
 		<Container border={border}>
-			<Avatar user={userData} size={100} />
+			<SideAvatar>
+				<Avatar user={userData} size={80} />
+			</SideAvatar>
 			<Body border={!border}>
-				<UserDetails>
+				<UserDetails width={width}>
+					<SmallAvatar>
+						<Avatar user={userData} size={50} />
+					</SmallAvatar>
 					<Link href={`/users/${userData?.username || 'no'}`}>
-						<Text size={Size.BIG} hover>
-							{displayName}
-						</Text>
+						<Text hover>{displayName}</Text>
 					</Link>
 					<Link href={`/users/${userData?.username || 'no'}`}>
-						<Text size={Size.BIG} lowOpacity hover>
+						<Text lowOpacity hover>
 							@{userData?.username}
 						</Text>
 					</Link>
-					<Text size={Size.BIG}>{date}</Text>
+					<Text>{date}</Text>
 				</UserDetails>
 				{renderText()}
 				{reAnnouncementData && (

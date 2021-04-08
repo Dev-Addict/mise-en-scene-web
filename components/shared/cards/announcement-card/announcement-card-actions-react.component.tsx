@@ -79,7 +79,7 @@ export const AnnouncementCardActionsReact: FC<Props> = ({
 			<Item
 				disabled={likeLoading || dislikeLoading}
 				onClick={onReact(Reaction.LIKE)}>
-				<Image src={isLiked ? likeFill : like} width={30} height={30} />
+				<Image src={isLiked ? likeFill : like} width={20} height={20} />
 				<Side>
 					<Text>{likeNumber}</Text>
 				</Side>
@@ -88,7 +88,7 @@ export const AnnouncementCardActionsReact: FC<Props> = ({
 				reverse
 				disabled={dislikeLoading || likeLoading}
 				onClick={onReact(Reaction.DISLIKE)}>
-				<Image src={isDisliked ? likeFill : like} width={30} height={30} />
+				<Image src={isDisliked ? likeFill : like} width={20} height={20} />
 				<Side>
 					<Text>{dislikeNumber}</Text>
 				</Side>

@@ -35,7 +35,8 @@ const User: NextPage<Props & InitialProps, InitialProps> = ({
 	if (!userState) return <Error statusCode={404} title="کاربر پیدا نشد!" />;
 
 	return (
-		<AnnouncementProvider filter={{user: userState.id}}>
+		<AnnouncementProvider
+			filter={{user: userState.id, comment: {exists: false}}}>
 			<div>
 				<Header setTheme={setTheme} />
 				<UserDetail user={userState} setUser={setUserState} />

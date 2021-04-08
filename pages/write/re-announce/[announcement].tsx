@@ -16,11 +16,15 @@ interface ContainerProps {
 }
 
 const Container = styled.div<ContainerProps>`
-	width: 1000px;
-	height: ${({height}) => height - 80}px;
-	margin: auto;
+	width: 800px;
+	margin: 10px auto;
 	display: flex;
 	flex-direction: column;
+
+	@media only screen and (max-width: 1000px) {
+		width: auto;
+		margin: 10px 20px;
+	}
 `;
 
 interface InitialProps {

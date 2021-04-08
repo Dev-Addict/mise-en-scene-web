@@ -16,8 +16,8 @@ interface ItemProps {
 export const Item = styled.div<ItemProps>`
 	direction: ltr;
 	position: relative;
-	height: 30px;
-	width: 30px;
+	height: 20px;
+	width: 20px;
 	cursor: pointer;
 	z-index: 2;
 

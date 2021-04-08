@@ -76,7 +76,7 @@ export const AnnouncementCardActions: FC<Props> = ({
 			/>
 			<Link href={`/conversations/announcements/${id}`}>
 				<Item>
-					<Image src={comment} width={30} height={30} />
+					<Image src={comment} width={20} height={20} />
 					<Side>
 						<Text>{comments}</Text>
 					</Side>
@@ -84,14 +84,14 @@ export const AnnouncementCardActions: FC<Props> = ({
 			</Link>
 			<Link href={`/write/re-announce/${id}`}>
 				<Item>
-					<Image src={repeat} width={30} height={30} />
+					<Image src={repeat} width={20} height={20} />
 					<Side>
 						<Text>{reAnnouncements}</Text>
 					</Side>
 				</Item>
 			</Link>
 			<Item onClick={onShareClick()}>
-				<Image src={share} width={30} height={30} />
+				<Image src={share} width={20} height={20} />
 				<Side active={showCopy}>
 					<div>کپی شد!</div>
 				</Side>

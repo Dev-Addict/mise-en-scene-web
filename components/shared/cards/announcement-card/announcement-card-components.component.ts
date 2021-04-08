@@ -29,6 +29,10 @@ export const Body = styled.div<StyledProps & BodyProps>`
 	padding: 10px;
 	flex: 1;
 
+	@media only screen and (max-width: 1000px) {
+		margin: 0;
+	}
+
 	${({border}) =>
 		border &&
 		css`
@@ -36,13 +40,37 @@ export const Body = styled.div<StyledProps & BodyProps>`
 		`}
 `;
 
-export const UserDetails = styled.div`
+interface UserDetailsProps {
+	width?: number;
+}
+
+export const UserDetails = styled.div<UserDetailsProps>`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	margin-bottom: 10px;
+	white-space: nowrap;
+	overflow: hidden;
 
 	& > *:not(:first-child):not(:last-child) {
-		margin: 0 10px;
+		margin: 0 4px;
+	}
+
+	@media only screen and (max-width: 1000px) {
+		max-width: ${({width}) => (width || 0) - 60}px;
+	}
+`;
+
+export const SideAvatar = styled.div`
+	@media only screen and (max-width: 1000px) {
+		display: none;
+	}
+`;
+
+export const SmallAvatar = styled.div`
+	display: none;
+
+	@media only screen and (max-width: 1000px) {
+		display: inline-flex;
 	}
 `;
