@@ -29,4 +29,9 @@ export interface Announcement {
 	reAnnouncement?: None<string>;
 	reAnnouncementData?: None<Announcement>;
 	reAnnouncements?: number;
+	reAnnouncementsData?: Announcement[];
+	comment?: None<string>;
+	commentData?: None<Announcement>;
+	comments?: number;
+	commentsData?: Announcement[];
 }

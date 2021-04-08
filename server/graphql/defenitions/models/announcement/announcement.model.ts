@@ -97,5 +97,29 @@ export const Announcement = objectType({
 				return Announcement.countDocuments({reAnnouncement: id});
 			},
 		});
+		t.nonNull.field('reAnnouncementsData', {
+			type: list(nonNull(Announcement)),
+			resolve({id}, _args, {models: {Announcement}}) {
+				return <any>Announcement.find({reAnnouncement: id});
+			},
+		});
+		t.id('comment');
+		t.field('commentData', {
+			type: Announcement,
+			resolve({comment}, _args, {models: {Announcement}}) {
+				return <any>Announcement.findById(comment);
+			},
+		});
+		t.nonNull.int('comments', {
+			resolve({id}, _args, {models: {Announcement}}) {
+				return Announcement.countDocuments({comment: id});
+			},
+		});
+		t.nonNull.field('commentsData', {
+			type: list(nonNull(Announcement)),
+			resolve({id}, _args, {models: {Announcement}}) {
+				return <any>Announcement.find({comment: id});
+			},
+		});
 	},
 });

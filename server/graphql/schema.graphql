@@ -3,6 +3,7 @@
 
 
 input AnnounceData {
+  comment: ID
   gif: ID
   images: [Upload!]
   poll: AnnouncementPollData
@@ -12,6 +13,10 @@ input AnnounceData {
 }
 
 type Announcement {
+  comment: ID
+  commentData: Announcement
+  comments: Int!
+  commentsData: [Announcement!]!
   dislike: Int!
   dislikeData: [AnnouncementDislike!]!
   gif: ID
@@ -31,6 +36,7 @@ type Announcement {
   reAnnouncement: ID
   reAnnouncementData: Announcement
   reAnnouncements: Int!
+  reAnnouncementsData: [Announcement!]!
   text: String
   user: ID!
   userData: User!

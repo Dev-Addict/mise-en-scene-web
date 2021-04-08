@@ -72,7 +72,7 @@
 0xE000047: image `directory` is required.
 0xE000048: image `width` is required.
 0xE000049: image `height` is required.
-0xE00004A: announcement text or reAnnounce is required.
+0xE00004A: announcement `text` or `reAnnouncement` is required.
 0xE00004B: announcement `copy` is too large.
 0xE00004C: announcement dislike `announcement` is required.
 0xE00004D: announcement dislike `user` is required.
@@ -83,3 +83,5 @@
 0xE000052: announcement poll result `user` is required.
 0xE000053: announcement poll result `option` is required.
 0xE000054: announcement `user` is required.
+0xE000055: announcement `reAnnouncement` and `comment` are incompatible.
+0xE000056: announcement `text` is required.

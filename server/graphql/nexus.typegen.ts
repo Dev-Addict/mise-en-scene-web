@@ -38,6 +38,7 @@ declare global {
 
 export interface NexusGenInputs {
   AnnounceData: { // input type
+    comment?: string | null; // ID
     gif?: string | null; // ID
     images?: NexusGenScalars['Upload'][] | null; // [Upload!]
     poll?: NexusGenInputs['AnnouncementPollData'] | null; // AnnouncementPollData
@@ -102,6 +103,7 @@ export interface NexusGenScalars {
 
 export interface NexusGenObjects {
   Announcement: { // root type
+    comment?: string | null; // ID
     gif?: string | null; // ID
     id: string; // ID!
     images: Array<string | null>; // [ID]!
@@ -204,6 +206,10 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnu
 
 export interface NexusGenFieldTypes {
   Announcement: { // field return type
+    comment: string | null; // ID
+    commentData: NexusGenRootTypes['Announcement'] | null; // Announcement
+    comments: number; // Int!
+    commentsData: NexusGenRootTypes['Announcement'][]; // [Announcement!]!
     dislike: number; // Int!
     dislikeData: NexusGenRootTypes['AnnouncementDislike'][]; // [AnnouncementDislike!]!
     gif: string | null; // ID
@@ -223,6 +229,7 @@ export interface NexusGenFieldTypes {
     reAnnouncement: string | null; // ID
     reAnnouncementData: NexusGenRootTypes['Announcement'] | null; // Announcement
     reAnnouncements: number; // Int!
+    reAnnouncementsData: NexusGenRootTypes['Announcement'][]; // [Announcement!]!
     text: string | null; // String
     user: string; // ID!
     userData: NexusGenRootTypes['User']; // User!
@@ -350,6 +357,10 @@ export interface NexusGenFieldTypes {
 
 export interface NexusGenFieldTypeNames {
   Announcement: { // field return type name
+    comment: 'ID'
+    commentData: 'Announcement'
+    comments: 'Int'
+    commentsData: 'Announcement'
     dislike: 'Int'
     dislikeData: 'AnnouncementDislike'
     gif: 'ID'
@@ -369,6 +380,7 @@ export interface NexusGenFieldTypeNames {
     reAnnouncement: 'ID'
     reAnnouncementData: 'Announcement'
     reAnnouncements: 'Int'
+    reAnnouncementsData: 'Announcement'
     text: 'String'
     user: 'ID'
     userData: 'User'

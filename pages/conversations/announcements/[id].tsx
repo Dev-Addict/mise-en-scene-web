@@ -2,46 +2,41 @@ import React, {useEffect} from 'react';
 import {NextPage} from 'next';
 import {useRouter} from 'next/router';
 import Error from 'next/error';
-import styled from 'styled-components';
 import Cookie from 'js-cookie';
 
-import {Announce, AnnouncementCard, Header} from '../../../components';
-import {Announcement, Props} from '../../../types';
-import {useAuth, useWindowSize} from '../../../hooks';
+import {Announcement as AnnouncementModel, Props} from '../../../types';
+import {
+	Announce,
+	AnnouncementCard,
+	AnnouncementProvider,
+	Announcements,
+	Header,
+} from '../../../components';
 import {cookieParser} from '../../../utils';
+import {useAuth} from '../../../hooks';
 import {getAnnouncement} from '../../../helpers';
+import styled from 'styled-components';
 
-interface ContainerProps {
-	height: number;
-}
-
-const Container = styled.div<ContainerProps>`
+const Container = styled.div`
 	width: 1000px;
-	height: ${({height}) => height - 80}px;
 	margin: auto;
-	display: flex;
-	flex-direction: column;
 `;
 
 interface InitialProps {
-	announcement?: Announcement;
+	announcement: AnnouncementModel | undefined;
 }
 
-const ReAnnounce: NextPage<Props & InitialProps, InitialProps> = ({
+const Announcement: NextPage<Props & InitialProps, InitialProps> = ({
 	setTheme,
 	announcement,
 }) => {
 	const router = useRouter();
 	const {asPath} = router;
 
-	const {isSigned, isLoading, user} = useAuth();
-
-	const {height} = useWindowSize();
+	const {isSigned, isLoading} = useAuth();
 
 	if (!announcement)
 		return <Error statusCode={404} title="گفت و گو پیدا نشد!" />;
-
-	const onAnnounce = () => () => router.push(`/users/${user?.username}`);
 
 	useEffect(() => {
 		if (!isLoading && !isSigned) router.push(`/sign?callback=${asPath}`);
@@ -50,15 +45,24 @@ const ReAnnounce: NextPage<Props & InitialProps, InitialProps> = ({
 	return (
 		<div>
 			<Header setTheme={setTheme} />
-			<Container height={height}>
+			<Container>
 				<AnnouncementCard announcement={announcement} border />
-				<Announce onAnnounce={onAnnounce()} reAnnouncement={announcement.id} />
+				<Announce
+					comment={announcement.id}
+					onAnnounce={() => console.log('comment')}
+				/>
+				<AnnouncementProvider
+					filter={{
+						comment: announcement.id,
+					}}>
+					<Announcements />
+				</AnnouncementProvider>
 			</Container>
 		</div>
 	);
 };
 
-ReAnnounce.getInitialProps = async ({query: {announcement: id}, req}) => {
+Announcement.getInitialProps = async ({query: {id}, req}) => {
 	const token =
 		cookieParser(req?.headers?.cookie || '')['auth-token'] ||
 		Cookie.get('auth-token');
@@ -68,4 +72,4 @@ ReAnnounce.getInitialProps = async ({query: {announcement: id}, req}) => {
 	};
 };
 
-export default ReAnnounce;
+export default Announcement;

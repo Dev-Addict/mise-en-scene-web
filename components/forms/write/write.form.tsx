@@ -17,6 +17,7 @@ export interface WriteFields {
 	publishAt: Date | undefined;
 	gallery: File[] | undefined;
 	reAnnouncement: string | undefined;
+	comment: string | undefined;
 }
 
 interface Props {

@@ -7,6 +7,7 @@ export const AnnounceData = inputObjectType({
 	name: 'AnnounceData',
 	definition(t) {
 		t.id('reAnnouncement');
+		t.id('comment');
 		t.string('text');
 		t.id('gif');
 		t.field('images', {

@@ -17,6 +17,8 @@ export const ANNOUNCEMENT_QUERY = gql`
 			text
 			gifData {
 				url
+				width
+				height
 			}
 			imagesData {
 				image
@@ -56,6 +58,8 @@ export const ANNOUNCEMENT_QUERY = gql`
 				text
 				gifData {
 					url
+					width
+					height
 				}
 				imagesData {
 					image
@@ -82,8 +86,11 @@ export const ANNOUNCEMENT_QUERY = gql`
 				dislike
 				isLiked
 				isDisliked
+				reAnnouncements
+				comments
 			}
 			reAnnouncements
+			comments
 		}
 	}
 `;

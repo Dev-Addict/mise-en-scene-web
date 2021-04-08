@@ -28,7 +28,7 @@ interface Props {
 }
 
 export const AnnouncementCardActions: FC<Props> = ({
-	announcement: {id, reAnnouncements},
+	announcement: {id, reAnnouncements, comments},
 	setAnnouncement,
 	announcement,
 }) => {
@@ -78,7 +78,7 @@ export const AnnouncementCardActions: FC<Props> = ({
 				<Item>
 					<Image src={comment} width={30} height={30} />
 					<Side>
-						<Text>{0}</Text>
+						<Text>{comments}</Text>
 					</Side>
 				</Item>
 			</Link>

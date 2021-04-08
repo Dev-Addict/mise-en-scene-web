@@ -12,10 +12,12 @@ export const AnnounceMutation = mutationField('announce', {
 	},
 	async resolve(
 		_root,
-		{data: {text, images, gif, poll, publishAt, reAnnouncement}},
+		{data: {text, images, gif, poll, publishAt, reAnnouncement, comment}},
 		{models: {Announcement, AnnouncementPoll, Image, User}, req}
 	) {
 		if (!reAnnouncement && !text) throw new AppError('0xE00004A', 400);
+		if (reAnnouncement && comment) throw new AppError('0xE000055', 400);
+		if (comment && !text) throw new AppError('0xE000056', 400);
 
 		const {id: user} = (await protect(req, User))!;
 
@@ -49,6 +51,7 @@ export const AnnounceMutation = mutationField('announce', {
 			publishAt,
 			publish: !publishAt,
 			reAnnouncement,
+			comment,
 		});
 	},
 });

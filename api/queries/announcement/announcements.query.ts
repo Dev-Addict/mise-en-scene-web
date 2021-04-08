@@ -89,8 +89,10 @@ export const ANNOUNCEMENTS_QUERY = gql`
 					isLiked
 					isDisliked
 					reAnnouncements
+					comments
 				}
 				reAnnouncements
+				comments
 			}
 		}
 	}
