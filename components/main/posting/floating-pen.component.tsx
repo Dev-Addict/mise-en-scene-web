@@ -34,7 +34,11 @@ export const FloatingPen = () => {
 
 	const link = isSigned ? '/write' : '/sign?callback=/write';
 
-	const writingPaths = ['/write', `/users/${user?.username || 'no'}`];
+	const writingPaths = [
+		'/write',
+		`/users/${user?.username || 'no'}`,
+		'/conversations',
+	];
 
 	return (
 		<>

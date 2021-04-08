@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {Dispatch, SetStateAction, useEffect, useState} from 'react';
 import {useQuery} from '@apollo/client';
 import Cookie from 'js-cookie';
 
@@ -6,11 +6,21 @@ import {
 	ANNOUNCEMENTS_QUERY,
 	AnnouncementsQueryData,
 	AnnouncementsQueryVariables,
+	MY_ANNOUNCEMENTS_QUERY,
+	MyAnnouncementsQueryData,
+	MyAnnouncementsQueryVariables,
 } from '../api';
 import {Announcement} from '../types';
 
-export const useAnnouncementsQuery = (filter: {}, page: number) => {
+export const useAnnouncementsQuery = (
+	filter: {},
+	page: number,
+	setPage: Dispatch<SetStateAction<number>>,
+	myPage: number,
+	setMyPage: Dispatch<SetStateAction<number>>
+) => {
 	const [announcements, setAnnouncements] = useState<Announcement[]>([]);
+	const [myAnnouncements, setMyAnnouncements] = useState<Announcement[]>([]);
 
 	const token = Cookie.get('auth-token');
 
@@ -31,9 +41,21 @@ export const useAnnouncementsQuery = (filter: {}, page: number) => {
 		notifyOnNetworkStatusChange: true,
 	});
 
-	useEffect(() => {
-		setAnnouncements([]);
-	}, [filter]);
+	const {data: myData, loading: myLoading, refetch: myRefetch} = useQuery<
+		MyAnnouncementsQueryData,
+		MyAnnouncementsQueryVariables
+	>(MY_ANNOUNCEMENTS_QUERY, {
+		variables: {
+			page: myPage,
+			sort: {publishedAt: -1, updatedAt: -1},
+		},
+		context: {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		},
+		notifyOnNetworkStatusChange: true,
+	});
 
 	useEffect(() => {
 		if (
@@ -46,13 +68,39 @@ export const useAnnouncementsQuery = (filter: {}, page: number) => {
 				...data.announcements.docs,
 			]);
 	}, [data]);
+
 	useEffect(() => {
-		if (!loading && !announcements.length) refetch();
+		if (
+			myData &&
+			myAnnouncements[myAnnouncements.length - 1]?.id !==
+				myData.myAnnouncements.docs[myData.myAnnouncements.docs.length - 1]?.id
+		)
+			setMyAnnouncements((announcements) => [
+				...announcements,
+				...myData.myAnnouncements.docs,
+			]);
+	}, [myData]);
+
+	useEffect(() => {
+		if (!loading && !announcements.length) {
+			setPage(1);
+			refetch();
+		}
 	}, [announcements]);
+
+	useEffect(() => {
+		if (!myLoading && !myAnnouncements.length) {
+			setMyPage(1);
+			myRefetch();
+		}
+	}, [myAnnouncements]);
 
 	return {
 		loading,
 		announcements,
 		results: data?.announcements?.results,
+		myLoading,
+		myAnnouncements,
+		myResults: myData?.myAnnouncements?.results,
 	};
 };

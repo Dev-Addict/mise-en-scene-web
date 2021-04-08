@@ -1,8 +1,5 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
-import {
-	Container,
-	Style,
-} from './image-gallery-open-components.component';
+import {Container, Style} from './image-gallery-open-components.component';
 import {Image as ImageModel} from '../../../../../types';
 import {useComponentSize} from '../../../../../hooks';
 import {ImagesGalleryOpenViewer} from './images-gallery-open-viwer.component';

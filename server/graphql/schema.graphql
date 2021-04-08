@@ -162,6 +162,7 @@ type Query {
   announcements(filter: JSON, limit: Int, page: Int, sort: JSON): AnnouncementsResponse
   findGifs(limit: Int, page: Int, query: String!): [Gif!]!
   findUser(filter: JSON!): User
+  myAnnouncements(filter: JSON, limit: Int, page: Int, sort: JSON): AnnouncementsResponse
   self: User!
   trendingGifs(limit: Int, page: Int): [Gif!]!
   userById(id: ID!): User

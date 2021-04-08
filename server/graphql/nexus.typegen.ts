@@ -308,6 +308,7 @@ export interface NexusGenFieldTypes {
     announcements: NexusGenRootTypes['AnnouncementsResponse'] | null; // AnnouncementsResponse
     findGifs: NexusGenRootTypes['Gif'][]; // [Gif!]!
     findUser: NexusGenRootTypes['User'] | null; // User
+    myAnnouncements: NexusGenRootTypes['AnnouncementsResponse'] | null; // AnnouncementsResponse
     self: NexusGenRootTypes['User']; // User!
     trendingGifs: NexusGenRootTypes['Gif'][]; // [Gif!]!
     userById: NexusGenRootTypes['User'] | null; // User
@@ -453,6 +454,7 @@ export interface NexusGenFieldTypeNames {
     announcements: 'AnnouncementsResponse'
     findGifs: 'Gif'
     findUser: 'User'
+    myAnnouncements: 'AnnouncementsResponse'
     self: 'User'
     trendingGifs: 'Gif'
     userById: 'User'
@@ -542,6 +544,12 @@ export interface NexusGenArgTypes {
     }
     findUser: { // args
       filter: NexusGenScalars['JSON']; // JSON!
+    }
+    myAnnouncements: { // args
+      filter?: NexusGenScalars['JSON'] | null; // JSON
+      limit?: number | null; // Int
+      page?: number | null; // Int
+      sort?: NexusGenScalars['JSON'] | null; // JSON
     }
     trendingGifs: { // args
       limit?: number | null; // Int

@@ -27,7 +27,7 @@ class Document extends NDocument<Props> {
 
 	render(): JSX.Element {
 		return (
-			<Html>
+			<Html lang="ir-fa">
 				<Head>
 					<link rel="preconnect" href="https://fonts.gstatic.com" />
 					<link

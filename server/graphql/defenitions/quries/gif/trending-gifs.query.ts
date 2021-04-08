@@ -20,9 +20,10 @@ export const TrendingGifsQuery = queryField('trendingGifs', {
 			} = await Axios.get('https://api.giphy.com/v1/gifs/trending', {
 				params: {
 					api_key: process.env.GIPHY_API_KEY,
-					rating: 'g',
-					offset: ((page || 1) - 1) * (limit || 20),
+					country_code: 'ir',
 					limit: limit || 20,
+					offset: ((page || 1) - 1) * (limit || 20),
+					rating: 'g',
 				},
 			});
 
