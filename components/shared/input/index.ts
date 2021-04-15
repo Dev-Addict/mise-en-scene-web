@@ -5,4 +5,5 @@ export * from './gif';
 export * from './input';
 export * from './poll';
 export * from './switch';
+export * from './select';
 export * from './date-time-input.component';

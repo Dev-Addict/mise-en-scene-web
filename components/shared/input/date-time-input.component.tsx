@@ -15,6 +15,10 @@ const Container = styled.div<StyledProps & ContainerProps>`
 	width: ${({width}) => width};
 	height: ${({height}) => height};
 
+	& .react-datepicker {
+		z-index: 100;
+	}
+
 	& * {
 		color: ${({theme: {foreground}}) => foreground};
 	}
@@ -415,6 +419,7 @@ export const DateTimeInput: FC<Props> = ({
 	return (
 		<Container height={height} width={width}>
 			<DatePicker
+				placeholderText={placeholder}
 				customInput={
 					<Input
 						primary={primary}

@@ -39,12 +39,7 @@ export const Announcements = () => {
 				</Text>
 			)}
 			{!!announcements.length && announcements.length !== results && (
-				<Button
-					outline
-					disabled={loading}
-					primary
-					color={Color.GHOST_WHITE}
-					onClick={onLoadMoreClick()}>
+				<Button outline disabled={loading} primary onClick={onLoadMoreClick()}>
 					بارگذاری بیشتر
 				</Button>
 			)}

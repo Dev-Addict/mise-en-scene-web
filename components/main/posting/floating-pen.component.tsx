@@ -1,11 +1,11 @@
 import React from 'react';
+import {useRouter} from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
 import styled from 'styled-components';
 
 import {Button} from '../../shared';
 import {useAuth} from '../../../hooks';
-import {useRouter} from 'next/router';
 
 const Container = styled(Button)`
 	width: 50px;
@@ -38,6 +38,7 @@ export const FloatingPen = () => {
 		'/write',
 		`/users/${user?.username || 'no'}`,
 		'/conversations',
+		'/sign',
 	];
 
 	return (

@@ -85,3 +85,12 @@
 0xE000054: announcement `user` is required.
 0xE000055: announcement `reAnnouncement` and `comment` are incompatible.
 0xE000056: announcement `text` is required.
+0xE000057: user have changed the password after token creation.
+0xE000058: can't find a user with prvided `authKey`.
+0xE000059: failed to send email.
+0xE00005A: invalid password reset token.
+0xE00005B: password reset token has expired.
+0xE00005C: can't find a user with prvided `email`.
+0xE00005D: failed to send email.
+0xE00005E: invalid email reset token.
+0xE00005F: email reset token has expired.

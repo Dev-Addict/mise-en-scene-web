@@ -16,6 +16,7 @@ interface Props {
 	right?: number;
 	bottom?: number;
 	left?: number;
+	minWidth?: number;
 }
 
 export const Button = styled.button<StyledProps & Props>`
@@ -29,6 +30,7 @@ export const Button = styled.button<StyledProps & Props>`
 	border: none;
 	outline: none;
 	text-align: center;
+	min-width: ${({minWidth}) => minWidth}px;
 
 	&:hover {
 		opacity: 0.5;

@@ -104,6 +104,10 @@ type AuthResponse {
   user: User!
 }
 
+input CheckAuthKeyData {
+  authKey: AuthKey!
+}
+
 input CheckEmailData {
   email: Email!
 }
@@ -118,6 +122,10 @@ scalar Email
 
 input FollowData {
   following: ID!
+}
+
+input ForgotPasswordData {
+  authKey: AuthKey!
 }
 
 enum Gender {
@@ -148,14 +156,23 @@ scalar JSON
 
 type Mutation {
   announce(data: AnnounceData!): Announcement
+  checkAuthKey(data: CheckAuthKeyData!): Boolean!
   checkEmail(data: CheckEmailData!): Boolean!
   checkUsername(data: CheckUsernameData!): Boolean!
   dislike(announcement: ID!): AnnouncementDislike!
   follow(data: FollowData!): UserFollow!
+  forgotPassword(data: ForgotPasswordData!): User
   like(announcement: ID!): AnnouncementLike!
+  resetEmail(data: ResetEmailData!): AuthResponse
+  resetEmailRequest(data: ResetEmailRequestData!): User
+  resetPassword(data: ResetPasswordData!): AuthResponse
+  resetPasswordRequest(data: ResetPasswordRequestData!): User
   signIn(data: SignInData!): AuthResponse!
   signUp(data: SignUpData!): AuthResponse!
   unfollow(data: FollowData!): UserFollow
+  updateSelf(data: UpdateSelfData!): User
+  validateResetEmailToken(data: ValidateResetEmailTokenData!): User
+  validateResetPasswordToken(data: ValidateResetPasswordTokenData!): User
   vote(data: VoteData!): AnnouncementPollResult
 }
 
@@ -175,6 +192,24 @@ type Query {
   users(filter: JSON, limit: Int, page: Int, sort: JSON): UsersResponse
 }
 
+input ResetEmailData {
+  email: Email!
+  resetToken: String!
+}
+
+input ResetEmailRequestData {
+  email: Email!
+}
+
+input ResetPasswordData {
+  password: Password!
+  resetToken: String!
+}
+
+input ResetPasswordRequestData {
+  authKey: AuthKey!
+}
+
 input SignInData {
   authKey: AuthKey!
   password: Password!
@@ -191,6 +226,17 @@ input SignUpData {
   lastname: Name
   password: Password!
   username: Username!
+}
+
+input UpdateSelfData {
+  avatar: Upload
+  bio: String
+  birthday: Date
+  displayName: String
+  firstname: Name
+  gender: Gender
+  lastname: Name
+  username: Username
 }
 
 scalar Upload
@@ -230,6 +276,14 @@ type UsersResponse {
   limit: Int!
   page: Int!
   results: Int!
+}
+
+input ValidateResetEmailTokenData {
+  resetToken: String!
+}
+
+input ValidateResetPasswordTokenData {
+  resetToken: String!
 }
 
 input VoteData {

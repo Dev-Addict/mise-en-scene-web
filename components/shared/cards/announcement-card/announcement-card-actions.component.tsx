@@ -1,4 +1,4 @@
-import React, {Dispatch, FC, SetStateAction, useState} from 'react';
+import React, {Dispatch, FC, SetStateAction} from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -7,9 +7,8 @@ import {
 	Item,
 	Side,
 } from './announcment-card-actions-components.component';
-import {Text} from '../../text.component';
-import {Announcement} from '../../../../types';
-import {useCopy, useThemeImage} from '../../../../hooks';
+import {Announcement} from 'types';
+import {useCopy, useThemeImage} from 'hooks';
 import {AnnouncementCardActionsReact} from './announcement-card-actions-react.component';
 import {useMutation} from '@apollo/client';
 import {
@@ -19,8 +18,9 @@ import {
 	LIKE_MUTATION,
 	LikeMutationData,
 	LikeMutationVariables,
-} from '../../../../api';
-import {BASE_URL} from '../../../../config';
+} from 'api';
+import {BASE_URL} from 'config';
+import {SlideMessage, Text} from 'components';
 
 interface Props {
 	announcement: Announcement;
@@ -53,18 +53,10 @@ export const AnnouncementCardActions: FC<Props> = ({
 		}
 	);
 
-	const [showCopy, setShowCopy] = useState(false);
-
 	const {copy} = useCopy();
 
-	const onShareClick = () => () => {
+	const onShare = () => () =>
 		copy(`${BASE_URL}/conversations/announcements/${id}`);
-
-		setShowCopy(true);
-		setTimeout(() => {
-			setShowCopy(false);
-		}, 3000);
-	};
 
 	return (
 		<Container>
@@ -90,11 +82,13 @@ export const AnnouncementCardActions: FC<Props> = ({
 					</Side>
 				</Item>
 			</Link>
-			<Item onClick={onShareClick()}>
-				<Image src={share} width={20} height={20} />
-				<Side active={showCopy}>
-					<div>کپی شد!</div>
-				</Side>
+			<Item>
+				<SlideMessage
+					action={onShare()}
+					message="کپی شد!"
+					view={<Image src={share} width={20} height={20} />}
+					left
+				/>
 			</Item>
 		</Container>
 	);

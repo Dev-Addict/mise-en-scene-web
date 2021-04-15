@@ -1,21 +1,9 @@
 import React, {FC, useState} from 'react';
-import styled from 'styled-components';
 
-import {Logo} from '../../main';
-import {Switch, SwitchItem} from '../../shared';
-import {Color} from '../../../data';
+import {SignHeader} from '../../main';
+import {SwitchItem} from '../../shared';
 import {SignInBody} from './sign-in-body.component';
 import {SignUpBody} from './sign-up-body.component';
-
-const Header = styled.div`
-	padding: 10px 20px;
-	margin-bottom: 40px;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-	direction: rtl;
-`;
 
 export enum SignState {
 	SIGN_IN = 'SIGN_IN',
@@ -37,28 +25,11 @@ export const Sign: FC<Props> = ({state}) => {
 
 	return (
 		<div>
-			<Header>
-				<Logo />
-				<Switch
-					items={[
-						{
-							key: SignState.SIGN_IN,
-							value: SignState.SIGN_IN,
-							text: 'ورود',
-						},
-						{
-							key: SignState.SIGN_UP,
-							value: SignState.SIGN_UP,
-							text: 'ثبت نام',
-						},
-					]}
-					value={localState}
-					circular
-					primary
-					unselectedItemColor={Color.GHOST_WHITE}
-					onClick={onSignItemClick()}
-				/>
-			</Header>
+			<SignHeader
+				showSwitch
+				onSwitchClick={onSignItemClick()}
+				switchValue={localState}
+			/>
 			{localState === SignState.SIGN_UP ? (
 				<SignUpBody switchSign={switchSign(SignState.SIGN_IN)} />
 			) : (

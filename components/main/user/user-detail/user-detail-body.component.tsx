@@ -57,7 +57,7 @@ export const UserDetailBody: FC<Props> = ({user, setUser}) => {
 				)}
 				{user.username === authUser?.username && (
 					<>
-						<Link href="/profile">
+						<Link href="/dashboard/profile">
 							<Control primary circular outline>
 								ویرایش مشخصات
 							</Control>

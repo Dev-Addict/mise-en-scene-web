@@ -50,6 +50,9 @@ export interface NexusGenInputs {
     options: string[]; // [String!]!
     question: string; // String!
   }
+  CheckAuthKeyData: { // input type
+    authKey: NexusGenScalars['AuthKey']; // AuthKey!
+  }
   CheckEmailData: { // input type
     email: NexusGenScalars['Email']; // Email!
   }
@@ -58,6 +61,23 @@ export interface NexusGenInputs {
   }
   FollowData: { // input type
     following: string; // ID!
+  }
+  ForgotPasswordData: { // input type
+    authKey: NexusGenScalars['AuthKey']; // AuthKey!
+  }
+  ResetEmailData: { // input type
+    email: NexusGenScalars['Email']; // Email!
+    resetToken: string; // String!
+  }
+  ResetEmailRequestData: { // input type
+    email: NexusGenScalars['Email']; // Email!
+  }
+  ResetPasswordData: { // input type
+    password: NexusGenScalars['Password']; // Password!
+    resetToken: string; // String!
+  }
+  ResetPasswordRequestData: { // input type
+    authKey: NexusGenScalars['AuthKey']; // AuthKey!
   }
   SignInData: { // input type
     authKey: NexusGenScalars['AuthKey']; // AuthKey!
@@ -74,6 +94,22 @@ export interface NexusGenInputs {
     lastname?: NexusGenScalars['Name'] | null; // Name
     password: NexusGenScalars['Password']; // Password!
     username: NexusGenScalars['Username']; // Username!
+  }
+  UpdateSelfData: { // input type
+    avatar?: NexusGenScalars['Upload'] | null; // Upload
+    bio?: string | null; // String
+    birthday?: NexusGenScalars['Date'] | null; // Date
+    displayName?: string | null; // String
+    firstname?: NexusGenScalars['Name'] | null; // Name
+    gender?: NexusGenEnums['Gender'] | null; // Gender
+    lastname?: NexusGenScalars['Name'] | null; // Name
+    username?: NexusGenScalars['Username'] | null; // Username
+  }
+  ValidateResetEmailTokenData: { // input type
+    resetToken: string; // String!
+  }
+  ValidateResetPasswordTokenData: { // input type
+    resetToken: string; // String!
   }
   VoteData: { // input type
     option: number; // Int!
@@ -300,14 +336,23 @@ export interface NexusGenFieldTypes {
   }
   Mutation: { // field return type
     announce: NexusGenRootTypes['Announcement'] | null; // Announcement
+    checkAuthKey: boolean; // Boolean!
     checkEmail: boolean; // Boolean!
     checkUsername: boolean; // Boolean!
     dislike: NexusGenRootTypes['AnnouncementDislike']; // AnnouncementDislike!
     follow: NexusGenRootTypes['UserFollow']; // UserFollow!
+    forgotPassword: NexusGenRootTypes['User'] | null; // User
     like: NexusGenRootTypes['AnnouncementLike']; // AnnouncementLike!
+    resetEmail: NexusGenRootTypes['AuthResponse'] | null; // AuthResponse
+    resetEmailRequest: NexusGenRootTypes['User'] | null; // User
+    resetPassword: NexusGenRootTypes['AuthResponse'] | null; // AuthResponse
+    resetPasswordRequest: NexusGenRootTypes['User'] | null; // User
     signIn: NexusGenRootTypes['AuthResponse']; // AuthResponse!
     signUp: NexusGenRootTypes['AuthResponse']; // AuthResponse!
     unfollow: NexusGenRootTypes['UserFollow'] | null; // UserFollow
+    updateSelf: NexusGenRootTypes['User'] | null; // User
+    validateResetEmailToken: NexusGenRootTypes['User'] | null; // User
+    validateResetPasswordToken: NexusGenRootTypes['User'] | null; // User
     vote: NexusGenRootTypes['AnnouncementPollResult'] | null; // AnnouncementPollResult
   }
   Query: { // field return type
@@ -451,14 +496,23 @@ export interface NexusGenFieldTypeNames {
   }
   Mutation: { // field return type name
     announce: 'Announcement'
+    checkAuthKey: 'Boolean'
     checkEmail: 'Boolean'
     checkUsername: 'Boolean'
     dislike: 'AnnouncementDislike'
     follow: 'UserFollow'
+    forgotPassword: 'User'
     like: 'AnnouncementLike'
+    resetEmail: 'AuthResponse'
+    resetEmailRequest: 'User'
+    resetPassword: 'AuthResponse'
+    resetPasswordRequest: 'User'
     signIn: 'AuthResponse'
     signUp: 'AuthResponse'
     unfollow: 'UserFollow'
+    updateSelf: 'User'
+    validateResetEmailToken: 'User'
+    validateResetPasswordToken: 'User'
     vote: 'AnnouncementPollResult'
   }
   Query: { // field return type name
@@ -511,6 +565,9 @@ export interface NexusGenArgTypes {
     announce: { // args
       data: NexusGenInputs['AnnounceData']; // AnnounceData!
     }
+    checkAuthKey: { // args
+      data: NexusGenInputs['CheckAuthKeyData']; // CheckAuthKeyData!
+    }
     checkEmail: { // args
       data: NexusGenInputs['CheckEmailData']; // CheckEmailData!
     }
@@ -523,8 +580,23 @@ export interface NexusGenArgTypes {
     follow: { // args
       data: NexusGenInputs['FollowData']; // FollowData!
     }
+    forgotPassword: { // args
+      data: NexusGenInputs['ForgotPasswordData']; // ForgotPasswordData!
+    }
     like: { // args
       announcement: string; // ID!
+    }
+    resetEmail: { // args
+      data: NexusGenInputs['ResetEmailData']; // ResetEmailData!
+    }
+    resetEmailRequest: { // args
+      data: NexusGenInputs['ResetEmailRequestData']; // ResetEmailRequestData!
+    }
+    resetPassword: { // args
+      data: NexusGenInputs['ResetPasswordData']; // ResetPasswordData!
+    }
+    resetPasswordRequest: { // args
+      data: NexusGenInputs['ResetPasswordRequestData']; // ResetPasswordRequestData!
     }
     signIn: { // args
       data: NexusGenInputs['SignInData']; // SignInData!
@@ -534,6 +606,15 @@ export interface NexusGenArgTypes {
     }
     unfollow: { // args
       data: NexusGenInputs['FollowData']; // FollowData!
+    }
+    updateSelf: { // args
+      data: NexusGenInputs['UpdateSelfData']; // UpdateSelfData!
+    }
+    validateResetEmailToken: { // args
+      data: NexusGenInputs['ValidateResetEmailTokenData']; // ValidateResetEmailTokenData!
+    }
+    validateResetPasswordToken: { // args
+      data: NexusGenInputs['ValidateResetPasswordTokenData']; // ValidateResetPasswordTokenData!
     }
     vote: { // args
       data: NexusGenInputs['VoteData']; // VoteData!

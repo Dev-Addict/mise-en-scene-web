@@ -1,14 +1,13 @@
 import React, {FC} from 'react';
 import {EditorState} from 'draft-js';
-import {Form, Formik, FormikProps} from 'formik';
-import {FormikHelpers} from 'formik/dist/types';
+import {Form, Formik, FormikProps, FormikHelpers} from 'formik';
 
 import {Button} from '../../shared';
 import {WriteInputs} from './write-inputs.component';
 import {Color} from '../../../data';
 import {GifResult} from '../../../api';
 import {Poll} from '../../../types';
-import {writeValidator} from '../validators/write/write.validator';
+import {writeValidator} from '../validators';
 
 export interface WriteFields {
 	text: EditorState;

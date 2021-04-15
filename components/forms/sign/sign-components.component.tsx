@@ -12,6 +12,10 @@ export const Body = styled(Form)`
 	position: relative;
 	left: 50%;
 	transform: translateX(-50%);
+
+	@media only screen and (max-width: 800px) {
+		width: auto;
+	}
 `;
 
 export const Profile = styled.div`
@@ -23,6 +27,7 @@ export const Profile = styled.div`
 export const ProfileHeader = styled.div`
 	font-size: 24px;
 	margin-bottom: 50px;
+	direction: rtl;
 `;
 
 export const InputContainer = styled.div`

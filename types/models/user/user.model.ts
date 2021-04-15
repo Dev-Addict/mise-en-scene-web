@@ -1,15 +1,15 @@
 import {Gender} from '../../enums';
+import {None} from '../../none.type';
 
 export interface User {
 	id?: string;
-	firstname?: string;
-	lastname?: string;
+	firstname?: None<string>;
+	lastname?: None<string>;
 	email?: string;
-	password?: string;
 	avatar?: string;
-	birthday?: number;
-	gender?: Gender;
+	birthday?: None<number>;
+	gender?: None<Gender>;
 	username?: string;
-	bio?: string;
-	displayName?: string;
+	bio?: None<string>;
+	displayName?: None<string>;
 }

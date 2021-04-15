@@ -10,8 +10,8 @@ interface ImageContainerProps {
 }
 
 const ImageContainer = styled.div<ImageContainerProps>`
-	width: 40px;
-	height: 40px;
+	width: 25px;
+	height: 25px;
 	cursor: pointer;
 
 	&:hover {
@@ -44,7 +44,7 @@ export const GalleryInput: FC<Props> = ({disabled, ...props}) => {
 				{...props}
 			/>
 			<ImageContainer onClick={onImageClick()} disabled={disabled}>
-				<Image src={image} width={40} height={40} />
+				<Image src={image} width={25} height={25} />
 			</ImageContainer>
 		</>
 	);

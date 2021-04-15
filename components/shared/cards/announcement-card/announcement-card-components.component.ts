@@ -1,4 +1,6 @@
 import styled, {css} from 'styled-components';
+
+import {Text} from '../../text.component';
 import {StyledProps} from '../../../../types';
 
 interface ContainerProps {
@@ -22,6 +24,7 @@ export const Container = styled.div<ContainerProps>`
 
 interface BodyProps {
 	border?: boolean;
+	reAnnouncement?: boolean;
 }
 
 export const Body = styled.div<StyledProps & BodyProps>`
@@ -31,6 +34,11 @@ export const Body = styled.div<StyledProps & BodyProps>`
 
 	@media only screen and (max-width: 1000px) {
 		margin: 0;
+		${({reAnnouncement}) =>
+			reAnnouncement &&
+			css`
+				padding: 0;
+			`}
 	}
 
 	${({border}) =>
@@ -42,6 +50,7 @@ export const Body = styled.div<StyledProps & BodyProps>`
 
 interface UserDetailsProps {
 	width?: number;
+	reAnnouncement?: boolean;
 }
 
 export const UserDetails = styled.div<UserDetailsProps>`
@@ -51,6 +60,7 @@ export const UserDetails = styled.div<UserDetailsProps>`
 	margin-bottom: 10px;
 	white-space: nowrap;
 	overflow: hidden;
+	position: relative;
 
 	& > *:not(:first-child):not(:last-child) {
 		margin: 0 4px;
@@ -58,9 +68,23 @@ export const UserDetails = styled.div<UserDetailsProps>`
 
 	@media only screen and (max-width: 1000px) {
 		max-width: ${({width}) => (width || 0) - 60}px;
+
+		${({reAnnouncement, width}) =>
+			reAnnouncement &&
+			css`
+				max-width: ${(width || 0) - 80}px;
+			`}
 	}
 `;
 
+export const Time = styled(Text)<StyledProps>`
+	position: absolute;
+	left: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	background-color: ${({theme: {background}}) => background};
+	padding-right: 2px;
+`;
 export const SideAvatar = styled.div`
 	@media only screen and (max-width: 1000px) {
 		display: none;

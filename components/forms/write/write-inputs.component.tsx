@@ -29,6 +29,7 @@ const fields: {
 	publishAt: 'publishAt',
 	gallery: 'gallery',
 	reAnnouncement: 'reAnnouncement',
+	comment: 'comment',
 };
 
 interface Props {
@@ -68,17 +69,17 @@ export const WriteInputs: FC<Props> = ({
 				{submitButton}
 				<Filler />
 				<DateTimeField name={fields.publishAt} isSubmitting={isSubmitting} />
-				<Filler flex={0} minWidth={20} />
+				<Filler flex={0} minWidth={10} />
 				<Field name={fields.poll} component={FormikPollTrigger} />
-				<Filler flex={0} minWidth={20} />
+				<Filler flex={0} minWidth={10} />
 				<Field
 					name={fields.gallery}
 					component={FormikGalleryInput}
 					maxLength={10}
 				/>
-				<Filler flex={0} minWidth={20} />
+				<Filler flex={0} minWidth={10} />
 				<Field name={fields.gif} component={FormikGifSelector} />
-				<Filler flex={0} minWidth={20} />
+				<Filler flex={0} minWidth={10} />
 				<Field name={fields.text} component={FormikEmojiPicker} />
 			</ControlRow>
 		</>

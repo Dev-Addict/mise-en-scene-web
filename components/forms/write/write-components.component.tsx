@@ -15,8 +15,8 @@ interface CalendarProps {
 }
 
 export const Calendar = styled.div<CalendarProps>`
-	width: 40px;
-	height: 40px;
+	width: 25px;
+	height: 25px;
 	cursor: pointer;
 
 	&:hover {
@@ -46,15 +46,15 @@ export const DateTimeField: FC<DateTimeFieldProps> = ({name, isSubmitting}) => {
 		<Field
 			name={name}
 			component={FormikDateTimeInput}
-			width="40px"
-			height="40px"
+			width="25px"
+			height="25px"
 			isClearable
 			minDate={new Date()}
 			showTimeSelect
 			timeFormat="HH:mm"
 			customInput={
 				<Calendar disabled={isSubmitting}>
-					<Image src={calendar} width={40} height={40} />
+					<Image src={calendar} width="25px" height="25px" />
 				</Calendar>
 			}
 		/>

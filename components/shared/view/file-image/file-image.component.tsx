@@ -1,14 +1,15 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
 import NImage from 'next/image';
 
-import {BlobImage, Close, Container} from './file-image-components.component';
 import {useComponentSize, useThemeImage} from '../../../../hooks';
+import {BlobImage, Close, Container} from './file-image-components.component';
 
 interface Props {
 	file?: File;
 	controls?: boolean;
 	disabled?: boolean;
 	onDeleteClick?: () => void;
+	initialSrc?: string;
 }
 
 export const FileImage: FC<Props> = ({
@@ -16,6 +17,7 @@ export const FileImage: FC<Props> = ({
 	controls = true,
 	disabled,
 	onDeleteClick,
+	initialSrc,
 }) => {
 	const logo = useThemeImage('/assets/logo/mes-$mode.svg');
 
@@ -41,18 +43,23 @@ export const FileImage: FC<Props> = ({
 			};
 
 			reader.onload = ({target}) => {
-				image.src = (target?.result as string | undefined) || logo;
-				setSrc((target?.result as string | undefined) || logo);
+				image.src =
+					(target?.result as string | undefined) || initialSrc || logo;
+				setSrc((target?.result as string | undefined) || initialSrc || logo);
 			};
 
 			reader.readAsDataURL(file);
 		}
 	}, [file]);
 
+	useEffect(() => {
+		if (!file && initialSrc) setSrc(initialSrc);
+	}, [file, initialSrc]);
+
 	return (
 		<Container ref={containerRef}>
 			<BlobImage
-				src={src}
+				src={src || initialSrc || ''}
 				width={containerWidth}
 				height={(containerWidth / width) * height || containerWidth}
 			/>

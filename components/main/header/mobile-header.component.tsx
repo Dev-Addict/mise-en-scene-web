@@ -3,9 +3,9 @@ import Image from 'next/image';
 import styled from 'styled-components';
 
 import {Sign} from './sign.component';
-import {Filler} from '../../shared';
-import {useThemeImage} from '../../../hooks';
-import {StyledProps} from '../../../types';
+import {useThemeImage} from 'hooks';
+import {StyledProps} from 'types';
+import {OpenModalStyle, Filler} from 'components';
 
 const MenuButtonContainer = styled.div`
 	display: none;
@@ -71,6 +71,7 @@ export const MobileHeader: FC<Props> = ({isOpen, setOpen}) => {
 
 	return (
 		<>
+			<OpenModalStyle open={isOpen} />
 			<MenuButtonContainer onClick={onMenuBarClick()}>
 				<Image src={menuBar} width="40px" height="40px" />
 			</MenuButtonContainer>

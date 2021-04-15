@@ -77,12 +77,12 @@ export const UserFollowControl: FC<Props> = ({user, setUser}) => {
 
 	return (
 		<Control
-			color={Color.GHOST_WHITE}
 			primary={!user.isFollowed}
 			danger={user.isFollowed}
 			outline={user.isFollowed}
 			circular
 			onClick={user.isFollowed ? onUnfollowClick() : onFollowClick()}
+			color={user.isFollowed ? undefined : Color.GHOST_WHITE}
 			disabled={user.isFollowed ? unfollowLoading : followLoading}>
 			{user.isFollowed ? 'دنبال نکردن' : 'دنبال کردن'}
 		</Control>

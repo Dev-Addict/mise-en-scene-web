@@ -25,6 +25,7 @@ interface Props {
 	touched?: boolean;
 	error?: string;
 	showError?: boolean;
+	editable?: boolean;
 }
 
 export const Input: FC<InputHTMLAttributes<HTMLInputElement> & Props> = ({
@@ -39,6 +40,7 @@ export const Input: FC<InputHTMLAttributes<HTMLInputElement> & Props> = ({
 	touched,
 	error,
 	disabled,
+	editable = true,
 	...props
 }) => {
 	const [isFocus, setFocus] = useState(false);
@@ -71,7 +73,7 @@ export const Input: FC<InputHTMLAttributes<HTMLInputElement> & Props> = ({
 				isFocus={isFocus}
 				onClick={onTextInputContainerClick()}
 				primary={primary}
-				disabled={disabled}>
+				disabled={disabled || !editable}>
 				<TextInput
 					icon={!!icon}
 					onFocus={onInputFocus}
@@ -80,7 +82,7 @@ export const Input: FC<InputHTMLAttributes<HTMLInputElement> & Props> = ({
 					type={localType}
 					autoComplete="off"
 					{...props}
-					disabled={disabled}
+					disabled={disabled || !editable}
 				/>
 				{icon && (
 					<Icon>

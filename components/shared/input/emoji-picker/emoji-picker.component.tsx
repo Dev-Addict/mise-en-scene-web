@@ -30,7 +30,7 @@ export const EmojiPicker: FC<Props> = ({onSelect, disabled = false}) => {
 	return (
 		<Container>
 			<Emoji onClick={onEmojiClick()} disabled={disabled}>
-				<Image src={emoji} width="40px" height="40px" />
+				<Image src={emoji} width="25px" height="25px" />
 			</Emoji>
 			<PickerContainer active={isActive}>
 				<Picker

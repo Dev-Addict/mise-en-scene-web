@@ -9,6 +9,7 @@ interface Props {
 	icon?: string;
 	primary?: boolean;
 	filter?: (value: string) => string;
+	editable?: boolean;
 }
 
 export const FormikInput: FC<FieldProps & Props> = ({
@@ -16,6 +17,7 @@ export const FormikInput: FC<FieldProps & Props> = ({
 	form: {touched, errors, isSubmitting, setFieldValue},
 	meta,
 	filter,
+	editable = true,
 	...props
 }) => {
 	const onChange = (): ChangeEventHandler<HTMLInputElement> => ({
@@ -30,6 +32,7 @@ export const FormikInput: FC<FieldProps & Props> = ({
 			value={value}
 			onChange={onChange()}
 			showError
+			editable={editable}
 			{...props}
 		/>
 	);

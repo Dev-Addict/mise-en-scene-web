@@ -1,4 +1,5 @@
 import React, {FC} from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
 import {Formik} from 'formik';
 
@@ -54,7 +55,9 @@ export const SignInForm: FC<Props> = ({
 				<ConvertText>
 					<div>
 						رمز عبور خود را فراموش کردید؟{' '}
-						<ConvertLink>رمز عبور خود را بازیابی کنید!</ConvertLink>
+						<Link href="/sign/password/forgot">
+							<ConvertLink>رمز عبور خود را بازیابی کنید!</ConvertLink>
+						</Link>
 					</div>
 					<div>
 						حساب کاربری ندارید؟{' '}

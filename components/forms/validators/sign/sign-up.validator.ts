@@ -22,7 +22,7 @@ export const signUpValidator = async ({
 	if (!email) errors.email = 'ایمیل اجباری است.';
 	else if (!emailValidator(email, false)) errors.email = 'ایمیل نامعتبر است.';
 	try {
-		if (!errors.username)
+		if (!errors.email)
 			if (
 				!(
 					await apolloClient.mutate({

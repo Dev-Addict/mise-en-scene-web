@@ -4,6 +4,7 @@ import {StyledProps} from '../../../../types';
 
 interface InputStyleProps {
 	icon?: boolean;
+	editable?: boolean;
 }
 
 const inputStyle = css<InputStyleProps>`
@@ -36,6 +37,7 @@ interface TextInputContainerProps {
 	isFocus?: boolean;
 	primary?: boolean;
 	disabled?: boolean;
+	editable?: boolean;
 }
 
 export const TextInputContainer = styled.div<
@@ -99,10 +101,14 @@ export const Error = styled.div<StyledProps & ErrorProps>`
 
 export const EditorContainer = styled(TextInputContainer)`
 	& .DraftEditor-root {
-		${inputStyle}
+		max-width: 100%;
+
 		& * {
 			user-select: auto;
+			z-index: 0;
 		}
+
+		${inputStyle}
 	}
 
 	& .public-DraftEditorPlaceholder-root .public-DraftEditorPlaceholder-inner {

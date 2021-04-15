@@ -3,7 +3,17 @@ import Cookie from 'js-cookie';
 
 import {apolloClient, SELF_QUERY} from '../../../api';
 import {AuthContext} from './auth.context';
-import {signIn, signOut, signUp} from './helpers';
+import {
+	forgotPassword,
+	resetEmail,
+	resetEmailRequest,
+	resetPassword,
+	resetPasswordRequest,
+	signIn,
+	signOut,
+	signUp,
+	updateSelf,
+} from './helpers';
 import {User} from '../../../types';
 
 export const AuthProvider: FC = ({children}) => {
@@ -42,13 +52,19 @@ export const AuthProvider: FC = ({children}) => {
 	return (
 		<AuthContext.Provider
 			value={{
-				isSigned,
+				forgotPassword: forgotPassword(),
 				isLoading,
-				user,
+				isSigned,
+				resetEmail: resetEmail({setUser, setSigned, setToken}),
+				resetEmailRequest: resetEmailRequest(),
+				resetPassword: resetPassword({setUser, setSigned, setToken}),
+				resetPasswordRequest: resetPasswordRequest(),
 				signIn: signIn({setUser, setSigned, setToken}),
-				signUp: signUp({setUser, setSigned, setToken}),
 				signOut: signOut({setUser, setSigned, setToken}),
+				signUp: signUp({setUser, setSigned, setToken}),
+				updateSelf: updateSelf({setUser, token}),
 				token,
+				user,
 			}}>
 			{children}
 		</AuthContext.Provider>

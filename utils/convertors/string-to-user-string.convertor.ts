@@ -1,0 +1,5 @@
+export const stringToUserStringConvertor = (string: string) =>
+	string
+		.split('_')
+		.map((word) => word[0].toUpperCase() + word.slice(1).toLowerCase())
+		.join(' ');

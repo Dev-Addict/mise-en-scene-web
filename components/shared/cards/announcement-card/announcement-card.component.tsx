@@ -9,6 +9,7 @@ import {
 	Container,
 	SideAvatar,
 	SmallAvatar,
+	Time,
 	UserDetails,
 } from './announcement-card-components.component';
 import {useDate, useUserDisplayName, useWindowSize} from '../../../../hooks';
@@ -17,9 +18,14 @@ import {AnnouncementCardActions} from './announcement-card-actions.component';
 interface Props {
 	announcement: Announcement;
 	border?: boolean;
+	reAnnouncement?: boolean;
 }
 
-export const AnnouncementCard: FC<Props> = ({announcement, border = false}) => {
+export const AnnouncementCard: FC<Props> = ({
+	announcement,
+	border = false,
+	reAnnouncement = false,
+}) => {
 	const [localAnnouncement, setLocalAnnouncement] = useState(announcement);
 	const {
 		userData,
@@ -52,8 +58,8 @@ export const AnnouncementCard: FC<Props> = ({announcement, border = false}) => {
 			<SideAvatar>
 				<Avatar user={userData} size={80} />
 			</SideAvatar>
-			<Body border={!border}>
-				<UserDetails width={width}>
+			<Body border={!border} reAnnouncement={reAnnouncement}>
+				<UserDetails width={width} reAnnouncement={reAnnouncement}>
 					<SmallAvatar>
 						<Avatar user={userData} size={50} />
 					</SmallAvatar>
@@ -65,11 +71,15 @@ export const AnnouncementCard: FC<Props> = ({announcement, border = false}) => {
 							@{userData?.username}
 						</Text>
 					</Link>
-					<Text>{date}</Text>
+					<Time>{date}</Time>
 				</UserDetails>
 				{renderText()}
 				{reAnnouncementData && (
-					<AnnouncementCard announcement={reAnnouncementData} border />
+					<AnnouncementCard
+						announcement={reAnnouncementData}
+						border
+						reAnnouncement
+					/>
 				)}
 				{imagesData && <Images images={imagesData} />}
 				{gifData && <Gif gif={gifData} />}

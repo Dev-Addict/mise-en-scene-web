@@ -10,8 +10,8 @@ interface EmojiProps {
 }
 
 export const Emoji = styled.div<EmojiProps>`
-	width: 40px;
-	height: 40px;
+	width: 25px;
+	height: 25px;
 	overflow: hidden;
 	cursor: pointer;
 

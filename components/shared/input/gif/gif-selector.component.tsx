@@ -15,8 +15,8 @@ interface GifProps {
 }
 
 const Gif = styled.div<GifProps>`
-	width: 40px;
-	height: 40px;
+	width: 25px;
+	height: 25px;
 	overflow: hidden;
 	cursor: pointer;
 
@@ -69,7 +69,7 @@ export const GifSelector: FC<Props> = ({onSelect, disabled}) => {
 	return (
 		<Container>
 			<Gif onClick={onGifClick()} disabled={disabled}>
-				<Image src={gif} width="40px" height="40px" />
+				<Image src={gif} width="25px" height="25px" />
 			</Gif>
 			<GifsContainer active={isActive}>
 				<Gifs onSelect={onSelect} />

@@ -11,8 +11,8 @@ interface ContainerProps {
 }
 
 const Container = styled.div<ContainerProps>`
-	width: 40px;
-	height: 40px;
+	width: 25px;
+	height: 25px;
 	cursor: pointer;
 
 	&:hover {
@@ -42,7 +42,7 @@ export const FormikPollTrigger: FC<FieldProps<Poll | undefined>> = ({
 
 	return (
 		<Container disabled={isSubmitting} onClick={onPollClick()}>
-			<Image src={poll} width="40" height="40" />
+			<Image src={poll} width="25px" height="25px" />
 		</Container>
 	);
 };
