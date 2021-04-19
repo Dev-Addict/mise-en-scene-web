@@ -9,8 +9,8 @@ import {
 	MY_ANNOUNCEMENTS_QUERY,
 	MyAnnouncementsQueryData,
 	MyAnnouncementsQueryVariables,
-} from '../api';
-import {Announcement} from '../types';
+} from '../../api';
+import {Announcement} from '../../types';
 
 export const useAnnouncementsQuery = (
 	filter: {},

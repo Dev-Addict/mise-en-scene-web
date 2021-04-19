@@ -10,6 +10,7 @@ interface Props {
 	disabled?: boolean;
 	onDeleteClick?: () => void;
 	initialSrc?: string;
+	defaultSrc?: string;
 }
 
 export const FileImage: FC<Props> = ({
@@ -18,12 +19,15 @@ export const FileImage: FC<Props> = ({
 	disabled,
 	onDeleteClick,
 	initialSrc,
+	defaultSrc,
 }) => {
-	const logo = useThemeImage('/assets/logo/mes-$mode.svg');
+	const defaultImage = useThemeImage(
+		defaultSrc || '/assets/logo/mes-$mode.svg'
+	);
 
 	const containerRef = useRef<HTMLDivElement>(null);
 
-	const [src, setSrc] = useState(logo);
+	const [src, setSrc] = useState(defaultImage);
 	const [width, setWidth] = useState(0);
 	const [height, setHeight] = useState(0);
 
@@ -44,8 +48,10 @@ export const FileImage: FC<Props> = ({
 
 			reader.onload = ({target}) => {
 				image.src =
-					(target?.result as string | undefined) || initialSrc || logo;
-				setSrc((target?.result as string | undefined) || initialSrc || logo);
+					(target?.result as string | undefined) || initialSrc || defaultImage;
+				setSrc(
+					(target?.result as string | undefined) || initialSrc || defaultImage
+				);
 			};
 
 			reader.readAsDataURL(file);

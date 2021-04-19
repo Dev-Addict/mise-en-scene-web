@@ -42,20 +42,13 @@ export const Button = styled.button<StyledProps & Props>`
 		cursor: default;
 	}
 
-	${({disabled}) =>
-		disabled &&
-		css`
-			opacity: 0.5;
-			cursor: default;
-		`}
-
 	${({circular}) =>
 		circular &&
 		css`
 			border-radius: 100px;
 		`}
 
-  ${({primary}) =>
+	${({primary}) =>
 		primary &&
 		css`
 			background-color: ${({theme: {primary}}) => primary};
@@ -106,5 +99,16 @@ export const Button = styled.button<StyledProps & Props>`
 			right: ${right}px;
 			bottom: ${bottom}px;
 			left: ${left}px;
+		`}
+
+  ${({disabled}) =>
+		disabled &&
+		css`
+			opacity: 0.5;
+			cursor: default;
+
+			&:hover {
+				box-shadow: none;
+			}
 		`}
 `;

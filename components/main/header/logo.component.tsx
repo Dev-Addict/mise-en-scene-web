@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import styled from 'styled-components';
@@ -32,7 +32,11 @@ const HeaderText = styled.a`
 	margin-right: 10px;
 `;
 
-export const Logo = () => {
+interface Props {
+	text?: boolean;
+}
+
+export const Logo: FC<Props> = ({text = true}) => {
 	const logo = useThemeImage('/assets/logo/mes-$mode.svg');
 
 	return (
@@ -41,7 +45,7 @@ export const Logo = () => {
 				<LogoContainer>
 					<Image src={logo} width="60px" height="60px" />
 				</LogoContainer>
-				<HeaderText>میزانسن</HeaderText>
+				{text && <HeaderText>میزانسن</HeaderText>}
 			</Container>
 		</Link>
 	);

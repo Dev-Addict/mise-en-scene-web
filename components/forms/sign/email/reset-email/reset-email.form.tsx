@@ -11,6 +11,7 @@ import {
 import {Avatar, Button, Errors} from '../../../../shared';
 import {Color} from '../../../../../data';
 import {ResetEmailInputs} from './reset-email-inputs.component';
+import {resetEmailValidator} from '../../../validators';
 
 export interface ResetEmailFields {
 	email: string;
@@ -33,7 +34,10 @@ export const ResetEmailForm: FC<Props> = ({
 	user,
 }) => {
 	return (
-		<Formik initialValues={initialValues} onSubmit={onSubmit}>
+		<Formik
+			initialValues={initialValues}
+			onSubmit={onSubmit}
+			validate={resetEmailValidator}>
 			{({isSubmitting}: FormikProps<ResetEmailFields>) => (
 				<Body>
 					<Avatar user={user} />

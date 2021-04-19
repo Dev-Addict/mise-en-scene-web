@@ -6,6 +6,8 @@ interface TextProps {
 	lowOpacity?: boolean;
 	hover?: boolean;
 	center?: boolean;
+	maxLines?: number;
+	width?: number;
 }
 
 export const Text = styled.div<StyledProps & TextProps>`
@@ -31,5 +33,22 @@ export const Text = styled.div<StyledProps & TextProps>`
 		center &&
 		css`
 			text-align: center;
+		`}
+
+  ${({maxLines}) =>
+		maxLines &&
+		css`
+			max-width: 100%;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: ${maxLines};
+			-webkit-box-orient: vertical;
+		`}
+
+  ${({width}) =>
+		width &&
+		css`
+			width: ${width}px;
 		`}
 `;

@@ -5,7 +5,6 @@ import {movieLoaderDark, movieLoaderLight} from '../../../../assets';
 import {Animation, AnnouncementCard, Button, Text} from '../../../shared';
 import {useAnnouncements} from '../../../../hooks';
 import {Size, Theme, ThemeMode} from '../../../../types';
-import {Color} from '../../../../data';
 
 export const Announcements = () => {
 	const {mode} = useTheme() as Theme;
@@ -15,12 +14,12 @@ export const Announcements = () => {
 	const animationData =
 		mode === ThemeMode.LIGHT ? movieLoaderLight : movieLoaderDark;
 
+	const onLoadMoreClick = () => () => !loading && loadMore();
+
 	const renderAnnouncements = () =>
 		announcements.map((announcement) => (
 			<AnnouncementCard announcement={announcement} />
 		));
-
-	const onLoadMoreClick = () => () => !loading && loadMore();
 
 	return (
 		<div>

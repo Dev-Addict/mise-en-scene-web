@@ -1,6 +1,7 @@
-import {GifResult} from '../api';
-import {DocumentNode, TypedDocumentNode, useQuery} from '@apollo/client';
 import {useEffect, useState} from 'react';
+import {DocumentNode, TypedDocumentNode, useQuery} from '@apollo/client';
+
+import {GifResult} from '../../api';
 
 interface VariablesType {
 	page?: number;

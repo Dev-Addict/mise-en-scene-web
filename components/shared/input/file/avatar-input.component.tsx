@@ -44,6 +44,7 @@ interface Props {
 	editable?: boolean;
 	disabled?: boolean;
 	initialSrc?: string;
+	defaultSrc?: string;
 }
 
 export const AvatarInput: FC<Props> = ({
@@ -52,6 +53,7 @@ export const AvatarInput: FC<Props> = ({
 	editable = true,
 	disabled = false,
 	initialSrc,
+	defaultSrc,
 }) => {
 	const [localFile, setLocalFile] = useState(file);
 
@@ -81,6 +83,7 @@ export const AvatarInput: FC<Props> = ({
 						controls={false}
 						disabled={disabled}
 						initialSrc={initialSrc}
+						defaultSrc={defaultSrc}
 					/>
 				</Avatar>
 			</Container>

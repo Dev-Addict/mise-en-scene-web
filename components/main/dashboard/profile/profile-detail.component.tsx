@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {FormikHelpers} from 'formik/dist/types';
 
-import {useAuth} from '../../../hooks';
-import {UserDetailFields, UserDetailForm} from '../../forms';
+import {useAuth} from '../../../../hooks';
+import {UserDetailFields, UserDetailForm} from '../../../forms';
 
 export const ProfileDetail = () => {
 	const [errors, setErrors] = useState<string[]>([]);

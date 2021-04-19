@@ -56,6 +56,9 @@ export interface NexusGenInputs {
   CheckEmailData: { // input type
     email: NexusGenScalars['Email']; // Email!
   }
+  CheckHandleData: { // input type
+    handle: NexusGenScalars['Username']; // Username!
+  }
   CheckUsernameData: { // input type
     username: NexusGenScalars['Username']; // Username!
   }
@@ -64,6 +67,11 @@ export interface NexusGenInputs {
   }
   ForgotPasswordData: { // input type
     authKey: NexusGenScalars['AuthKey']; // AuthKey!
+  }
+  RequestChannelData: { // input type
+    cover?: NexusGenScalars['Upload'] | null; // Upload
+    handle: NexusGenScalars['Username']; // Username!
+    name: string; // String!
   }
   ResetEmailData: { // input type
     email: NexusGenScalars['Email']; // Email!
@@ -118,6 +126,7 @@ export interface NexusGenInputs {
 }
 
 export interface NexusGenEnums {
+  ChannelAdminPermission: "CREATE_NEW_ADMIN" | "DELETE_POST" | "EDIT_ADMINS_PERMISSIONS" | "EDIT_OTHERS_POST" | "MAKE_ADMIN" | "POST" | "REMOVE_ADMIN"
   Gender: "CUSTOM" | "FEMALE" | "MALE"
 }
 
@@ -186,6 +195,26 @@ export interface NexusGenObjects {
   AuthResponse: { // root type
     token: string; // String!
     user: NexusGenRootTypes['User']; // User!
+  }
+  Channel: { // root type
+    cover: string; // String!
+    handle: NexusGenScalars['Username']; // Username!
+    id: string; // ID!
+    name: string; // String!
+    owner: string; // ID!
+    verified: boolean; // Boolean!
+  }
+  ChannelAdmin: { // root type
+    channel: string; // ID!
+    id: string; // ID!
+    permissions: NexusGenEnums['ChannelAdminPermission'][]; // [ChannelAdminPermission!]!
+    user: string; // ID!
+  }
+  ChannelsResponse: { // root type
+    docs: NexusGenRootTypes['Channel'][]; // [Channel!]!
+    limit: number; // Int!
+    page: number; // Int!
+    results: number; // Int!
   }
   Gif: { // root type
     giphyId: string; // ID!
@@ -318,6 +347,30 @@ export interface NexusGenFieldTypes {
     token: string; // String!
     user: NexusGenRootTypes['User']; // User!
   }
+  Channel: { // field return type
+    admins: NexusGenRootTypes['ChannelAdmin'][]; // [ChannelAdmin!]!
+    cover: string; // String!
+    handle: NexusGenScalars['Username']; // Username!
+    id: string; // ID!
+    name: string; // String!
+    owner: string; // ID!
+    ownerData: NexusGenRootTypes['User']; // User!
+    verified: boolean; // Boolean!
+  }
+  ChannelAdmin: { // field return type
+    channel: string; // ID!
+    channelData: NexusGenRootTypes['Channel']; // Channel!
+    id: string; // ID!
+    permissions: NexusGenEnums['ChannelAdminPermission'][]; // [ChannelAdminPermission!]!
+    user: string; // ID!
+    userData: NexusGenRootTypes['User']; // User!
+  }
+  ChannelsResponse: { // field return type
+    docs: NexusGenRootTypes['Channel'][]; // [Channel!]!
+    limit: number; // Int!
+    page: number; // Int!
+    results: number; // Int!
+  }
   Gif: { // field return type
     giphyId: string; // ID!
     height: number; // Int!
@@ -338,11 +391,13 @@ export interface NexusGenFieldTypes {
     announce: NexusGenRootTypes['Announcement'] | null; // Announcement
     checkAuthKey: boolean; // Boolean!
     checkEmail: boolean; // Boolean!
+    checkHandle: boolean | null; // Boolean
     checkUsername: boolean; // Boolean!
     dislike: NexusGenRootTypes['AnnouncementDislike']; // AnnouncementDislike!
     follow: NexusGenRootTypes['UserFollow']; // UserFollow!
     forgotPassword: NexusGenRootTypes['User'] | null; // User
     like: NexusGenRootTypes['AnnouncementLike']; // AnnouncementLike!
+    requestChannel: NexusGenRootTypes['Channel']; // Channel!
     resetEmail: NexusGenRootTypes['AuthResponse'] | null; // AuthResponse
     resetEmailRequest: NexusGenRootTypes['User'] | null; // User
     resetPassword: NexusGenRootTypes['AuthResponse'] | null; // AuthResponse
@@ -361,6 +416,7 @@ export interface NexusGenFieldTypes {
     findGifs: NexusGenRootTypes['Gif'][]; // [Gif!]!
     findUser: NexusGenRootTypes['User'] | null; // User
     myAnnouncements: NexusGenRootTypes['AnnouncementsResponse'] | null; // AnnouncementsResponse
+    ownedChannels: NexusGenRootTypes['ChannelsResponse'] | null; // ChannelsResponse
     self: NexusGenRootTypes['User']; // User!
     trendingGifs: NexusGenRootTypes['Gif'][]; // [Gif!]!
     userById: NexusGenRootTypes['User'] | null; // User
@@ -478,6 +534,30 @@ export interface NexusGenFieldTypeNames {
     token: 'String'
     user: 'User'
   }
+  Channel: { // field return type name
+    admins: 'ChannelAdmin'
+    cover: 'String'
+    handle: 'Username'
+    id: 'ID'
+    name: 'String'
+    owner: 'ID'
+    ownerData: 'User'
+    verified: 'Boolean'
+  }
+  ChannelAdmin: { // field return type name
+    channel: 'ID'
+    channelData: 'Channel'
+    id: 'ID'
+    permissions: 'ChannelAdminPermission'
+    user: 'ID'
+    userData: 'User'
+  }
+  ChannelsResponse: { // field return type name
+    docs: 'Channel'
+    limit: 'Int'
+    page: 'Int'
+    results: 'Int'
+  }
   Gif: { // field return type name
     giphyId: 'ID'
     height: 'Int'
@@ -498,11 +578,13 @@ export interface NexusGenFieldTypeNames {
     announce: 'Announcement'
     checkAuthKey: 'Boolean'
     checkEmail: 'Boolean'
+    checkHandle: 'Boolean'
     checkUsername: 'Boolean'
     dislike: 'AnnouncementDislike'
     follow: 'UserFollow'
     forgotPassword: 'User'
     like: 'AnnouncementLike'
+    requestChannel: 'Channel'
     resetEmail: 'AuthResponse'
     resetEmailRequest: 'User'
     resetPassword: 'AuthResponse'
@@ -521,6 +603,7 @@ export interface NexusGenFieldTypeNames {
     findGifs: 'Gif'
     findUser: 'User'
     myAnnouncements: 'AnnouncementsResponse'
+    ownedChannels: 'ChannelsResponse'
     self: 'User'
     trendingGifs: 'Gif'
     userById: 'User'
@@ -571,6 +654,9 @@ export interface NexusGenArgTypes {
     checkEmail: { // args
       data: NexusGenInputs['CheckEmailData']; // CheckEmailData!
     }
+    checkHandle: { // args
+      data: NexusGenInputs['CheckHandleData']; // CheckHandleData!
+    }
     checkUsername: { // args
       data: NexusGenInputs['CheckUsernameData']; // CheckUsernameData!
     }
@@ -585,6 +671,9 @@ export interface NexusGenArgTypes {
     }
     like: { // args
       announcement: string; // ID!
+    }
+    requestChannel: { // args
+      data: NexusGenInputs['RequestChannelData']; // RequestChannelData!
     }
     resetEmail: { // args
       data: NexusGenInputs['ResetEmailData']; // ResetEmailData!
@@ -639,6 +728,12 @@ export interface NexusGenArgTypes {
       filter: NexusGenScalars['JSON']; // JSON!
     }
     myAnnouncements: { // args
+      filter?: NexusGenScalars['JSON'] | null; // JSON
+      limit?: number | null; // Int
+      page?: number | null; // Int
+      sort?: NexusGenScalars['JSON'] | null; // JSON
+    }
+    ownedChannels: { // args
       filter?: NexusGenScalars['JSON'] | null; // JSON
       limit?: number | null; // Int
       page?: number | null; // Int

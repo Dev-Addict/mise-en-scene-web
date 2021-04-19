@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
 
-import {ActionContainer} from './profile-components.component';
-import {Button, Text, SlideMessage} from '../../shared';
-import {Color} from '../../../data';
-import {useAuth} from '../../../hooks';
+import {Button, Text, SlideMessage} from '../../../shared';
+import {Color} from '../../../../data';
+import {useAuth} from '../../../../hooks';
 
 export const ChangeEmail = () => {
 	const [loading, setLoading] = useState(false);
@@ -23,7 +22,7 @@ export const ChangeEmail = () => {
 	};
 
 	return (
-		<ActionContainer>
+		<div>
 			<Text>آیا می خواهید ایمیل خود را تغییر دهید؟</Text>
 			<SlideMessage
 				message="ایمیل ارسال شد!"
@@ -39,6 +38,6 @@ export const ChangeEmail = () => {
 				}
 				action={action()}
 			/>
-		</ActionContainer>
+		</div>
 	);
 };

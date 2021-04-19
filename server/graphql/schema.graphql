@@ -104,12 +104,53 @@ type AuthResponse {
   user: User!
 }
 
+type Channel {
+  admins: [ChannelAdmin!]!
+  cover: String!
+  handle: Username!
+  id: ID!
+  name: String!
+  owner: ID!
+  ownerData: User!
+  verified: Boolean!
+}
+
+type ChannelAdmin {
+  channel: ID!
+  channelData: Channel!
+  id: ID!
+  permissions: [ChannelAdminPermission!]!
+  user: ID!
+  userData: User!
+}
+
+enum ChannelAdminPermission {
+  CREATE_NEW_ADMIN
+  DELETE_POST
+  EDIT_ADMINS_PERMISSIONS
+  EDIT_OTHERS_POST
+  MAKE_ADMIN
+  POST
+  REMOVE_ADMIN
+}
+
+type ChannelsResponse {
+  docs: [Channel!]!
+  limit: Int!
+  page: Int!
+  results: Int!
+}
+
 input CheckAuthKeyData {
   authKey: AuthKey!
 }
 
 input CheckEmailData {
   email: Email!
+}
+
+input CheckHandleData {
+  handle: Username!
 }
 
 input CheckUsernameData {
@@ -158,11 +199,13 @@ type Mutation {
   announce(data: AnnounceData!): Announcement
   checkAuthKey(data: CheckAuthKeyData!): Boolean!
   checkEmail(data: CheckEmailData!): Boolean!
+  checkHandle(data: CheckHandleData!): Boolean
   checkUsername(data: CheckUsernameData!): Boolean!
   dislike(announcement: ID!): AnnouncementDislike!
   follow(data: FollowData!): UserFollow!
   forgotPassword(data: ForgotPasswordData!): User
   like(announcement: ID!): AnnouncementLike!
+  requestChannel(data: RequestChannelData!): Channel!
   resetEmail(data: ResetEmailData!): AuthResponse
   resetEmailRequest(data: ResetEmailRequestData!): User
   resetPassword(data: ResetPasswordData!): AuthResponse
@@ -186,10 +229,17 @@ type Query {
   findGifs(limit: Int, page: Int, query: String!): [Gif!]!
   findUser(filter: JSON!): User
   myAnnouncements(filter: JSON, limit: Int, page: Int, sort: JSON): AnnouncementsResponse
+  ownedChannels(filter: JSON, limit: Int, page: Int, sort: JSON): ChannelsResponse
   self: User!
   trendingGifs(limit: Int, page: Int): [Gif!]!
   userById(id: ID!): User
   users(filter: JSON, limit: Int, page: Int, sort: JSON): UsersResponse
+}
+
+input RequestChannelData {
+  cover: Upload
+  handle: Username!
+  name: String!
 }
 
 input ResetEmailData {

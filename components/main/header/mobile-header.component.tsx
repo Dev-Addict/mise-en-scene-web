@@ -58,9 +58,10 @@ const ArrowContainer = styled.div`
 interface Props {
 	isOpen: boolean;
 	setOpen: Dispatch<SetStateAction<boolean>>;
+	sign?: boolean;
 }
 
-export const MobileHeader: FC<Props> = ({isOpen, setOpen}) => {
+export const MobileHeader: FC<Props> = ({isOpen, setOpen, sign = true}) => {
 	const menuBar = useThemeImage('/assets/icons/menu/menu-bar-$mode.svg');
 	const arrowLeft = useThemeImage(
 		'/assets/icons/arrows/left/arrow-left-$mode.svg'
@@ -80,7 +81,7 @@ export const MobileHeader: FC<Props> = ({isOpen, setOpen}) => {
 					<Image src={arrowLeft} width="40px" height="40px" />
 				</ArrowContainer>
 				<Filler />
-				<Sign mobile />
+				{sign && <Sign mobile />}
 			</MobileHeaderContainer>
 		</>
 	);

@@ -1,10 +1,11 @@
-import React, {FC, useEffect, useRef, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {FieldProps} from 'formik';
 
 import {AvatarInput} from '../avatar-input.component';
 
 interface Props {
 	editable?: boolean;
+	defaultSrc?: string;
 }
 
 export const FormikAvatarInput: FC<
@@ -13,6 +14,7 @@ export const FormikAvatarInput: FC<
 	field: {name, value},
 	form: {setFieldValue, isSubmitting},
 	editable = true,
+	defaultSrc,
 }) => {
 	const [initialSrc, setInitialSrc] = useState(
 		typeof value === 'string' ? `/image/user/avatar/${value}` : undefined
@@ -35,6 +37,7 @@ export const FormikAvatarInput: FC<
 			disabled={isSubmitting}
 			editable={editable}
 			initialSrc={initialSrc}
+			defaultSrc={defaultSrc}
 		/>
 	);
 };

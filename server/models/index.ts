@@ -1,5 +1,6 @@
 export * from './announcement';
 export * from './cast';
+export * from './channel';
 export * from './company';
 export * from './geo';
 export * from './gif';
