@@ -9,11 +9,10 @@ export const OWNED_CHANNELS_QUERY = gql`
 				cover
 				name
 				handle
-				ownerData {
-					id
-				}
+				owner
 				admins {
 					id
+					accepted
 				}
 				verified
 			}

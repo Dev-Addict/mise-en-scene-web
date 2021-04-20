@@ -25,5 +25,6 @@ export const ChannelAdmin = objectType({
 		t.nonNull.list.nonNull.field('permissions', {
 			type: ChannelAdminPermissionEnum,
 		});
+		t.nonNull.boolean('accepted');
 	},
 });

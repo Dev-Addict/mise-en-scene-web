@@ -9,4 +9,5 @@ export interface ChannelAdmin {
 	user?: string;
 	userData?: User;
 	permissions?: ChannelAdminPermission[];
+	accepted?: boolean;
 }

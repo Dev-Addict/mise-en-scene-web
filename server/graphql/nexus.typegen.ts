@@ -205,6 +205,7 @@ export interface NexusGenObjects {
     verified: boolean; // Boolean!
   }
   ChannelAdmin: { // root type
+    accepted: boolean; // Boolean!
     channel: string; // ID!
     id: string; // ID!
     permissions: NexusGenEnums['ChannelAdminPermission'][]; // [ChannelAdminPermission!]!
@@ -358,6 +359,7 @@ export interface NexusGenFieldTypes {
     verified: boolean; // Boolean!
   }
   ChannelAdmin: { // field return type
+    accepted: boolean; // Boolean!
     channel: string; // ID!
     channelData: NexusGenRootTypes['Channel']; // Channel!
     id: string; // ID!
@@ -545,6 +547,7 @@ export interface NexusGenFieldTypeNames {
     verified: 'Boolean'
   }
   ChannelAdmin: { // field return type name
+    accepted: 'Boolean'
     channel: 'ID'
     channelData: 'Channel'
     id: 'ID'

@@ -7,6 +7,7 @@ import {Cover} from '../../view';
 import {Text} from '../../text.component';
 import {Button} from '../../native';
 import {Color} from '../../../../data';
+import {useAuth} from '../../../../hooks';
 
 interface ContainerProps {
 	verified?: boolean;
@@ -34,13 +35,21 @@ interface Props {
 }
 
 export const ChannelCard: FC<Props> = ({
-	channel: {verified, cover, name, handle},
+	channel: {verified, cover, name, handle, owner, admins},
 	width,
 }) => {
 	const router = useRouter();
 
+	const {user} = useAuth();
+
+	const isOwnerOrAccepted =
+		user?.id === owner ||
+		admins?.find(({user: admin}) => admin === user?.id)?.accepted ||
+		false;
+
 	const onManageClick = () => () =>
 		verified && router.push(`/channel/manage/${handle || 'no'}`);
+	const onAcceptClick = () => () => {};
 
 	return (
 		<Container verified={verified}>
@@ -54,14 +63,25 @@ export const ChannelCard: FC<Props> = ({
 			<Text lowOpacity maxLines={1} width={width - 20}>
 				@{handle}
 			</Text>
-			<Button
-				primary
-				fill
-				disabled={!verified}
-				onClick={onManageClick()}
-				color={Color.GHOST_WHITE}>
-				مدیریت
-			</Button>
+			{isOwnerOrAccepted ? (
+				<Button
+					primary
+					fill
+					disabled={!verified}
+					onClick={onManageClick()}
+					color={Color.GHOST_WHITE}>
+					مدیریت
+				</Button>
+			) : (
+				<Button
+					primary
+					fill
+					disabled={!verified}
+					onClick={onAcceptClick()}
+					color={Color.GHOST_WHITE}>
+					قبول کردن
+				</Button>
+			)}
 		</Container>
 	);
 };

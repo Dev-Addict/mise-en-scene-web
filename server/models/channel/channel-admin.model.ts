@@ -19,12 +19,17 @@ const channelAdminSchema = new Schema({
 			message: '',
 		},
 	},
+	accepted: {
+		type: Boolean,
+		default: false,
+	},
 });
 
 export interface ChannelAdminModel {
 	channel: string;
 	user: string;
 	permissions: ChannelAdminPermission[];
+	accepted: boolean;
 }
 
 export interface IChannelAdmin extends Document, ChannelAdminModel {}

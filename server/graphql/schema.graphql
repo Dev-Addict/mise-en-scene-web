@@ -116,6 +116,7 @@ type Channel {
 }
 
 type ChannelAdmin {
+  accepted: Boolean!
   channel: ID!
   channelData: Channel!
   id: ID!

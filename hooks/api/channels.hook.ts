@@ -19,7 +19,7 @@ export const useChannels = () => {
 		setPage((page) => page + 1);
 	};
 
-	const {data, loading} = useQuery<
+	const {data, loading, refetch} = useQuery<
 		OwnedChannelsQueryData,
 		OwnedChannelsQueryVariables
 	>(OWNED_CHANNELS_QUERY, {
@@ -41,6 +41,13 @@ export const useChannels = () => {
 		)
 			setChannels((channels) => [...channels, ...data.ownedChannels.docs]);
 	}, [data]);
+
+	useEffect(() => {
+		if (!loading && !channels.length && data?.ownedChannels?.results) {
+			setPage(1);
+			refetch();
+		}
+	}, [channels]);
 
 	return {
 		loading,
