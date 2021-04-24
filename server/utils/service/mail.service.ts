@@ -55,20 +55,20 @@ export class MailService {
 			subject,
 		}: SendMailOptions
 	) {
-		const html = compileTemplate(properties);
-		const text = htmlToText(html);
-
-		try {
-			await this.transporter.sendMail({
-				attachments,
-				from: `${senderName} <${senderEmail}>`,
-				html,
-				subject,
-				text,
-				to,
-			});
-		} catch (error) {
-			throw new AppError('0xE000059', 500);
-		}
+		// const html = compileTemplate(properties);
+		// const text = htmlToText(html);
+		//
+		// try {
+		// 	await this.transporter.sendMail({
+		// 		attachments,
+		// 		from: `${senderName} <${senderEmail}>`,
+		// 		html,
+		// 		subject,
+		// 		text,
+		// 		to,
+		// 	});
+		// } catch (error) {
+		// 	throw new AppError('0xE000059', 500);
+		// }
 	}
 }
