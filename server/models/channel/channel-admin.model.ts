@@ -25,6 +25,8 @@ const channelAdminSchema = new Schema({
 	},
 });
 
+channelAdminSchema.index({channel: 1, user: 1});
+
 export interface ChannelAdminModel {
 	channel: string;
 	user: string;

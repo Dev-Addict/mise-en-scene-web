@@ -8,8 +8,7 @@ import {UserFollowControl} from './user-follow-control.component';
 import {Control} from './user-detail-components.component';
 import {SpaceDivider, Text} from '../../../shared';
 import {useAuth} from '../../../../hooks';
-import {Size} from '../../../../types';
-import {FindUserQueryDataFindUser} from '../../../../api';
+import {Size, User} from '../../../../types';
 
 const Container = styled.div`
 	padding: 10px;
@@ -34,8 +33,8 @@ const Controls = styled.div`
 `;
 
 interface Props {
-	user: FindUserQueryDataFindUser;
-	setUser: Dispatch<SetStateAction<FindUserQueryDataFindUser | undefined>>;
+	user: User;
+	setUser: Dispatch<SetStateAction<User | undefined>>;
 }
 
 export const UserDetailBody: FC<Props> = ({user, setUser}) => {
@@ -59,7 +58,7 @@ export const UserDetailBody: FC<Props> = ({user, setUser}) => {
 					<>
 						<Link href="/dashboard/profile">
 							<Control primary circular outline>
-								ویرایش مشخصات
+								داشبورد
 							</Control>
 						</Link>
 						<SpaceDivider size={Size.TINY} />

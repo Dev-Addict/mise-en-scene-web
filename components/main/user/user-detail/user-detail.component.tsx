@@ -2,8 +2,8 @@ import React, {Dispatch, FC, SetStateAction} from 'react';
 import styled from 'styled-components';
 
 import {UserDetailBody} from './user-detail-body.component';
-import {FindUserQueryDataFindUser} from '../../../../api';
 import {Avatar} from '../../../shared';
+import {User} from '../../../../types';
 
 const UserDetailContainer = styled.div`
 	width: 250px;
@@ -23,8 +23,8 @@ const UserDetailContainer = styled.div`
 `;
 
 interface Props {
-	user: FindUserQueryDataFindUser;
-	setUser: Dispatch<SetStateAction<FindUserQueryDataFindUser | undefined>>;
+	user: User;
+	setUser: Dispatch<SetStateAction<User | undefined>>;
 }
 
 export const UserDetail: FC<Props> = ({user, setUser}) => {

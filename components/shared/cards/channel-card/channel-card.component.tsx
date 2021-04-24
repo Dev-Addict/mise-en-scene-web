@@ -1,16 +1,17 @@
-import React, {FC} from 'react';
-import {useRouter} from 'next/router';
+import React, {FC, useEffect, useState} from 'react';
 import styled, {css} from 'styled-components';
 
 import {Channel, Size} from '../../../../types';
 import {Cover} from '../../view';
 import {Text} from '../../text.component';
-import {Button} from '../../native';
-import {Color} from '../../../../data';
+import {Filler} from '../../flex.component';
 import {useAuth} from '../../../../hooks';
+import {ChannelCardOwnerActions} from './channel-card-owner-actions.component';
+import {ChannelCardUnacceptedActions} from './channel-card-unaccepted-actions.component';
 
 interface ContainerProps {
 	verified?: boolean;
+	exists?: boolean;
 }
 
 const Container = styled.div<ContainerProps>`
@@ -27,6 +28,12 @@ const Container = styled.div<ContainerProps>`
 		css`
 			border-color: ${primary};
 		`}
+
+	${({exists = true}) =>
+		!exists &&
+		css`
+			display: none;
+		`}
 `;
 
 interface Props {
@@ -34,25 +41,24 @@ interface Props {
 	width: number;
 }
 
-export const ChannelCard: FC<Props> = ({
-	channel: {verified, cover, name, handle, owner, admins},
-	width,
-}) => {
-	const router = useRouter();
-
+export const ChannelCard: FC<Props> = ({channel, width}) => {
 	const {user} = useAuth();
 
-	const isOwnerOrAccepted =
-		user?.id === owner ||
-		admins?.find(({user: admin}) => admin === user?.id)?.accepted ||
-		false;
+	const [
+		{verified, cover, name, handle, owner, myAdmin},
+		setLocalChannel,
+	] = useState(channel);
 
-	const onManageClick = () => () =>
-		verified && router.push(`/channel/manage/${handle || 'no'}`);
-	const onAcceptClick = () => () => {};
+	const isOwnerOrAccepted = user?.id === owner || myAdmin?.accepted || false;
+
+	const isOwnerOrAdmin = user?.id === owner || !!myAdmin || false;
+
+	useEffect(() => {
+		setLocalChannel(channel);
+	}, [channel]);
 
 	return (
-		<Container verified={verified}>
+		<Container verified={verified} exists={isOwnerOrAdmin}>
 			<Cover
 				src={`/image/channel/cover/${cover || 'default.svg'}`}
 				size={150}
@@ -63,24 +69,14 @@ export const ChannelCard: FC<Props> = ({
 			<Text lowOpacity maxLines={1} width={width - 20}>
 				@{handle}
 			</Text>
+			<Filler />
 			{isOwnerOrAccepted ? (
-				<Button
-					primary
-					fill
-					disabled={!verified}
-					onClick={onManageClick()}
-					color={Color.GHOST_WHITE}>
-					مدیریت
-				</Button>
+				<ChannelCardOwnerActions handle={handle} verified={verified} />
 			) : (
-				<Button
-					primary
-					fill
-					disabled={!verified}
-					onClick={onAcceptClick()}
-					color={Color.GHOST_WHITE}>
-					قبول کردن
-				</Button>
+				<ChannelCardUnacceptedActions
+					channel={channel}
+					setChannel={setLocalChannel}
+				/>
 			)}
 		</Container>
 	);

@@ -8,6 +8,7 @@ interface TextProps {
 	center?: boolean;
 	maxLines?: number;
 	width?: number;
+	active?: boolean;
 }
 
 export const Text = styled.div<StyledProps & TextProps>`
@@ -50,5 +51,15 @@ export const Text = styled.div<StyledProps & TextProps>`
 		width &&
 		css`
 			width: ${width}px;
+		`}
+	
+	${({active}) =>
+		active &&
+		css`
+			cursor: pointer;
+
+			&:hover {
+				opacity: 0.5;
+			}
 		`}
 `;

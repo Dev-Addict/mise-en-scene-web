@@ -9,15 +9,11 @@ import {
 	OwnedChannelsQueryVariables,
 } from '../../api';
 
-export const useChannels = () => {
+export const useOwnedChannels = () => {
 	const [channels, setChannels] = useState<Channel[]>([]);
 	const [page, setPage] = useState(1);
 
 	const token = Cookie.get('auth-token');
-
-	const loadMore = () => () => {
-		setPage((page) => page + 1);
-	};
 
 	const {data, loading, refetch} = useQuery<
 		OwnedChannelsQueryData,
@@ -33,6 +29,10 @@ export const useChannels = () => {
 		},
 	});
 
+	const loadMore = () => () => {
+		setPage((page) => page + 1);
+	};
+
 	useEffect(() => {
 		if (
 			data &&
@@ -43,10 +43,13 @@ export const useChannels = () => {
 	}, [data]);
 
 	useEffect(() => {
-		if (!loading && !channels.length && data?.ownedChannels?.results) {
-			setPage(1);
-			refetch();
-		}
+		(async () => {
+			if (!loading && !channels.length && data?.ownedChannels?.results) {
+				setPage(1);
+				setChannels([]);
+				await refetch();
+			}
+		})();
 	}, [channels]);
 
 	return {

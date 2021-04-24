@@ -1,5 +1,6 @@
 import {User} from '../user';
 import {ChannelAdmin} from './channel-admin.model';
+import {None} from '../../none.type';
 
 export interface Channel {
 	id?: string;
@@ -10,4 +11,5 @@ export interface Channel {
 	cover?: string;
 	verified?: boolean;
 	admins?: ChannelAdmin[];
+	myAdmin?: None<ChannelAdmin>;
 }

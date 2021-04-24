@@ -94,3 +94,13 @@
 0xE00005D: failed to send email.
 0xE00005E: invalid email reset token.
 0xE00005F: email reset token has expired.
+0xE000060: channel with id of `channel` not found.
+0xE000061: user with id of `admin` not found.
+0xE000062: you are not an admin.
+0xE000063: you are not an accepted admin.
+0xE000064: you don't have the given permissions.
+0xE000065: you don't have the permission to create new admin.
+0xE000066: can not find the cahnnel with id of `channel`.
+0xE000067: you don't have the permission to delete admin.
+0xE000068: can not find the cahnnel with id of `channel`.
+0xE000069: you don't have the permission to delete admin.

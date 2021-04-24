@@ -1,8 +1,10 @@
 import {gql} from '@apollo/client';
 
+import {None, User} from '../../../types';
+
 export const FIND_USER_QUERY = gql`
-	query FindUser($username: Username!) {
-		findUser(filter: {username: $username}) {
+	query FindUser($filter: JSON!) {
+		findUser(filter: $filter) {
 			id
 			firstname
 			lastname
@@ -18,22 +20,9 @@ export const FIND_USER_QUERY = gql`
 `;
 
 export interface FindUserQueryVariables {
-	username: string;
-}
-
-export interface FindUserQueryDataFindUser {
-	id: string;
-	firstname: string | null;
-	lastname: string | null;
-	displayName: string | null;
-	username: string;
-	bio: string | null;
-	followers: number;
-	followings: number;
-	avatar: string;
-	isFollowed: boolean;
+	filter: {[key: string]: any};
 }
 
 export interface FindUserQueryData {
-	findUser?: FindUserQueryDataFindUser;
+	findUser?: None<User>;
 }

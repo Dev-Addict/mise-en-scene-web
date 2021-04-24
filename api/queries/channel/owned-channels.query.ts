@@ -10,7 +10,7 @@ export const OWNED_CHANNELS_QUERY = gql`
 				name
 				handle
 				owner
-				admins {
+				myAdmin {
 					id
 					accepted
 				}

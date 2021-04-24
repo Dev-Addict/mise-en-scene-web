@@ -4,7 +4,13 @@ import {ApolloProvider} from '@apollo/client';
 import {ThemeProvider} from 'styled-components';
 import 'nprogress/nprogress.css';
 
-import {CopyProvider, FloatingPen, GlobalStyle, Loading} from '../components';
+import {
+	CopyProvider,
+	FloatingPen,
+	GlobalStyle,
+	Loading,
+	OverallHead,
+} from '../components';
 import {ThemeMode} from '../types';
 import {darkTheme, lightTheme} from '../data';
 import {apolloClient} from '../api';
@@ -24,6 +30,7 @@ const App = ({Component, pageProps}: AppProps) => {
 				<AuthProvider>
 					<ThemeProvider
 						theme={theme === ThemeMode.DARK ? darkTheme : lightTheme}>
+						<OverallHead />
 						<GlobalStyle />
 						{isMounted && (
 							<>

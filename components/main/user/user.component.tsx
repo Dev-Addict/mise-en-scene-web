@@ -4,9 +4,9 @@ import styled from 'styled-components';
 
 import {UserDetail} from './user-detail';
 import {Announce} from '../announce';
-import {FindUserQueryDataFindUser} from '../../../api';
 import {useAuth} from '../../../hooks';
 import {Announcements} from './announcements';
+import {User as UserModel} from '../../../types';
 
 const Container = styled.div`
 	margin: 20px 100px;
@@ -38,8 +38,8 @@ const Body = styled.div`
 `;
 
 interface Props {
-	user: FindUserQueryDataFindUser;
-	setUser: Dispatch<SetStateAction<FindUserQueryDataFindUser | undefined>>;
+	user: UserModel;
+	setUser: Dispatch<SetStateAction<UserModel | undefined>>;
 }
 
 export const User: FC<Props> = ({user, setUser}) => {

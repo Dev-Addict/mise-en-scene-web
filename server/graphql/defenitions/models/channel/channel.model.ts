@@ -3,6 +3,7 @@ import {objectType} from 'nexus';
 import {UsernameScalar} from '../../scalars';
 import {User} from '../user';
 import {ChannelAdmin} from './channel-admin.model';
+import {protect} from '../../../../utils';
 
 export const Channel = objectType({
 	name: 'Channel',
@@ -21,8 +22,16 @@ export const Channel = objectType({
 		t.nonNull.boolean('verified');
 		t.nonNull.list.nonNull.field('admins', {
 			type: ChannelAdmin,
-			resolve({id}, _args, {models: {ChannelAdmin}}) {
-				return <any>ChannelAdmin.find({id});
+			async resolve({id}, _args, {models: {ChannelAdmin}}) {
+				return <any>ChannelAdmin.find({channel: id}).limit(1000);
+			},
+		});
+		t.field('myAdmin', {
+			type: ChannelAdmin,
+			async resolve({id}, _args, {req, models: {ChannelAdmin, User}}) {
+				const user = req.user || (await protect(req, User, false));
+
+				return <any>ChannelAdmin.findOne({channel: id, user: user?.id});
 			},
 		});
 	},

@@ -2,6 +2,16 @@
 ### Do not make changes to this file directly
 
 
+input AcceptAdminData {
+  channel: ID!
+}
+
+input AddAdminData {
+  admin: ID!
+  channel: ID!
+  permissions: [ChannelAdminPermission!]!
+}
+
 input AnnounceData {
   comment: ID
   gif: ID
@@ -109,6 +119,7 @@ type Channel {
   cover: String!
   handle: Username!
   id: ID!
+  myAdmin: ChannelAdmin
   name: String!
   owner: ID!
   ownerData: User!
@@ -130,9 +141,15 @@ enum ChannelAdminPermission {
   DELETE_POST
   EDIT_ADMINS_PERMISSIONS
   EDIT_OTHERS_POST
-  MAKE_ADMIN
   POST
   REMOVE_ADMIN
+}
+
+type ChannelAdminsResponse {
+  docs: [ChannelAdmin!]!
+  limit: Int!
+  page: Int!
+  results: Int!
 }
 
 type ChannelsResponse {
@@ -159,6 +176,12 @@ input CheckUsernameData {
 }
 
 scalar Date
+
+input EditAdminPermissionsData {
+  admin: ID!
+  channel: ID!
+  permissions: [ChannelAdminPermission!]!
+}
 
 scalar Email
 
@@ -197,15 +220,20 @@ type Image {
 scalar JSON
 
 type Mutation {
+  acceptAdmin(data: AcceptAdminData!): ChannelAdmin
+  addAdmin(data: AddAdminData!): ChannelAdmin!
   announce(data: AnnounceData!): Announcement
   checkAuthKey(data: CheckAuthKeyData!): Boolean!
   checkEmail(data: CheckEmailData!): Boolean!
   checkHandle(data: CheckHandleData!): Boolean
   checkUsername(data: CheckUsernameData!): Boolean!
   dislike(announcement: ID!): AnnouncementDislike!
+  editAdminPermissions(data: EditAdminPermissionsData!): ChannelAdmin
   follow(data: FollowData!): UserFollow!
   forgotPassword(data: ForgotPasswordData!): User
   like(announcement: ID!): AnnouncementLike!
+  rejectAdmin(data: RejectAdminData!): ChannelAdmin
+  removeAdmin(data: RemoveAdminData!): ChannelAdmin
   requestChannel(data: RequestChannelData!): Channel!
   resetEmail(data: ResetEmailData!): AuthResponse
   resetEmailRequest(data: ResetEmailRequestData!): User
@@ -225,8 +253,10 @@ scalar Name
 scalar Password
 
 type Query {
+  admins(filter: JSON, limit: Int, page: Int, sort: JSON): ChannelAdminsResponse!
   announcement(id: ID!): Announcement
   announcements(filter: JSON, limit: Int, page: Int, sort: JSON): AnnouncementsResponse
+  findChannel(filter: JSON!): Channel
   findGifs(limit: Int, page: Int, query: String!): [Gif!]!
   findUser(filter: JSON!): User
   myAnnouncements(filter: JSON, limit: Int, page: Int, sort: JSON): AnnouncementsResponse
@@ -235,6 +265,15 @@ type Query {
   trendingGifs(limit: Int, page: Int): [Gif!]!
   userById(id: ID!): User
   users(filter: JSON, limit: Int, page: Int, sort: JSON): UsersResponse
+}
+
+input RejectAdminData {
+  channel: ID!
+}
+
+input RemoveAdminData {
+  admin: ID!
+  channel: ID!
 }
 
 input RequestChannelData {

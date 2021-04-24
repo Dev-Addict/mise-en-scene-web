@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import styled, {useTheme} from 'styled-components';
 
-import {useChannels, useComponentSize} from '../../../hooks';
+import {useComponentSize, useOwnedChannels} from '../../../hooks';
 import {Animation, Button, ChannelCard, Text} from '../../shared';
 import {Size, Theme, ThemeMode} from '../../../types';
 import {movieLoaderDark, movieLoaderLight} from '../../../assets';
@@ -10,22 +10,22 @@ const Container = styled.div`
 	margin: 10px 0;
 `;
 
-interface ContainerProps {
+interface ChannelsProps {
 	itemPerView?: number;
 }
 
-const Channels = styled.div<ContainerProps>`
+const Channels = styled.div<ChannelsProps>`
 	display: grid;
-	grid-auto-rows: 1fr;
 	grid-template-columns: ${({itemPerView}) =>
 		new Array(itemPerView).fill('1fr').join(' ')};
 `;
 
 export const OwnedChannels = () => {
 	const channelsContainerRef = useRef<HTMLDivElement>(null);
+
 	const {mode} = useTheme() as Theme;
 
-	const {channels, loading, loadMore, results} = useChannels();
+	const {channels, loading, loadMore, results} = useOwnedChannels();
 
 	const {width} = useComponentSize(channelsContainerRef);
 

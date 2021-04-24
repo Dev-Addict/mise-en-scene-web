@@ -9,17 +9,11 @@ import {
 	User as UserDetail,
 } from '../../components';
 import {cookieParser} from '../../utils';
-import {
-	apolloClient,
-	FIND_USER_QUERY,
-	FindUserQueryData,
-	FindUserQueryDataFindUser,
-	FindUserQueryVariables,
-} from '../../api';
-import {Props} from '../../types';
+import {Props, User as UserModel} from '../../types';
+import {findUser} from '../../helpers';
 
 interface InitialProps {
-	user?: FindUserQueryDataFindUser;
+	user?: UserModel;
 }
 
 const User: NextPage<Props & InitialProps, InitialProps> = ({
@@ -46,28 +40,11 @@ const User: NextPage<Props & InitialProps, InitialProps> = ({
 };
 
 User.getInitialProps = async ({query: {username}, req}) => {
-	let user: FindUserQueryDataFindUser | undefined = undefined;
-
 	const token =
 		cookieParser(req?.headers?.cookie || '')['auth-token'] ||
 		Cookie.get('auth-token');
 
-	try {
-		const {data} = await apolloClient.query<
-			FindUserQueryData,
-			FindUserQueryVariables
-		>({
-			query: FIND_USER_QUERY,
-			variables: {username: username as string},
-			context: {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			},
-		});
-
-		user = data.findUser;
-	} catch (_) {}
+	const user = await findUser({username}, token);
 
 	return {
 		user,

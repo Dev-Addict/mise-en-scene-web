@@ -22,7 +22,7 @@ export const OwnedChannelsQuery = queryField('ownedChannels', {
 
 		const adminCases = await ChannelAdmin.find({user});
 
-		const adminChannels = adminCases.map(({_id}: IChannelAdmin) => _id);
+		const adminChannels = adminCases.map(({channel}: IChannelAdmin) => channel);
 
 		filter = {
 			...filter,

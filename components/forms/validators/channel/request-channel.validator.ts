@@ -2,12 +2,12 @@ import {FormikErrors} from 'formik';
 
 import {RequestChannelFields} from '../../channel';
 import {usernameValidator} from '../../../../utils';
-import {apolloClient} from '../../../../api';
 import {
+	apolloClient,
 	CHECK_HANDLE_MUTATION,
 	CheckHandleMutationData,
 	CheckHandleMutationVariables,
-} from '../../../../api/mutations/channel/check-handle.mutation';
+} from '../../../../api';
 
 export const requestChannelValidator = async ({
 	handle,

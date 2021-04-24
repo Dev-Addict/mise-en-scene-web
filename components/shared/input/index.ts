@@ -1,3 +1,4 @@
+export * from './check-box';
 export * from './emoji-picker';
 export * from './file';
 export * from './formik';

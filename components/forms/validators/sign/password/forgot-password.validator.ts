@@ -5,7 +5,6 @@ import {ForgotPasswordFields} from '../../../sign';
 import {
 	apolloClient,
 	CHECK_AUTH_KEY_MUTATION,
-	CHECK_EMAIL_MUTATION,
 	CheckAuthKeyMutationData,
 	CheckAuthKeyMutationVariables,
 } from '../../../../../api';
@@ -32,7 +31,9 @@ export const forgotPasswordValidator = async ({
 				)?.data?.checkAuthKey
 			)
 				errors.authKey = 'ایمیل یا شناسه کاربری وارد شده پیدا نشد.';
-	} catch (e) {}
+	} catch (e) {
+		errors.authKey = 'خطای نامشخصی رخ داد لطفا دوباره تلاش کنید.';
+	}
 
 	return errors;
 };

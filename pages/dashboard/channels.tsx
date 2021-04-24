@@ -30,7 +30,7 @@ const Channels: NextPage<Props> = ({setTheme}) => {
 			<Body>
 				<Header>
 					<Text size={Size.HUGE}>کانال های شما</Text>
-					<Link href="/channel/request">
+					<Link href="/channels/request">
 						<Button primary circular type="button">
 							درخواست کانال
 						</Button>
