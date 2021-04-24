@@ -2,9 +2,8 @@ import React, {FC} from 'react';
 import styled from 'styled-components';
 
 import {useUserDisplayName} from '../../../../hooks';
-import {FindUserQueryDataFindUser} from '../../../../api';
 import {Text} from '../../../shared';
-import {Size} from '../../../../types';
+import {Size, User} from '../../../../types';
 
 const Container = styled.div`
 	display: flex;
@@ -29,11 +28,11 @@ const Container = styled.div`
 `;
 
 interface Props {
-	user: FindUserQueryDataFindUser;
+	user: User;
 }
 
 export const Username: FC<Props> = ({user}) => {
-	const displayName = useUserDisplayName<FindUserQueryDataFindUser>(user);
+	const displayName = useUserDisplayName<User>(user);
 
 	return (
 		<Container>

@@ -2,8 +2,7 @@ import React, {FC} from 'react';
 import styled from 'styled-components';
 
 import {Filler, Row, Text} from '../../../shared';
-import {FindUserQueryDataFindUser} from '../../../../api';
-import {Size} from '../../../../types';
+import {Size, User} from '../../../../types';
 
 const Container = styled(Row)`
 	@media only screen and (max-width: 1000px) {
@@ -16,7 +15,7 @@ const Container = styled(Row)`
 `;
 
 interface Props {
-	user: FindUserQueryDataFindUser;
+	user: User;
 }
 
 export const UserFollowDetail: FC<Props> = ({user}) => {

@@ -4,7 +4,6 @@ import {useMutation} from '@apollo/client';
 
 import {Control} from './user-detail-components.component';
 import {
-	FindUserQueryDataFindUser,
 	FOLLOW_MUTATION,
 	FollowMutationData,
 	FollowMutationVariables,
@@ -14,10 +13,11 @@ import {
 } from '../../../../api';
 import {useAuth} from '../../../../hooks';
 import {Color} from '../../../../data';
+import {User} from '../../../../types';
 
 interface Props {
-	user: FindUserQueryDataFindUser;
-	setUser: Dispatch<SetStateAction<FindUserQueryDataFindUser | undefined>>;
+	user: User;
+	setUser: Dispatch<SetStateAction<User | undefined>>;
 }
 
 export const UserFollowControl: FC<Props> = ({user, setUser}) => {
@@ -40,7 +40,7 @@ export const UserFollowControl: FC<Props> = ({user, setUser}) => {
 
 		try {
 			await follow({
-				variables: {following: user.id},
+				variables: {following: user.id || ''},
 				context: {
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -50,8 +50,8 @@ export const UserFollowControl: FC<Props> = ({user, setUser}) => {
 
 			setUser({
 				...user,
-				followers: user.followers + 1,
 				isFollowed: true,
+				followers: (user.followers || 0) + 1,
 			});
 		} catch (error) {}
 	};
@@ -59,7 +59,7 @@ export const UserFollowControl: FC<Props> = ({user, setUser}) => {
 	const onUnfollowClick = () => async () => {
 		try {
 			await unfollow({
-				variables: {following: user.id},
+				variables: {following: user.id || ''},
 				context: {
 					headers: {
 						Authorization: `Bearer ${token}`,
@@ -69,7 +69,7 @@ export const UserFollowControl: FC<Props> = ({user, setUser}) => {
 
 			setUser({
 				...user,
-				followers: user.followers - 1,
+				followers: (user.followers || 0) - 1,
 				isFollowed: false,
 			});
 		} catch (error) {}

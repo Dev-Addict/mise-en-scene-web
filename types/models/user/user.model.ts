@@ -12,4 +12,7 @@ export interface User {
 	username?: string;
 	bio?: None<string>;
 	displayName?: None<string>;
+	followers?: number;
+	isFollowed?: boolean;
+	followings?: number;
 }
