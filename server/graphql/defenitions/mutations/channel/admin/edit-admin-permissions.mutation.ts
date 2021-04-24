@@ -41,9 +41,9 @@ export const EditAdminPermissionsMutation = mutationField(
 			)
 				throw new AppError('0xE000069', 403);
 
-			if (admin) admin.permissions = permissions;
+			if (admin) admin.permissions = permissions as any;
 			await admin?.save();
-			return admin;
+			return <any>admin;
 		},
 	}
 );

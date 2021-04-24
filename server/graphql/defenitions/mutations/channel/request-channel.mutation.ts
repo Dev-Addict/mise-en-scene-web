@@ -21,6 +21,6 @@ export const RequestChannelMutation = mutationField('requestChannel', {
 			? await saveFile(cover, 'image', 'channel/cover')
 			: undefined;
 
-		return Channel.create({...data, owner, cover: coverUrl});
+		return <any>Channel.create({...data, owner, cover: coverUrl});
 	},
 });

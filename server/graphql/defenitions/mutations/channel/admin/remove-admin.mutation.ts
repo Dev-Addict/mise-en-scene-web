@@ -32,6 +32,6 @@ export const RemoveAdminMutation = mutationField('removeAdmin', {
 		)
 			throw new AppError('0xE000067', 403);
 
-		return ChannelAdmin.findByIdAndDelete(adminId);
+		return <any>ChannelAdmin.findByIdAndDelete(adminId);
 	},
 });

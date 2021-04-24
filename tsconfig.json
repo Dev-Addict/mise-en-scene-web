@@ -14,7 +14,7 @@
     "baseUrl": ".",
     "esModuleInterop": true,
     "preserveSymlinks": false,
-    "preserveConstEnums": false,
+    "preserveConstEnums": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
