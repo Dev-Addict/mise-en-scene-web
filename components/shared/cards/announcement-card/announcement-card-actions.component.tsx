@@ -87,7 +87,6 @@ export const AnnouncementCardActions: FC<Props> = ({
 					action={onShare()}
 					message="کپی شد!"
 					view={<Image src={share} width={20} height={20} />}
-					left
 				/>
 			</Item>
 		</Container>
