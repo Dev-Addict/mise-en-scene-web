@@ -6,11 +6,13 @@ import Cookie from 'js-cookie';
 import {
 	AnnouncementProvider,
 	Header,
+	Meta,
 	User as UserDetail,
 } from '../../components';
 import {cookieParser} from '../../utils';
 import {Props, User as UserModel} from '../../types';
 import {findUser} from '../../helpers';
+import {useUserDisplayName} from '../../hooks';
 
 interface InitialProps {
 	user?: UserModel;
@@ -22,6 +24,8 @@ const User: NextPage<Props & InitialProps, InitialProps> = ({
 }) => {
 	const [userState, setUserState] = useState(user);
 
+	const displayName = userState && useUserDisplayName(userState);
+
 	useEffect(() => {
 		setUserState(user);
 	}, [user]);
@@ -32,6 +36,7 @@ const User: NextPage<Props & InitialProps, InitialProps> = ({
 		<AnnouncementProvider
 			filter={{user: userState.id, comment: {exists: false}}}>
 			<div>
+				<Meta title={`پروفایل ${displayName}`} />
 				<Header setTheme={setTheme} />
 				<UserDetail user={userState} setUser={setUserState} />
 			</div>

@@ -5,6 +5,7 @@ import {FormikHelpers} from 'formik/dist/types';
 import {
 	ForgotPasswordFields,
 	ForgotPasswordForm,
+	Meta,
 	SignHeader,
 } from '../../../../components';
 import {useAuth} from '../../../../hooks';
@@ -44,6 +45,7 @@ const ResetPassword = () => {
 
 	return (
 		<div>
+			<Meta title="بازنشانی رمز عبور" />
 			<SignHeader />
 			<ForgotPasswordForm
 				errors={errors}

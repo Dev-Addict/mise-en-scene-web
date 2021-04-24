@@ -3,7 +3,7 @@ import Image from 'next/image';
 import styled from 'styled-components';
 
 import {useThemeImage, useWindowSize} from '../../../../hooks';
-import {SignHeader} from '../../../../components';
+import {Meta, SignHeader} from '../../../../components';
 
 const Title = styled.div`
 	direction: rtl;
@@ -52,6 +52,7 @@ const Success = () => {
 
 	return (
 		<div>
+			<Meta title="موفقیت بازنشانی رمز عبور" />
 			<SignHeader />
 			<div>
 				<Title>ایمیل تغییر رمز عبور با موفقیت ارسال شد!</Title>

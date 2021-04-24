@@ -5,6 +5,7 @@ import Error from 'next/error';
 import {FormikHelpers} from 'formik/dist/types';
 
 import {
+	Meta,
 	ResetPasswordFields,
 	ResetPasswordForm,
 	SignHeader,
@@ -66,6 +67,7 @@ const Reset: NextPage<Props & InitialProps, InitialProps> = ({
 
 	return (
 		<div>
+			<Meta title="بازنشانی رمز عبور" />
 			<SignHeader />
 			<ResetPasswordForm
 				errors={errors}

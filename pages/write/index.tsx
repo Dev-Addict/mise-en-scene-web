@@ -3,7 +3,7 @@ import {NextPage} from 'next';
 import {useRouter} from 'next/router';
 import styled from 'styled-components';
 
-import {Announce, Header} from '../../components';
+import {Announce, Header, Meta} from '../../components';
 import {Props} from '../../types';
 import {useAuth, useWindowSize} from '../../hooks';
 
@@ -38,6 +38,7 @@ const Write: NextPage<Props> = ({setTheme}) => {
 
 	return (
 		<div>
+			<Meta title="آغاز گفت و گو" />
 			<Header setTheme={setTheme} />
 			<Container height={height}>
 				<Announce onAnnounce={onAnnounce()} />

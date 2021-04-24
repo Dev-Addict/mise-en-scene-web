@@ -11,6 +11,7 @@ import {
 	AnnouncementProvider,
 	Announcements,
 	Header,
+	Meta,
 } from '../../../components';
 import {cookieParser} from '../../../utils';
 import {useAuth} from '../../../hooks';
@@ -51,6 +52,7 @@ const Announcement: NextPage<Props & InitialProps, InitialProps> = ({
 
 	return (
 		<div>
+			<Meta title="گفت و گو" />
 			<Header setTheme={setTheme} />
 			<Container>
 				<AnnouncementCard announcement={announcement} border />

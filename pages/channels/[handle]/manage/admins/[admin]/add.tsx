@@ -3,7 +3,7 @@ import {NextPage} from 'next';
 import {useRouter} from 'next/router';
 import Cookie from 'js-cookie';
 
-import {AddAdminView} from '../../../../../../components';
+import {AddAdminView, Meta} from '../../../../../../components';
 import {Channel, Props, User} from '../../../../../../types';
 import {findChannel, findUser} from '../../../../../../helpers';
 import {cookieParser} from '../../../../../../utils';
@@ -38,7 +38,12 @@ const AddAdmin: NextPage<Props & InitialProps, InitialProps> = ({
 		setLocalAdmin(admin);
 	}, [admin]);
 
-	return <AddAdminView admin={localAdmin} channel={localChannel} />;
+	return (
+		<div>
+			<Meta title={`اضافه کردن مدیر به کانال ${channel?.name}`} />
+			<AddAdminView admin={localAdmin} channel={localChannel} />
+		</div>
+	);
 };
 
 AddAdmin.getInitialProps = async ({query: {handle, admin: authKey}, req}) => {

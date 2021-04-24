@@ -5,7 +5,7 @@ import Error from 'next/error';
 import styled from 'styled-components';
 import Cookie from 'js-cookie';
 
-import {Announce, AnnouncementCard, Header} from '../../../components';
+import {Announce, AnnouncementCard, Header, Meta} from '../../../components';
 import {Announcement, Props} from '../../../types';
 import {useAuth, useWindowSize} from '../../../hooks';
 import {cookieParser} from '../../../utils';
@@ -53,6 +53,7 @@ const ReAnnounce: NextPage<Props & InitialProps, InitialProps> = ({
 
 	return (
 		<div>
+			<Meta title="بازگویی گفت و گو" />
 			<Header setTheme={setTheme} />
 			<Container height={height}>
 				<AnnouncementCard announcement={announcement} border />

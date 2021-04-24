@@ -7,6 +7,7 @@ import styled, {css} from 'styled-components';
 import {useComponentSize, useThemeImage} from '../../../hooks';
 import {StyledProps} from '../../../types';
 import {Color} from '../../../data';
+import {Meta} from '../../pages';
 
 const Container = styled.div`
 	position: relative;
@@ -78,6 +79,7 @@ export const DashboardRoute: FC<Props> = ({icon, name, route}) => {
 
 	return (
 		<Container>
+			{active && <Meta title={name} />}
 			<Icon>
 				<Image src={themeIcon} width={30} height={30} />
 			</Icon>

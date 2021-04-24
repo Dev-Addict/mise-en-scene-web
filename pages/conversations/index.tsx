@@ -7,6 +7,7 @@ import {
 	AnnouncementProvider,
 	Announcements,
 	Header,
+	Meta,
 	Tabs,
 } from '../../components';
 import {useAuth} from '../../hooks';
@@ -68,6 +69,7 @@ const Conversations: NextPage<
 				},
 			}}>
 			<div>
+				<Meta title={isMy ? 'گفت و گو های من' : 'همه گفت و گو ها'} />
 				<Header setTheme={setTheme} />
 				<Body>
 					{isSigned && <Announce />}

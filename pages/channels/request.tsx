@@ -1,6 +1,11 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
-import {Logo, RequestChannelFields, RequestChannelForm} from '../../components';
+import {
+	Logo,
+	Meta,
+	RequestChannelFields,
+	RequestChannelForm,
+} from '../../components';
 import {FormikHelpers} from 'formik/dist/types';
 import {useMutation} from '@apollo/client';
 import {
@@ -79,6 +84,7 @@ const Request = () => {
 
 	return (
 		<div>
+			<Meta title="درخواست کانال" />
 			<Header>
 				<Logo />
 			</Header>

@@ -5,6 +5,7 @@ import Error from 'next/error';
 import {FormikHelpers} from 'formik/dist/types';
 
 import {
+	Meta,
 	ResetEmailFields,
 	ResetEmailForm,
 	SignHeader,
@@ -65,6 +66,7 @@ const Reset: NextPage<Props & InitialProps, InitialProps> = ({
 
 	return (
 		<div>
+			<Meta title="بازنشانی ایمیل" />
 			<SignHeader />
 			<ResetEmailForm
 				errors={errors}

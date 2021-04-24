@@ -4,7 +4,13 @@ import {useRouter} from 'next/router';
 import Error from 'next/error';
 import styled from 'styled-components';
 
-import {AdminFinder, ChannelAdmins, Header, Text} from '../../../../components';
+import {
+	AdminFinder,
+	ChannelAdmins,
+	Header,
+	Meta,
+	Text,
+} from '../../../../components';
 import {findChannel} from '../../../../helpers';
 import {Channel, Props, Size} from '../../../../types';
 import {useAuth} from '../../../../hooks';
@@ -52,6 +58,7 @@ const ManageChannel: NextPage<Props & InitialProps, InitialProps> = ({
 
 	return (
 		<div>
+			<Meta title={`مدیدریت کانال ${localChannel.name}`} />
 			<Header setTheme={setTheme} />
 			<Body>
 				<Text size={Size.MASSIVE}>مدیر ها</Text>

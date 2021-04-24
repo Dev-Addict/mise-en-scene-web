@@ -4,6 +4,7 @@ import {SignHeader} from '../../main';
 import {SwitchItem} from '../../shared';
 import {SignInBody} from './sign-in-body.component';
 import {SignUpBody} from './sign-up-body.component';
+import {Meta} from '../meta.component';
 
 export enum SignState {
 	SIGN_IN = 'SIGN_IN',
@@ -25,6 +26,7 @@ export const Sign: FC<Props> = ({state}) => {
 
 	return (
 		<div>
+			<Meta title={localState === SignState.SIGN_UP ? 'ثبت نام' : 'ورود'} />
 			<SignHeader
 				showSwitch
 				onSwitchClick={onSignItemClick()}
