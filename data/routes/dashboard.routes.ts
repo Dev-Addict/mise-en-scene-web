@@ -14,4 +14,9 @@ export const dashboardRoutes = [
 		name: 'کانال ها',
 		route: '/dashboard/channels',
 	},
+	{
+		icon: '/assets/icons/wallet/wallet-$mode.svg',
+		name: 'کیف پول',
+		route: '/dashboard/wallet',
+	},
 ];

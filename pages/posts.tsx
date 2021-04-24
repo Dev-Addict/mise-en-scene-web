@@ -4,7 +4,7 @@ import {NextPage} from 'next';
 import {ComingSoon, Header} from '../components';
 import {Props} from '../types';
 
-const Home: NextPage<Props> = ({setTheme}) => {
+const Posts: NextPage<Props> = ({setTheme}: Props) => {
 	return (
 		<div>
 			<Header setTheme={setTheme} />
@@ -13,4 +13,4 @@ const Home: NextPage<Props> = ({setTheme}) => {
 	);
 };
 
-export default Home;
+export default Posts;
