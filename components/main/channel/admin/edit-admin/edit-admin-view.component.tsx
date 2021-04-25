@@ -1,16 +1,16 @@
 import React, {FC} from 'react';
 import Error from 'next/error';
 
-import {Channel, User} from '../../../../types';
-import {SignHeader} from '../../sign';
-import {AddAdmin} from './add-amin.component';
+import {Channel, User} from '../../../../../types';
+import {SignHeader} from '../../../sign';
+import {EditAdmin} from './edit-amin.component';
 
 interface Props {
 	admin?: User;
 	channel?: Channel;
 }
 
-export const AddAdminView: FC<Props> = ({admin, channel}) => {
+export const EditAdminView: FC<Props> = ({admin, channel}) => {
 	if (!channel)
 		return <Error statusCode={404} title="کانالی با این هندل وجود ندارد." />;
 
@@ -27,21 +27,18 @@ export const AddAdminView: FC<Props> = ({admin, channel}) => {
 
 	if (channel.ownerData?.id === admin.id)
 		return (
-			<Error
-				statusCode={401}
-				title="امکان اضافه کردن صاحب کانال به عنوان ادمین وجود ندارد."
-			/>
+			<Error statusCode={401} title="امکان ویرایش صاحب کانال وجود ندارد." />
 		);
 
-	if (channel.admins?.some(({userData}) => userData?.id === admin.id))
+	if (!channel.admins?.some(({userData}) => userData?.id === admin.id))
 		return (
-			<Error statusCode={401} title="ادمین قبلا به کانال اضافه شده است." />
+			<Error statusCode={401} title="ادمین قبلا به کانال اضافه نشده است." />
 		);
 
 	return (
 		<div>
 			<SignHeader />
-			<AddAdmin admin={admin} channel={channel} />
+			<EditAdmin admin={admin} channel={channel} />
 		</div>
 	);
 };

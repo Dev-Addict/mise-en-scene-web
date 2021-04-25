@@ -68,7 +68,7 @@ export const AdminPermissionsForm: FC<Props> = ({
 						<Avatar user={admin} size={120} />
 					</ConnectContainer>
 					<ProfileHeader>{header}</ProfileHeader>
-					<AdminPermissionsInputs />
+					<AdminPermissionsInputs myAdmin={channel?.myAdmin} />
 					<Errors errors={errors} />
 					<SubmitContainer>
 						<Button

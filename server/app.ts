@@ -9,3 +9,4 @@ app.use(cors());
 app.use(urlencoded({extended: true}));
 app.use(json());
 app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(express.static('dynamic'));

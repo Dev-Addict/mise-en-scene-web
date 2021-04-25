@@ -2,23 +2,32 @@ import React, {FC, useState} from 'react';
 import {useRouter} from 'next/router';
 import {FormikHelpers} from 'formik';
 
-import {AdminFinderFields, AdminFinderForm} from '../../../forms';
-import {ChannelAdmin, User} from '../../../../types';
+import {AdminFinderFields, AdminFinderForm} from '../../../../forms';
+import {Channel, ChannelAdminPermission} from '../../../../../types';
+import {useAuth} from '../../../../../hooks';
 
 const initialValues: AdminFinderFields = {
 	authKey: '',
 };
 
 interface Props {
-	admins?: ChannelAdmin[];
-	owner?: User;
+	channel: Channel;
 }
 
-export const AdminFinder: FC<Props> = ({admins, owner}) => {
+export const AdminFinder: FC<Props> = ({
+	channel: {admins, owner, ownerData, myAdmin},
+}) => {
 	const router = useRouter();
 	const {handle} = router.query;
 
 	const [errors, setErrors] = useState<string[]>([]);
+
+	const {user} = useAuth();
+
+	const isAddable =
+		owner === user?.id ||
+		myAdmin?.permissions?.includes(ChannelAdminPermission.CREATE_NEW_ADMIN) ||
+		false;
 
 	const onSubmit = (): ((
 		values: AdminFinderFields,
@@ -28,7 +37,7 @@ export const AdminFinder: FC<Props> = ({admins, owner}) => {
 
 		setErrors([]);
 
-		if (owner?.username === authKey || owner?.email === authKey)
+		if (ownerData?.username === authKey || ownerData?.email === authKey)
 			setErrors(['امکان اضافه کردن صاحب کانال به عنوان ادمین وجود ندارد.']);
 		else if (
 			admins?.some(
@@ -44,11 +53,13 @@ export const AdminFinder: FC<Props> = ({admins, owner}) => {
 
 	return (
 		<div>
-			<AdminFinderForm
-				onSubmit={onSubmit()}
-				errors={errors}
-				initialValues={initialValues}
-			/>
+			{isAddable && (
+				<AdminFinderForm
+					onSubmit={onSubmit()}
+					errors={errors}
+					initialValues={initialValues}
+				/>
+			)}
 		</div>
 	);
 };

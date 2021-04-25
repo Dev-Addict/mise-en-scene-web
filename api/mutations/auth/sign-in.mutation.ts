@@ -11,6 +11,7 @@ export const SIGN_IN_MUTATION = gql`
 				email
 				avatar
 				birthday
+				gender
 				username
 				bio
 				displayName

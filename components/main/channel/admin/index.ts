@@ -1,3 +1,3 @@
-export * from './add-admin-key.component';
-export * from './add-admin-view.component';
+export * from './add-admin';
+export * from './edit-admin';
 export * from './channel-admins.component';

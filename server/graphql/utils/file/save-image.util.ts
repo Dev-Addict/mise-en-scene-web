@@ -23,7 +23,7 @@ export const saveImage = async (
 	)}`;
 	const directoryPath = join(
 		__dirname,
-		`../../../../public/image/${directory}`
+		`../../../../dynamic/image/${directory}`
 	);
 	const path = join(directoryPath, filename);
 	if (!existsSync(directoryPath)) mkdirSync(directoryPath);

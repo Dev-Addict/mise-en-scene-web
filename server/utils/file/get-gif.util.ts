@@ -17,7 +17,7 @@ export const getGif = async (
 
 	if (!gif) {
 		try {
-			const directory = join(__dirname, `../../../public/image/gif/`);
+			const directory = join(__dirname, `../../../dynamic/image/gif/`);
 			const filename = `${giphyId}.gif`;
 			const path = join(directory, filename);
 

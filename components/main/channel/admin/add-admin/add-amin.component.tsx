@@ -1,18 +1,18 @@
 import React, {FC, useState} from 'react';
 import {useRouter} from 'next/router';
 import {useMutation} from '@apollo/client';
+import {GraphQLError} from 'graphql';
 import {FormikHelpers} from 'formik';
 
-import {AdminPermissionsFields, AdminPermissionsForm} from '../../../forms';
-import {Channel, User} from '../../../../types';
+import {AdminPermissionsFields, AdminPermissionsForm} from '../../../../forms';
+import {Channel, ChannelAdminPermission, User} from '../../../../../types';
 import {
 	ADD_ADMIN_MUTATION,
 	AddAdminMutationData,
 	AddAdminMutationVariables,
-} from '../../../../api';
-import {useAuth} from '../../../../hooks';
-import {errorParser} from '../../../../utils';
-import {GraphQLError} from 'graphql';
+} from '../../../../../api';
+import {useAuth} from '../../../../../hooks';
+import {errorParser} from '../../../../../utils';
 
 const initialValues: AdminPermissionsFields = {
 	EDIT_OTHERS_POST: true,
@@ -59,7 +59,9 @@ export const AddAdmin: FC<Props> = ({admin, channel}) => {
 				variables: {
 					admin: admin!.id!,
 					channel: channel!.id!,
-					permissions: [],
+					permissions: Object.keys(values).filter(
+						(key) => (values as any)[key]
+					) as ChannelAdminPermission[],
 				},
 			});
 

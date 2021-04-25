@@ -37,7 +37,7 @@ export const signUpValidator = async ({
 	if (!username) errors.username = 'نام کاربری اجباری است.';
 	else if (!usernameValidator(username, false))
 		errors.username =
-			'نام کاربری نامعتبر است. حداقل چهار کاراکتر با حروف انگلیسی و اعداد و آندرلاین.';
+			'نام کاربری نامعتبر است. حداقل چهار کاراکتر با حروف کوچک انگلیسی و اعداد و آندرلاین.';
 	try {
 		if (!errors.username)
 			if (

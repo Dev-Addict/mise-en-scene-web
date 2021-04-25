@@ -25,7 +25,7 @@ export const saveFile = async (
 	)}`;
 	const directoryPath = join(
 		__dirname,
-		`../../../../public/${type}/${directory}`
+		`../../../../dynamic/${type}/${directory}`
 	);
 	const path = join(directoryPath, filename);
 	if (!existsSync(directoryPath)) mkdirSync(directoryPath);
