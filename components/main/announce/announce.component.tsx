@@ -1,5 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
+import {useRouter} from 'next/router';
 import {useMutation} from '@apollo/client';
+import {GraphQLError} from 'graphql';
 import {EditorState} from 'draft-js';
 
 import {
@@ -9,9 +11,7 @@ import {
 } from '../../../api';
 import {WriteFields, WriteForm} from '../../forms';
 import {FormikHelpers} from 'formik/dist/types';
-import {useAuth} from '../../../hooks';
-import {useRouter} from 'next/router';
-import {GraphQLError} from 'graphql';
+import {useAnnouncements, useAuth} from '../../../hooks';
 import {editorStateToRawText, errorParser} from '../../../utils';
 import {ServerError} from '../../../types';
 
@@ -38,6 +38,7 @@ export const Announce: FC<Props> = ({onAnnounce, reAnnouncement, comment}) => {
 	const [errors, setErrors] = useState<string[]>([]);
 
 	const {isSigned, isLoading, token} = useAuth();
+	const {reload} = useAnnouncements();
 
 	const [announce] = useMutation<
 		AnnounceMutationData,
@@ -46,7 +47,7 @@ export const Announce: FC<Props> = ({onAnnounce, reAnnouncement, comment}) => {
 
 	const onSubmit = () => async (
 		{text, gif, gallery, poll, publishAt, reAnnouncement, comment}: WriteFields,
-		{setSubmitting}: FormikHelpers<WriteFields>
+		{setSubmitting, resetForm}: FormikHelpers<WriteFields>
 	) => {
 		setSubmitting(true);
 
@@ -76,7 +77,11 @@ export const Announce: FC<Props> = ({onAnnounce, reAnnouncement, comment}) => {
 						) as ServerError[]) || []
 					)
 				);
-			} else onAnnounce && onAnnounce();
+			} else {
+				onAnnounce && onAnnounce();
+				reload();
+				resetForm({values: initialValues});
+			}
 		} catch (error) {
 			setErrors(
 				errorParser(

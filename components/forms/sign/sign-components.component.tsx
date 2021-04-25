@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import {Form} from 'formik';
 
 import {StyledProps} from '../../../types';
@@ -51,7 +51,16 @@ export const ConvertLink = styled.span<StyledProps>`
 	}
 `;
 
-export const SubmitContainer = styled.div`
+interface SubmitContainerProps {
+	space?: boolean;
+}
+
+export const SubmitContainer = styled.div<SubmitContainerProps>`
 	width: 100%;
-	margin-bottom: 80px;
+
+	${({space = true}) =>
+		space &&
+		css`
+			margin-bottom: 80px;
+		`}
 `;

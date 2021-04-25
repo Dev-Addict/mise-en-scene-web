@@ -34,7 +34,7 @@ export const AdminFinderForm: FC<Props> = ({
 				<Body>
 					<AdminKeyInputs />
 					<Errors errors={errors} />
-					<SubmitContainer>
+					<SubmitContainer space={false}>
 						<Button
 							primary
 							color={Color.GHOST_WHITE}

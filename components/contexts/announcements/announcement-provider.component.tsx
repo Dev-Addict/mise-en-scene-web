@@ -25,6 +25,7 @@ export const AnnouncementProvider: FC<Props> = ({
 		myAnnouncements,
 		myLoading,
 		myResults,
+		reload,
 	} = useAnnouncementsQuery(filter || {}, page, setPage, myPage, setMyPage);
 
 	const loadMore = () => () =>
@@ -40,6 +41,7 @@ export const AnnouncementProvider: FC<Props> = ({
 				loading: my ? myLoading : loading,
 				loadMore: loadMore(),
 				results: my ? myResults : results,
+				reload,
 			}}>
 			{children}
 		</AnnouncementContext.Provider>
