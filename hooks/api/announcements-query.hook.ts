@@ -95,6 +95,14 @@ export const useAnnouncementsQuery = (
 		}
 	}, [myAnnouncements]);
 
+	const reload = () => async () => {
+		setPage(1);
+		setMyPage(1);
+		setAnnouncements([]);
+		setMyAnnouncements([]);
+		await refetch();
+	};
+
 	return {
 		loading,
 		announcements,
@@ -102,5 +110,6 @@ export const useAnnouncementsQuery = (
 		myLoading,
 		myAnnouncements,
 		myResults: myData?.myAnnouncements?.results,
+		reload: reload(),
 	};
 };

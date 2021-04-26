@@ -56,14 +56,14 @@ const Announcement: NextPage<Props & InitialProps, InitialProps> = ({
 			<Header setTheme={setTheme} />
 			<Container>
 				<AnnouncementCard announcement={announcement} border />
-				<Announce
-					comment={announcement.id}
-					onAnnounce={() => console.log('comment')}
-				/>
 				<AnnouncementProvider
 					filter={{
 						comment: announcement.id,
 					}}>
+					<Announce
+						comment={announcement.id}
+						onAnnounce={() => console.log('comment')}
+					/>
 					<Announcements />
 				</AnnouncementProvider>
 			</Container>

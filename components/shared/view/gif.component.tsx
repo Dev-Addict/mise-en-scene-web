@@ -38,7 +38,7 @@ interface Props {
 }
 
 export const Gif: FC<Props> = ({
-	gif: {url, width, height},
+	gif: {url, width, height, title},
 	disabled = false,
 	controls = false,
 	onDelete,
@@ -49,10 +49,11 @@ export const Gif: FC<Props> = ({
 
 	return (
 		<Container ref={containerRef}>
-			<Image
+			<img
 				src={`/image/gif/${url}`}
 				width={containerWidth}
 				height={(containerWidth / (width || 0)) * (height || 0)}
+				alt={title}
 			/>
 			{controls && (
 				<Close onClick={disabled ? undefined : onDelete}>

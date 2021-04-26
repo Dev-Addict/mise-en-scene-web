@@ -29,7 +29,7 @@ export const useAdmins = (filter?: {[key: string]: any}) => {
 				data.admins.docs[data.admins.docs.length - 1]?.id
 		)
 			setAdmins((admins) => [...admins, ...data.admins.docs]);
-	}, [data]);
+	}, [data, loading]);
 
 	useEffect(() => {
 		(async () => {
@@ -39,7 +39,7 @@ export const useAdmins = (filter?: {[key: string]: any}) => {
 				await refetch();
 			}
 		})();
-	}, [admins]);
+	}, [admins, loading, data]);
 
 	return {
 		loading,

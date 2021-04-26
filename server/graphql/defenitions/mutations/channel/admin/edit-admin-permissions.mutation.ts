@@ -23,7 +23,10 @@ export const EditAdminPermissionsMutation = mutationField(
 				channel: channelId,
 				user: user.id,
 			});
-			const admin = await ChannelAdmin.findById(adminId);
+			const admin = await ChannelAdmin.findOne({
+				channel: channelId,
+				user: adminId,
+			});
 
 			if (!channel) throw new AppError('0xE000068', 404);
 

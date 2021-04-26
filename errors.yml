@@ -104,3 +104,13 @@
 0xE000067: you don't have the permission to delete admin.
 0xE000068: can not find the cahnnel with id of `channel`.
 0xE000069: you don't have the permission to delete admin.
+0xE00006A: channel `handle` is required.
+0xE00006B: channel `handle` is invalid.
+0xE00006C: channel `handle` is taken.
+0xE00006D: channel `name` is too short(min length 4).
+0xE00006E: channel `name` is too long(max length 20).
+0xE00006F: channel `name` is required.
+0xE000070: channel `owner` is required.
+0xE000071: channel admin `channel` is required.
+0xE000072: channel admin `user` is required.
+0xE000073: image `alt` is too long(max length 50).

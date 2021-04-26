@@ -27,7 +27,7 @@ export const getGif = async (
 
 			gif = await Gif.create({giphyId, title, url: filename, width, height});
 
-			return gif as IGif;
+			return gif;
 		} catch (error) {
 			return getGif(Gif, giphyUrl, giphyId, title, width, height);
 		}

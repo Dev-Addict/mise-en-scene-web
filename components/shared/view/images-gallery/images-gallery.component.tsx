@@ -6,6 +6,7 @@ import {Image} from '../../../../types';
 import {useComponentSize, useFitSize, useThemeImage} from '../../../../hooks';
 import {
 	Container,
+	MainImage,
 	MainImageContainer,
 	MoreContainer,
 	SideContainer,
@@ -50,20 +51,20 @@ export const ImagesGallery: FC<Props> = ({images}) => {
 			/>
 			<Container ref={containerRef} width={containerWidth}>
 				<MainImageContainer containerWidth={containerWidth}>
-					<NImage
+					<MainImage
 						src={`/image/${mainImage.directory}/${mainImage.image}`}
 						width={mainImageWidth}
 						height={mainImageHeight}
-						layout="fixed"
+						alt={images[0].alt || undefined}
 					/>
 				</MainImageContainer>
 				<SideContainer containerWidth={containerWidth}>
 					<div>
-						<NImage
+						<img
 							src={`/image/${secondaryImage.directory}/${secondaryImage.image}`}
 							width={secondaryImageWidth}
 							height={secondaryImageHeight}
-							layout="fixed"
+							alt={images[1].alt || undefined}
 						/>
 					</div>
 					<div onClick={onGalleryClick()}>

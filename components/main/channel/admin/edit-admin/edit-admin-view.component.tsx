@@ -1,9 +1,11 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
+import {useRouter} from 'next/router';
 import Error from 'next/error';
 
-import {Channel, User} from '../../../../../types';
+import {Channel, ChannelAdminPermission, User} from '../../../../../types';
 import {SignHeader} from '../../../sign';
 import {EditAdmin} from './edit-amin.component';
+import {useAuth} from '../../../../../hooks';
 
 interface Props {
 	admin?: User;
@@ -11,6 +13,15 @@ interface Props {
 }
 
 export const EditAdminView: FC<Props> = ({admin, channel}) => {
+	const router = useRouter();
+	const {asPath} = router.query;
+
+	const {isSigned, isLoading, user} = useAuth();
+
+	useEffect(() => {
+		if (!isLoading && !isSigned) router.push(`/sign?callback=${asPath}`);
+	}, [asPath, isSigned, isLoading]);
+
 	if (!channel)
 		return <Error statusCode={404} title="کانالی با این هندل وجود ندارد." />;
 
@@ -33,6 +44,21 @@ export const EditAdminView: FC<Props> = ({admin, channel}) => {
 	if (!channel.admins?.some(({userData}) => userData?.id === admin.id))
 		return (
 			<Error statusCode={401} title="ادمین قبلا به کانال اضافه نشده است." />
+		);
+
+	if (channel.owner !== user?.id && !channel.myAdmin)
+		return (
+			<Error statusCode={403} title="شما اجازه دسترسی به این صفحه را ندارید!" />
+		);
+
+	if (
+		channel.myAdmin &&
+		channel.myAdmin.permissions?.includes(
+			ChannelAdminPermission.EDIT_ADMINS_PERMISSIONS
+		)
+	)
+		return (
+			<Error statusCode={403} title="شما اجازه دسترسی به این صفحه را ندارید!" />
 		);
 
 	return (

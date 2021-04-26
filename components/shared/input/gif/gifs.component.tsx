@@ -1,5 +1,4 @@
 import React, {ChangeEventHandler, FC, useEffect, useState} from 'react';
-import Image from 'next/image';
 
 import {
 	FIND_GIFS_QUERY,
@@ -51,7 +50,7 @@ export const Gifs: FC<Props> = ({onSelect}) => {
 	const renderGifs = () =>
 		(query ? findGifs : trendingGifs).map((gif) => (
 			<Gif onClick={onGifClick(gif)}>
-				<Image src={`/image/gif/${gif.url}`} width="180px" height="180px" />
+				<img src={`/image/gif/${gif.url}`} alt={gif.title} />
 				<GifData>{gif.title}</GifData>
 			</Gif>
 		));

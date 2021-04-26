@@ -1,5 +1,4 @@
 import React, {FC, useRef} from 'react';
-import NImage from 'next/image';
 import styled from 'styled-components';
 
 import {Image as ImageModel, StyledProps} from '../../../types';
@@ -16,24 +15,26 @@ const Container = styled.div<StyledProps & ContainerProps>`
 	overflow: hidden;
 	width: ${({width}) => width};
 	height: ${({height}) => height};
+`;
 
-	& > div:first-child {
-		box-shadow: 3px 0 6px 0 ${({theme: {primary}}) => primary}29;
-		border: 1px solid ${({theme: {primary}}) => primary}4C;
-		border-radius: 10px;
-	}
+const Img = styled.img`
+	box-shadow: 3px 0 6px 0 ${({theme: {primary}}) => primary}29;
+	border: 1px solid ${({theme: {primary}}) => primary}4C;
+	border-radius: 10px;
 `;
 
 interface Props {
-	image: ImageModel;
+	image?: ImageModel;
 	width?: number;
 	height?: number;
+	defaultSrc?: string;
 }
 
 export const Image: FC<Props> = ({
-	image: {directory, image, alt, height, width},
+	image,
 	width: fWidth,
 	height: fHeight,
+	defaultSrc,
 }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 
@@ -41,11 +42,14 @@ export const Image: FC<Props> = ({
 
 	return (
 		<Container ref={containerRef} width={fWidth} height={fHeight}>
-			<NImage
-				src={`/image/${directory}/${image}`}
+			<Img
+				src={image ? `/image/${image?.directory}/${image?.image}` : defaultSrc}
 				width={fWidth || containerWidth}
-				height={fHeight || (containerWidth / (width || 0)) * (height || 0)}
-				alt={alt || undefined}
+				height={
+					fHeight ||
+					(containerWidth / (image?.width || 0)) * (image?.height || 0)
+				}
+				alt={image?.alt || undefined}
 			/>
 		</Container>
 	);

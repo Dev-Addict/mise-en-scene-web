@@ -5,23 +5,23 @@ import {usernameValidator} from '../../../utils';
 const channelSchema = new Schema({
 	handle: {
 		type: String,
-		required: [true, ''],
+		required: [true, '0xE00006A'],
 		validator: {
 			validate: (value: string) => usernameValidator(value, false),
-			message: '',
+			message: '0xE00006B',
 		},
-		unique: [true, ''],
+		unique: [true, '0xE00006C'],
 	},
 	name: {
 		type: String,
-		min: [4, ''],
-		max: [20, ''],
-		required: [true, ''],
+		min: [4, '0xE00006D'],
+		max: [20, '0xE00006E'],
+		required: [true, '0xE00006F'],
 	},
 	owner: {
 		type: Types.ObjectId,
 		ref: 'User',
-		required: [true, ''],
+		required: [true, '0xE000070'],
 	},
 	cover: {
 		type: String,

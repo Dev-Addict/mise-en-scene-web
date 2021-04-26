@@ -4,12 +4,12 @@ import {ChannelAdminPermission} from '../../../types';
 const channelAdminSchema = new Schema({
 	channel: {
 		type: Types.ObjectId,
-		required: [true, ''],
+		required: [true, '0xE000071'],
 		ref: 'Channel',
 	},
 	user: {
 		type: Types.ObjectId,
-		required: [true, ''],
+		required: [true, '0xE000072'],
 		ref: 'User',
 	},
 	permissions: {

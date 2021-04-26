@@ -40,7 +40,7 @@ export const AdminFinderForm: FC<Props> = ({
 							color={Color.GHOST_WHITE}
 							type="submit"
 							disabled={isSubmitting}>
-							اضافه کردن ادمین
+							اضافه کردن مدیر
 						</Button>
 					</SubmitContainer>
 				</Body>

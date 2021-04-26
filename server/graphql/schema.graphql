@@ -243,6 +243,7 @@ type Mutation {
   signUp(data: SignUpData!): AuthResponse!
   unfollow(data: FollowData!): UserFollow
   updateSelf(data: UpdateSelfData!): User
+  uploadImage(data: UploadImageData!): Image
   validateResetEmailToken(data: ValidateResetEmailTokenData!): User
   validateResetPasswordToken(data: ValidateResetPasswordTokenData!): User
   vote(data: VoteData!): AnnouncementPollResult
@@ -251,6 +252,22 @@ type Mutation {
 scalar Name
 
 scalar Password
+
+type Post {
+  admin: ID
+  adminData: ChannelAdmin
+  body: String!
+  channel: ID!
+  channelData: Channel!
+  cover: String!
+  description: String
+  id: ID!
+  publishAt: Date
+  published: Boolean!
+  subtitle: String
+  tags: [String!]!
+  title: String!
+}
 
 type Query {
   admins(filter: JSON, limit: Int, page: Int, sort: JSON): ChannelAdminsResponse!
@@ -330,6 +347,11 @@ input UpdateSelfData {
 }
 
 scalar Upload
+
+input UploadImageData {
+  alt: String
+  image: Upload!
+}
 
 type User {
   announcements: Int!

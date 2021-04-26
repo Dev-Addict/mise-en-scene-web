@@ -2,11 +2,10 @@ import React, {Dispatch, FC, SetStateAction} from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 
-import {UserFollowDetail} from './user-follow-detail.component';
 import {Username} from './username.component';
 import {UserFollowControl} from './user-follow-control.component';
 import {Control} from './user-detail-components.component';
-import {SpaceDivider, Text} from '../../../shared';
+import {FollowDetail, SpaceDivider, Text} from '../../../shared';
 import {useAuth} from '../../../../hooks';
 import {Size, User} from '../../../../types';
 
@@ -45,7 +44,7 @@ export const UserDetailBody: FC<Props> = ({user, setUser}) => {
 			<Username user={user} />
 			<Text>{user.bio}</Text>
 			<SpaceDivider size={Size.SMALL} />
-			<UserFollowDetail user={user} />
+			<FollowDetail followings={user.followings} followers={user.followers} />
 			<SpaceDivider size={Size.SMALL} />
 			<Controls>
 				{user.username !== authUser?.username && (

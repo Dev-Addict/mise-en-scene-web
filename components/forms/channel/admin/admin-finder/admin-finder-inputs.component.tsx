@@ -20,7 +20,7 @@ export const AdminKeyInputs = () => {
 			<InputContainer>
 				<Field
 					label="ایمیل یا نام کاربری"
-					placeholder="ایمیل یا نام کابری ادمین"
+					placeholder="ایمیل یا نام کابری مدیر"
 					icon={username}
 					primary
 					type="text"

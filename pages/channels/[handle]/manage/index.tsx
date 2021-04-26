@@ -1,21 +1,27 @@
 import React, {useEffect, useState} from 'react';
 import {NextPage} from 'next';
 import {useRouter} from 'next/router';
+import Link from 'next/link';
 import Error from 'next/error';
 import styled from 'styled-components';
+import Cookie from 'js-cookie';
 
 import {
 	AdminFinder,
+	Button,
 	ChannelAdmins,
+	ChannelDetail,
+	Filler,
 	Header,
 	Meta,
+	Row,
 	Text,
 } from '../../../../components';
 import {findChannel} from '../../../../helpers';
 import {Channel, Props, Size} from '../../../../types';
 import {useAuth} from '../../../../hooks';
 import {cookieParser} from '../../../../utils';
-import Cookie from 'js-cookie';
+import {Color} from '../../../../data';
 
 const Body = styled.div`
 	margin: auto auto 80px;
@@ -40,7 +46,7 @@ const ManageChannel: NextPage<Props & InitialProps, InitialProps> = ({
 
 	const [localChannel, setLocalChannel] = useState(channel);
 
-	const {isSigned, isLoading} = useAuth();
+	const {isSigned, isLoading, user} = useAuth();
 
 	useEffect(() => {
 		if (!isLoading && !isSigned) router.push(`/sign?callback=${asPath}`);
@@ -56,17 +62,31 @@ const ManageChannel: NextPage<Props & InitialProps, InitialProps> = ({
 	if (!localChannel.verified)
 		return <Error statusCode={404} title="کانال هنوز تایید نشده است." />;
 
+	if (localChannel.owner !== user?.id && !localChannel.myAdmin)
+		return (
+			<Error statusCode={403} title="شما اجازه دسترسی به این صفحه را ندارید!" />
+		);
+
 	return (
 		<div>
 			<Meta title={`مدیدریت کانال ${localChannel.name}`} />
 			<Header setTheme={setTheme} />
 			<Body>
-				<Text size={Size.MASSIVE}>مدیر ها</Text>
-				<AdminFinder
-					admins={localChannel.admins}
-					owner={localChannel.ownerData}
-				/>
+				<ChannelDetail channel={localChannel} />
+				<Filler minHeight={30} />
+				<Text size={Size.HUGE}>مدیر ها</Text>
+				<AdminFinder channel={localChannel} />
 				<ChannelAdmins channel={localChannel} />
+				<Filler minHeight={30} />
+				<Row>
+					<Link href={`/channels/${localChannel.handle}/manage/post`}>
+						<Button circular primary color={Color.GHOST_WHITE} type="button">
+							ساخت مطلب
+						</Button>
+					</Link>
+					<Filler />
+					<Text size={Size.HUGE}>مطالب</Text>
+				</Row>
 			</Body>
 		</div>
 	);

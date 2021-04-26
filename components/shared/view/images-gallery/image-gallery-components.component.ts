@@ -29,13 +29,13 @@ export const MainImageContainer = styled.div<
 	overflow: hidden;
 	border-radius: 0 10px 10px 0;
 	position: relative;
+`;
 
-	& > * {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translateY(-50%);
-	}
+export const MainImage = styled.img`
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 `;
 
 interface SideContainerProps {

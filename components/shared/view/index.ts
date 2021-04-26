@@ -4,6 +4,7 @@ export * from './poll';
 export * from './animation.component';
 export * from './avatar.component';
 export * from './cover.component';
+export * from './follow-detail.component';
 export * from './gif.component';
 export * from './image.component';
 export * from './images.component';

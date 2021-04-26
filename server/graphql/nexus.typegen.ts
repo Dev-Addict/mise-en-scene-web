@@ -133,6 +133,10 @@ export interface NexusGenInputs {
     lastname?: NexusGenScalars['Name'] | null; // Name
     username?: NexusGenScalars['Username'] | null; // Username
   }
+  UploadImageData: { // input type
+    alt?: string | null; // String
+    image: NexusGenScalars['Upload']; // Upload!
+  }
   ValidateResetEmailTokenData: { // input type
     resetToken: string; // String!
   }
@@ -260,6 +264,19 @@ export interface NexusGenObjects {
     width: number; // Float!
   }
   Mutation: {};
+  Post: { // root type
+    admin?: string | null; // ID
+    body: string; // String!
+    channel: string; // ID!
+    cover: string; // String!
+    description?: string | null; // String
+    id: string; // ID!
+    publishAt?: NexusGenScalars['Date'] | null; // Date
+    published: boolean; // Boolean!
+    subtitle?: string | null; // String
+    tags: string[]; // [String!]!
+    title: string; // String!
+  }
   Query: {};
   User: { // root type
     avatar: string; // String!
@@ -446,9 +463,25 @@ export interface NexusGenFieldTypes {
     signUp: NexusGenRootTypes['AuthResponse']; // AuthResponse!
     unfollow: NexusGenRootTypes['UserFollow'] | null; // UserFollow
     updateSelf: NexusGenRootTypes['User'] | null; // User
+    uploadImage: NexusGenRootTypes['Image'] | null; // Image
     validateResetEmailToken: NexusGenRootTypes['User'] | null; // User
     validateResetPasswordToken: NexusGenRootTypes['User'] | null; // User
     vote: NexusGenRootTypes['AnnouncementPollResult'] | null; // AnnouncementPollResult
+  }
+  Post: { // field return type
+    admin: string | null; // ID
+    adminData: NexusGenRootTypes['ChannelAdmin'] | null; // ChannelAdmin
+    body: string; // String!
+    channel: string; // ID!
+    channelData: NexusGenRootTypes['Channel']; // Channel!
+    cover: string; // String!
+    description: string | null; // String
+    id: string; // ID!
+    publishAt: NexusGenScalars['Date'] | null; // Date
+    published: boolean; // Boolean!
+    subtitle: string | null; // String
+    tags: string[]; // [String!]!
+    title: string; // String!
   }
   Query: { // field return type
     admins: NexusGenRootTypes['ChannelAdminsResponse']; // ChannelAdminsResponse!
@@ -648,9 +681,25 @@ export interface NexusGenFieldTypeNames {
     signUp: 'AuthResponse'
     unfollow: 'UserFollow'
     updateSelf: 'User'
+    uploadImage: 'Image'
     validateResetEmailToken: 'User'
     validateResetPasswordToken: 'User'
     vote: 'AnnouncementPollResult'
+  }
+  Post: { // field return type name
+    admin: 'ID'
+    adminData: 'ChannelAdmin'
+    body: 'String'
+    channel: 'ID'
+    channelData: 'Channel'
+    cover: 'String'
+    description: 'String'
+    id: 'ID'
+    publishAt: 'Date'
+    published: 'Boolean'
+    subtitle: 'String'
+    tags: 'String'
+    title: 'String'
   }
   Query: { // field return type name
     admins: 'ChannelAdminsResponse'
@@ -770,6 +819,9 @@ export interface NexusGenArgTypes {
     }
     updateSelf: { // args
       data: NexusGenInputs['UpdateSelfData']; // UpdateSelfData!
+    }
+    uploadImage: { // args
+      data: NexusGenInputs['UploadImageData']; // UploadImageData!
     }
     validateResetEmailToken: { // args
       data: NexusGenInputs['ValidateResetEmailTokenData']; // ValidateResetEmailTokenData!

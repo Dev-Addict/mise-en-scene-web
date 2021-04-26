@@ -19,6 +19,7 @@ const imageSchema = new Schema({
 	},
 	alt: {
 		type: String,
+		max: [50, ''],
 	},
 });
 

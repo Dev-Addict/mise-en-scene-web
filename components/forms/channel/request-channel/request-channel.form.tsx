@@ -1,7 +1,6 @@
 import React, {FC} from 'react';
-import {FormikHelpers} from 'formik/dist/types';
+import {Formik, FormikProps, FormikHelpers} from 'formik';
 
-import {Formik, FormikProps} from 'formik';
 import {
 	Body,
 	ProfileHeader,
