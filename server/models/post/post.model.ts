@@ -24,7 +24,7 @@ const postSchema = new Schema(
 			max: [20, ''],
 		},
 		body: {
-			type: [String],
+			type: String,
 			required: [true, ''],
 		},
 		publishAt: {

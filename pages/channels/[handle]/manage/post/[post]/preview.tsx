@@ -2,14 +2,14 @@ import React, {useEffect, useState} from 'react';
 import {NextPage} from 'next';
 import {useRouter} from 'next/router';
 import Error from 'next/error';
-import styled from 'styled-components';
 import Cookie from 'js-cookie';
+import styled from 'styled-components';
 
-import {Header, Meta, PostBody} from '../../../../../components';
-import {findChannel} from '../../../../../helpers';
-import {Channel, ChannelAdminPermission, Props} from '../../../../../types';
-import {useAuth} from '../../../../../hooks';
-import {cookieParser} from '../../../../../utils';
+import {Channel, Post as PostModel, Props} from '../../../../../../types';
+import {useAuth} from '../../../../../../hooks';
+import {Header, Meta, Post} from '../../../../../../components';
+import {cookieParser} from '../../../../../../utils';
+import {findChannel, getChannelPost} from '../../../../../../helpers';
 
 const Body = styled.div`
 	margin: auto;
@@ -23,18 +23,21 @@ const Body = styled.div`
 
 interface InitialProps {
 	channel?: Channel;
+	post?: PostModel;
 }
 
-const Post: NextPage<Props & InitialProps, InitialProps> = ({
+const Preview: NextPage<Props & InitialProps, InitialProps> = ({
 	setTheme,
 	channel,
+	post,
 }) => {
 	const router = useRouter();
-	const {asPath} = router;
+	const {asPath} = router.query;
 
 	const [localChannel, setLocalChannel] = useState(channel);
+	const [localPost, setLocalPost] = useState(post);
 
-	const {isSigned, isLoading, user} = useAuth();
+	const {user, isLoading, isSigned} = useAuth();
 
 	useEffect(() => {
 		if (!isLoading && !isSigned) router.push(`/sign?callback=${asPath}`);
@@ -44,46 +47,46 @@ const Post: NextPage<Props & InitialProps, InitialProps> = ({
 		setLocalChannel(channel);
 	}, [channel]);
 
+	useEffect(() => {
+		setLocalPost(post);
+	}, [post]);
+
 	if (!localChannel)
 		return <Error statusCode={404} title="کانالی با این هندل وجود ندارد." />;
 
+	if (!localPost) return <Error statusCode={404} title="مطلب پیدا نشد." />;
+
 	if (!localChannel.verified)
-		return <Error statusCode={404} title="کانال هنوز تایید نشده است." />;
+		return <Error statusCode={403} title="کانال هنوز تایید نشده است." />;
 
 	if (localChannel.owner !== user?.id && !localChannel.myAdmin)
 		return (
 			<Error statusCode={403} title="شما اجازه دسترسی به این صفحه را ندارید!" />
 		);
 
-	if (
-		localChannel.myAdmin &&
-		localChannel.myAdmin.permissions?.includes(ChannelAdminPermission.POST)
-	)
-		return (
-			<Error statusCode={403} title="شما اجازه دسترسی به این صفحه را ندارید!" />
-		);
-
 	return (
 		<div>
-			<Meta title={`مدیدریت کانال ${localChannel.name} - نوشتن مطب`} />
+			<Meta title={`مدیدریت کانال ${localChannel.name} - ویرایش مطب`} />
 			<Header setTheme={setTheme} />
 			<Body>
-				<PostBody channel={localChannel} />
+				<Post post={localPost} />
 			</Body>
 		</div>
 	);
 };
 
-Post.getInitialProps = async ({query: {handle}, req}) => {
+Preview.getInitialProps = async ({query: {handle, post: postId}, req}) => {
 	const token =
 		cookieParser(req?.headers?.cookie || '')['auth-token'] ||
 		Cookie.get('auth-token');
 
 	const channel = await findChannel(handle as string, token);
+	const post = await getChannelPost(postId as string, token);
 
 	return {
 		channel,
+		post,
 	};
 };
 
-export default Post;
+export default Preview;

@@ -1,19 +1,20 @@
 import React, {FC, useState} from 'react';
 import {useRouter} from 'next/router';
-import {useMutation} from '@apollo/client';
 import {GraphQLError} from 'graphql';
-import {EditorState, convertToRaw} from 'draft-js';
+import {useMutation} from '@apollo/client';
+import {EditorState, convertToRaw, convertFromRaw} from 'draft-js';
+import {createEditorStateWithText} from '@draft-js-plugins/editor';
 import {FormikHelpers} from 'formik';
 
 import {PostFields, PostForm} from '../../../forms';
 import {
-	CREATE_POST_MUTATION,
-	CreatePostMutationData,
-	CreatePostMutationVariables,
+	UPDATE_POST_MUTATION,
+	UpdatePostMutationData,
+	UpdatePostMutationVariables,
 } from '../../../../api';
 import {useAuth} from '../../../../hooks';
 import {editorStateToRawText, errorParser} from '../../../../utils';
-import {Channel} from '../../../../types';
+import {Channel, Post} from '../../../../types';
 
 const initialValues: PostFields = {
 	cover: undefined,
@@ -28,19 +29,33 @@ const initialValues: PostFields = {
 
 interface Props {
 	channel: Channel;
+	post: Post;
 }
 
-export const PostBody: FC<Props> = ({channel: {id, myAdmin, handle}}) => {
+export const EditPost: FC<Props> = ({
+	channel: {handle},
+	post: {
+		id,
+		title,
+		description,
+		subtitle,
+		publishAt,
+		published,
+		bodyData,
+		coverData,
+		tags,
+	},
+}) => {
 	const router = useRouter();
 
 	const [errors, setErrors] = useState<string[]>([]);
 
 	const {token} = useAuth();
 
-	const [createPost] = useMutation<
-		CreatePostMutationData,
-		CreatePostMutationVariables
-	>(CREATE_POST_MUTATION, {
+	const [updatePost] = useMutation<
+		UpdatePostMutationData,
+		UpdatePostMutationVariables
+	>(UPDATE_POST_MUTATION, {
 		context: {
 			headers: {
 				Authorization: `Bearer ${token}`,
@@ -60,18 +75,17 @@ export const PostBody: FC<Props> = ({channel: {id, myAdmin, handle}}) => {
 		setErrors([]);
 
 		try {
-			await createPost({
+			await updatePost({
 				variables: {
+					id: id || '',
 					body: convertToRaw(body.getCurrentContent()),
 					title: editorStateToRawText(title, ' '),
 					description: editorStateToRawText(description, ' '),
 					subtitle: editorStateToRawText(subtitle, ' '),
 					publishAt: publishAt?.getTime(),
 					tags,
-					channel: id || '',
 					published: publish,
 					cover: cover?.id,
-					admin: myAdmin?.id,
 				},
 			});
 
@@ -94,7 +108,22 @@ export const PostBody: FC<Props> = ({channel: {id, myAdmin, handle}}) => {
 			<PostForm
 				onSubmit={onSubmit()}
 				errors={errors}
-				initialValues={initialValues}
+				initialValues={{
+					title: title ? createEditorStateWithText(title) : initialValues.title,
+					subtitle: subtitle
+						? createEditorStateWithText(subtitle)
+						: initialValues.subtitle,
+					cover: coverData ? coverData : initialValues.cover,
+					tags: tags ? tags : initialValues.tags,
+					publish: published ? published : initialValues.publish,
+					body: bodyData
+						? EditorState.createWithContent(convertFromRaw(bodyData as any))
+						: initialValues.body,
+					description: description
+						? createEditorStateWithText(description)
+						: initialValues.description,
+					publishAt: publishAt ? new Date(publishAt) : initialValues.publishAt,
+				}}
 				submitText="ثبت مطلب"
 			/>
 		</div>

@@ -299,6 +299,12 @@ export interface NexusGenObjects {
     tags: string[]; // [String!]!
     title: string; // String!
   }
+  PostsResponse: { // root type
+    docs: NexusGenRootTypes['Post'][]; // [Post!]!
+    limit: number; // Int!
+    page: number; // Int!
+    results: number; // Int!
+  }
   Query: {};
   User: { // root type
     avatar: string; // String!
@@ -511,10 +517,18 @@ export interface NexusGenFieldTypes {
     tags: string[]; // [String!]!
     title: string; // String!
   }
+  PostsResponse: { // field return type
+    docs: NexusGenRootTypes['Post'][]; // [Post!]!
+    limit: number; // Int!
+    page: number; // Int!
+    results: number; // Int!
+  }
   Query: { // field return type
     admins: NexusGenRootTypes['ChannelAdminsResponse']; // ChannelAdminsResponse!
     announcement: NexusGenRootTypes['Announcement'] | null; // Announcement
     announcements: NexusGenRootTypes['AnnouncementsResponse'] | null; // AnnouncementsResponse
+    channelPost: NexusGenRootTypes['Post'] | null; // Post
+    channelPosts: NexusGenRootTypes['PostsResponse'] | null; // PostsResponse
     findChannel: NexusGenRootTypes['Channel'] | null; // Channel
     findGifs: NexusGenRootTypes['Gif'][]; // [Gif!]!
     findUser: NexusGenRootTypes['User'] | null; // User
@@ -735,10 +749,18 @@ export interface NexusGenFieldTypeNames {
     tags: 'String'
     title: 'String'
   }
+  PostsResponse: { // field return type name
+    docs: 'Post'
+    limit: 'Int'
+    page: 'Int'
+    results: 'Int'
+  }
   Query: { // field return type name
     admins: 'ChannelAdminsResponse'
     announcement: 'Announcement'
     announcements: 'AnnouncementsResponse'
+    channelPost: 'Post'
+    channelPosts: 'PostsResponse'
     findChannel: 'Channel'
     findGifs: 'Gif'
     findUser: 'User'
@@ -895,6 +917,14 @@ export interface NexusGenArgTypes {
       limit?: number | null; // Int
       page?: number | null; // Int
       sort?: NexusGenScalars['JSON'] | null; // JSON
+    }
+    channelPost: { // args
+      id: string; // ID!
+    }
+    channelPosts: { // args
+      channel: string; // ID!
+      limit?: number | null; // Int
+      page?: number | null; // Int
     }
     findChannel: { // args
       filter: NexusGenScalars['JSON']; // JSON!

@@ -31,6 +31,7 @@ interface Props {
 	showError?: boolean;
 	error?: string;
 	touched?: boolean;
+	readOnly?: boolean;
 }
 
 export const Editor: FC<Props> = ({
@@ -42,6 +43,7 @@ export const Editor: FC<Props> = ({
 	showError,
 	error,
 	touched,
+	readOnly,
 }) => {
 	const image = useThemeImage('/assets/icons/image/image-$mode.svg');
 
@@ -100,13 +102,13 @@ export const Editor: FC<Props> = ({
 			/>
 			<Container>
 				{label && <Text size={Size.LARGE} text={label} />}
-				<EditorContainer disabled={disabled || loading}>
+				<EditorContainer disabled={disabled || loading} readOnly={readOnly}>
 					<DraftEditor
 						editorState={editorState}
 						onChange={onEditorChange()}
 						plugins={plugins}
 						placeholder={placeholder}
-						readOnly={disabled || loading}
+						readOnly={readOnly || disabled || loading}
 						blockRendererFn={blockRenderer}
 					/>
 					<InlineToolbarContainer>
@@ -115,9 +117,11 @@ export const Editor: FC<Props> = ({
 						</InlineToolbar>
 					</InlineToolbarContainer>
 				</EditorContainer>
-				<ImageControl disabled={disabled || loading} onClick={onImageClick()}>
-					<Image src={image} width={18} height={18} />
-				</ImageControl>
+				{!readOnly && (
+					<ImageControl disabled={disabled || loading} onClick={onImageClick()}>
+						<Image src={image} width={18} height={18} />
+					</ImageControl>
+				)}
 				<Error show={showError}>{(touched && error) || <>&nbsp;</>}</Error>
 			</Container>
 		</>

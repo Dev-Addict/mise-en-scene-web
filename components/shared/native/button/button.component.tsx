@@ -17,6 +17,7 @@ interface Props {
 	bottom?: number;
 	left?: number;
 	minWidth?: number;
+	flex?: number;
 }
 
 export const Button = styled.button<StyledProps & Props>`
@@ -31,6 +32,7 @@ export const Button = styled.button<StyledProps & Props>`
 	outline: none;
 	text-align: center;
 	min-width: ${({minWidth}) => minWidth}px;
+	flex: ${({flex = 0}) => flex};
 
 	&:hover {
 		opacity: 0.5;

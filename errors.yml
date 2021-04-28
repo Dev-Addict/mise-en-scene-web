@@ -123,5 +123,10 @@
 0xE00007A: couldn't find the post with provided `id`.
 0xE00007B: couldn't find the post with provided `id`.
 0xE00007C: couldn't find the admin with provided `id`.
-0xE00007D: you don't have the permission to delete the post with provided `id`.
+0xE00007D: you don't have the permission to update the post with provided `id`.
 0xE00007E: you don't have the permission to delete the post with provided `id`.
+0xE00007F: couldn't find the channel with provided `channel`.
+0xE000080: you don't have the permission to get posts of channel.
+0xE000081: couldn't find the post with provided `id`.
+0xE000082: couldn't find the channel with post.
+0xE000083: you don't have permission to get this post.

@@ -1,6 +1,7 @@
 import styled, {css} from 'styled-components';
 
 import {StyledProps} from '../../../../types';
+import {Color} from '../../../../data';
 
 export const Container = styled.div`
 	direction: rtl;
@@ -92,6 +93,7 @@ export const Item = styled.div<StyledProps & ItemProps>`
 	margin: 0 4px;
 	cursor: pointer;
 	font-size: 16px;
+	color: ${Color.GHOST_WHITE};
 
 	&:hover {
 		opacity: 0.5;

@@ -18,7 +18,6 @@ import {
 	TextInput,
 	TextInputContainer,
 } from './item-input-components.component';
-import {useThemeImage} from '../../../../hooks';
 
 interface Props
 	extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
@@ -51,8 +50,6 @@ export const ItemInput: FC<Props> = ({
 	unique,
 	...props
 }) => {
-	const close = useThemeImage('/assets/icons/close/close-$mode.svg');
-
 	const [isFocus, setFocus] = useState(false);
 	const [items, setItems] = useState<string[]>(value || []);
 	const [inputValue, setInputValue] = useState('');
@@ -111,7 +108,11 @@ export const ItemInput: FC<Props> = ({
 		items.map((item, i) => (
 			<Item key={item} onClick={onItemClick(i)} disabled={disabled}>
 				{item}
-				<Image src={close} width={10} height={10} />
+				<Image
+					src={'/assets/icons/close/close-dark.svg'}
+					width={10}
+					height={10}
+				/>
 			</Item>
 		));
 

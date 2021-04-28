@@ -1,10 +1,10 @@
 import React, {FC} from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import styled, {css} from 'styled-components';
-
-import {useAuth, useThemeImage} from '../../../../hooks';
 import {useMutation} from '@apollo/client';
+
+import {Container, Item} from './admin-card-actions-components.component';
+import {useAuth, useThemeImage} from '../../../../hooks';
 import {
 	REMOVE_ADMIN_MUTATION,
 	RemoveAdminMutationData,
@@ -12,51 +12,16 @@ import {
 } from '../../../../api';
 import {Channel, ChannelAdmin, ChannelAdminPermission} from '../../../../types';
 
-const Container = styled.div`
-	display: flex;
-	flex-direction: row;
-
-	& > * {
-		margin: 0 5px;
-	}
-
-	& > *:first-child {
-		margin-left: 0;
-	}
-
-	& > *:last-child {
-		margin-right: 0;
-	}
-`;
-
-interface ItemProps {
-	disabled?: boolean;
-}
-
-const Item = styled.div<ItemProps>`
-	width: 20px;
-	height: 20px;
-	cursor: pointer;
-
-	&:hover {
-		opacity: 0.5;
-	}
-
-	${({disabled}) =>
-		disabled &&
-		css`
-			opacity: 0.5;
-		`}
-`;
-
 interface Props {
 	channel: Channel;
 	admin: ChannelAdmin;
+	reload: () => void;
 }
 
 export const AdminCardActions: FC<Props> = ({
-	channel: {id, myAdmin, handle, owner},
-	admin: {userData, permissions},
+	channel: {id: channel, myAdmin, handle, owner},
+	admin: {userData, permissions, id},
+	reload,
 }) => {
 	const close = useThemeImage('/assets/icons/close/close-$mode.svg');
 	const edit = useThemeImage('/assets/icons/edit/edit-$mode.svg');
@@ -73,12 +38,13 @@ export const AdminCardActions: FC<Props> = ({
 			},
 		},
 		variables: {
-			channel: id || '',
-			admin: myAdmin?.id || '',
+			channel: channel || '',
+			admin: id || '',
 		},
 	});
 
 	const isEditable =
+		user?.id !== id ||
 		owner === user?.id ||
 		(myAdmin?.permissions?.includes(
 			ChannelAdminPermission.EDIT_ADMINS_PERMISSIONS
@@ -88,6 +54,7 @@ export const AdminCardActions: FC<Props> = ({
 				myAdmin?.permissions?.includes(permission)
 			));
 	const isRemovable =
+		user?.id !== id ||
 		owner === user?.id ||
 		(myAdmin?.permissions?.includes(ChannelAdminPermission.DELETE_ADMIN) &&
 			!permissions?.includes(ChannelAdminPermission.DELETE_ADMIN) &&
@@ -100,6 +67,8 @@ export const AdminCardActions: FC<Props> = ({
 
 		try {
 			await removeAdmin();
+
+			await reload();
 		} catch (error) {}
 	};
 

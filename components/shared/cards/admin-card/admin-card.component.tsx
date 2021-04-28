@@ -32,12 +32,14 @@ const Container = styled.div<StyledProps & ContainerProps>`
 interface Props {
 	admin: ChannelAdmin;
 	channel: Channel;
+	reload: () => void;
 }
 
 export const AdminCard: FC<Props> = ({
 	admin: {userData, accepted},
 	channel,
 	admin,
+	reload,
 }) => {
 	const name = userData && useUserDisplayName(userData);
 
@@ -55,7 +57,7 @@ export const AdminCard: FC<Props> = ({
 					text={`@${userData?.username || ''}`}
 				/>
 			</Link>
-			<AdminCardActions channel={channel} admin={admin} />
+			<AdminCardActions channel={channel} admin={admin} reload={reload} />
 		</Container>
 	);
 };

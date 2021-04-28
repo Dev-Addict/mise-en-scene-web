@@ -22,6 +22,7 @@ export const Container = styled.div`
 
 interface EditorContainerProps {
 	disabled?: boolean;
+	readOnly?: boolean;
 }
 
 export const EditorContainer = styled.div<StyledProps & EditorContainerProps>`
@@ -59,6 +60,18 @@ export const EditorContainer = styled.div<StyledProps & EditorContainerProps>`
 	& * {
 		user-select: auto;
 	}
+
+	${({readOnly}) =>
+		readOnly &&
+		css`
+			border-right: none;
+			padding: 0;
+			margin: 0;
+
+			& * {
+				user-select: none;
+			}
+		`}
 `;
 
 export const InlineToolbarContainer = styled.div<StyledProps>`

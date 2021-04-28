@@ -5,5 +5,5 @@ export const editorStateToRawText = (
 	lineConnector = '\n'
 ) =>
 	convertToRaw(editorState.getCurrentContent())
-		.blocks.map(({text}) => (!text.trim() && '\n') || text)
+		.blocks.map(({text}) => (!text.trim() && lineConnector) || text)
 		.join(lineConnector);

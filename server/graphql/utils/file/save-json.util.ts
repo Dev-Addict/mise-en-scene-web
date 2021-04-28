@@ -6,7 +6,7 @@ export const saveJson = async (
 	json: {[key: string]: any},
 	directory: string
 ) => {
-	const filename = `${json}-${directory.replace(
+	const filename = `json-${directory.replace(
 		/\//g,
 		'-'
 	)}-${Date.now()}-${Math.random().toString(16)}.json`;

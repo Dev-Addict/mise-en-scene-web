@@ -11,6 +11,7 @@ import {
 	Button,
 	ChannelAdmins,
 	ChannelDetail,
+	ChannelPosts,
 	Filler,
 	Header,
 	Meta,
@@ -31,6 +32,11 @@ const Body = styled.div`
 	@media only screen and (max-width: 800px) {
 		width: auto;
 	}
+`;
+
+const HeaderRow = styled(Row)`
+	align-items: center;
+	justify-content: space-between;
 `;
 
 interface InitialProps {
@@ -60,7 +66,7 @@ const ManageChannel: NextPage<Props & InitialProps, InitialProps> = ({
 		return <Error statusCode={404} title="کانالی با این هندل وجود ندارد." />;
 
 	if (!localChannel.verified)
-		return <Error statusCode={404} title="کانال هنوز تایید نشده است." />;
+		return <Error statusCode={403} title="کانال هنوز تایید نشده است." />;
 
 	if (localChannel.owner !== user?.id && !localChannel.myAdmin)
 		return (
@@ -78,15 +84,19 @@ const ManageChannel: NextPage<Props & InitialProps, InitialProps> = ({
 				<AdminFinder channel={localChannel} />
 				<ChannelAdmins channel={localChannel} />
 				<Filler minHeight={30} />
-				<Row>
+				<HeaderRow>
 					<Link href={`/channels/${localChannel.handle}/manage/post`}>
-						<Button circular primary color={Color.GHOST_WHITE} type="button">
+						<Button
+							primary
+							type="button"
+							color={Color.GHOST_WHITE}
+							minWidth={120}>
 							ساخت مطلب
 						</Button>
 					</Link>
-					<Filler />
 					<Text size={Size.HUGE} text="مطالب" />
-				</Row>
+				</HeaderRow>
+				<ChannelPosts channel={localChannel} />
 			</Body>
 		</div>
 	);

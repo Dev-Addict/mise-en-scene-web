@@ -25,8 +25,6 @@ export const DeletePostMutation = mutationField('deletePost', {
 
 		const admin = await ChannelAdmin.findById(post.admin);
 
-		if (!admin) throw new AppError('0xE00007C', 404);
-
 		const myAdmin = await ChannelAdmin.findOne({
 			channel: channel.id,
 			user: user.id,
@@ -34,7 +32,7 @@ export const DeletePostMutation = mutationField('deletePost', {
 
 		if (
 			channel.owner.toString() !== user.id.toString() &&
-			myAdmin?.id?.toString() !== admin.id.toString() &&
+			myAdmin?.id?.toString() !== admin?.id?.toString() &&
 			!myAdmin?.permissions?.includes(ChannelAdminPermission.DELETE_POST)
 		)
 			throw new AppError('0xE00007D', 403);

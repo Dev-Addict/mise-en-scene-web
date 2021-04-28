@@ -41,10 +41,17 @@ export const useAdmins = (filter?: {[key: string]: any}) => {
 		})();
 	}, [admins, loading, data]);
 
+	const reload = async () => {
+		setPage(1);
+		setAdmins([]);
+		await refetch();
+	};
+
 	return {
 		loading,
 		admins,
 		loadMore: loadMore(),
 		results: data?.admins?.results,
+		reload,
 	};
 };

@@ -288,10 +288,19 @@ type Post {
   title: String!
 }
 
+type PostsResponse {
+  docs: [Post!]!
+  limit: Int!
+  page: Int!
+  results: Int!
+}
+
 type Query {
   admins(filter: JSON, limit: Int, page: Int, sort: JSON): ChannelAdminsResponse!
   announcement(id: ID!): Announcement
   announcements(filter: JSON, limit: Int, page: Int, sort: JSON): AnnouncementsResponse
+  channelPost(id: ID!): Post
+  channelPosts(channel: ID!, limit: Int, page: Int): PostsResponse
   findChannel(filter: JSON!): Channel
   findGifs(limit: Int, page: Int, query: String!): [Gif!]!
   findUser(filter: JSON!): User
