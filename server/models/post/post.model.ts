@@ -3,8 +3,8 @@ import {Document, model, Schema, Types} from 'mongoose';
 const postSchema = new Schema(
 	{
 		cover: {
-			type: String,
-			default: 'default.svg',
+			type: Types.ObjectId,
+			ref: 'Image',
 		},
 		title: {
 			type: String,
@@ -46,7 +46,7 @@ const postSchema = new Schema(
 );
 
 export interface PostModel {
-	cover: string;
+	cover?: string;
 	title: string;
 	subtitle?: string;
 	description?: string;
