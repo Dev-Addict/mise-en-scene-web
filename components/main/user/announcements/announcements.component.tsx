@@ -27,15 +27,11 @@ export const Announcements = () => {
 			{loading && (
 				<div>
 					<Animation data={animationData} />
-					<Text size={Size.MASSIVE} center>
-						در حال بارگذاری گفت و گو...
-					</Text>
+					<Text size={Size.MASSIVE} center text="در حال بارگذاری گفت و گو..." />
 				</div>
 			)}
 			{!loading && !announcements.length && (
-				<Text size={Size.MASSIVE} center>
-					هنوز پستی وجود ندارد!
-				</Text>
+				<Text size={Size.MASSIVE} center text="هنوز پستی وجود ندارد!" />
 			)}
 			{!!announcements.length && announcements.length !== results && (
 				<Button outline disabled={loading} primary onClick={onLoadMoreClick()}>

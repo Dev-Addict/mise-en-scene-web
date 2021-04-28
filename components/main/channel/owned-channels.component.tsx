@@ -52,15 +52,15 @@ export const OwnedChannels = () => {
 			{loading && (
 				<div>
 					<Animation data={animationData} />
-					<Text size={Size.MASSIVE} center>
-						در حال بارگذاری کانال ها...
-					</Text>
+					<Text size={Size.MASSIVE} center text="در حال بارگذاری کانال ها..." />
 				</div>
 			)}
 			{!loading && !channels.length && (
-				<Text size={Size.MASSIVE} center>
-					هنوز درخواست کانالی را ارسال نکرده اید!
-				</Text>
+				<Text
+					size={Size.MASSIVE}
+					center
+					text="هنوز درخواست کانالی را ارسال نکرده اید!"
+				/>
 			)}
 			{!!channels.length && channels.length !== results && (
 				<Button outline disabled={loading} primary onClick={onLoadMoreClick()}>

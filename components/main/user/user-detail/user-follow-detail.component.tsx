@@ -21,17 +21,13 @@ interface Props {
 export const UserFollowDetail: FC<Props> = ({user}) => {
 	return (
 		<Container>
-			<Text size={Size.SMALL}>{user.followers}</Text>
-			<Text size={Size.SMALL}>&nbsp;</Text>
-			<Text size={Size.SMALL} lowOpacity>
-				دنبال کننده
-			</Text>
+			<Text size={Size.SMALL} text={user.followers?.toString()} />
+			<Text size={Size.SMALL} text=" " />
+			<Text size={Size.SMALL} lowOpacity text="دنبال کننده" />
 			<Filler />
-			<Text size={Size.SMALL}>{user.followings}</Text>
-			<Text size={Size.SMALL}>&nbsp;</Text>
-			<Text size={Size.SMALL} lowOpacity>
-				دنبال می کند
-			</Text>
+			<Text size={Size.SMALL} text={user.followings?.toString()} />
+			<Text size={Size.SMALL} text=" " />
+			<Text size={Size.SMALL} lowOpacity text="دنبال می کند" />
 		</Container>
 	);
 };

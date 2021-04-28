@@ -114,3 +114,14 @@
 0xE000071: channel admin `channel` is required.
 0xE000072: channel admin `user` is required.
 0xE000073: image `alt` is too long(max length 50).
+0xE000074: couldn't find the channel with provided `channel`.
+0xE000075: you don't have permission to create post for this channel.
+0xE000076: couldn't find the channel with provided `id`.
+0xE000077: couldn't find the post with provided `id`.
+0xE000078: couldn't find the admin with provided `id`.
+0xE000079: you don't have the permission to edit this post.
+0xE00007A: couldn't find the post with provided `id`.
+0xE00007B: couldn't find the post with provided `id`.
+0xE00007C: couldn't find the admin with provided `id`.
+0xE00007D: you don't have the permission to delete the post with provided `id`.
+0xE00007E: you don't have the permission to delete the post with provided `id`.

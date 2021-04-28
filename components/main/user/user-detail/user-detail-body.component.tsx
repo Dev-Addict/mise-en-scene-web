@@ -42,7 +42,7 @@ export const UserDetailBody: FC<Props> = ({user, setUser}) => {
 	return (
 		<Container>
 			<Username user={user} />
-			<Text>{user.bio}</Text>
+			<Text text={user.bio || ''} />
 			<SpaceDivider size={Size.SMALL} />
 			<FollowDetail followings={user.followings} followers={user.followers} />
 			<SpaceDivider size={Size.SMALL} />

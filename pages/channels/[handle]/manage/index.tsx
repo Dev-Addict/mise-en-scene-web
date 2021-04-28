@@ -74,7 +74,7 @@ const ManageChannel: NextPage<Props & InitialProps, InitialProps> = ({
 			<Body>
 				<ChannelDetail channel={localChannel} />
 				<Filler minHeight={30} />
-				<Text size={Size.HUGE}>مدیر ها</Text>
+				<Text size={Size.HUGE} text="مدیر ها" />
 				<AdminFinder channel={localChannel} />
 				<ChannelAdmins channel={localChannel} />
 				<Filler minHeight={30} />
@@ -85,7 +85,7 @@ const ManageChannel: NextPage<Props & InitialProps, InitialProps> = ({
 						</Button>
 					</Link>
 					<Filler />
-					<Text size={Size.HUGE}>مطالب</Text>
+					<Text size={Size.HUGE} text="مطالب" />
 				</Row>
 			</Body>
 		</div>

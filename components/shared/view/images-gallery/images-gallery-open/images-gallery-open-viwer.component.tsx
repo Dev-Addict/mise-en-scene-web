@@ -64,7 +64,7 @@ export const ImagesGalleryOpenViewer: FC<Props> = ({
 						onClick={onZoomClick(0.05)}
 					/>
 				</ZoomController>
-				<Zoom>{zoom}</Zoom>
+				<Zoom text={zoom?.toString()} />
 				<ZoomController disabled={zoom <= 0.5}>
 					<NImage
 						src={minus}

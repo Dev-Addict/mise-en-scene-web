@@ -175,6 +175,19 @@ input CheckUsernameData {
   username: Username!
 }
 
+input CreatePostData {
+  admin: ID
+  body: JSON!
+  channel: ID!
+  cover: ID
+  description: String
+  publishAt: Date
+  published: Boolean
+  subtitle: String
+  tags: [String!]
+  title: String!
+}
+
 scalar Date
 
 input EditAdminPermissionsData {
@@ -227,6 +240,9 @@ type Mutation {
   checkEmail(data: CheckEmailData!): Boolean!
   checkHandle(data: CheckHandleData!): Boolean
   checkUsername(data: CheckUsernameData!): Boolean!
+  createPost(data: CreatePostData!): Post
+  deleteAnnouncement(id: ID!): Announcement
+  deletePost(id: ID!): Post
   dislike(announcement: ID!): AnnouncementDislike!
   editAdminPermissions(data: EditAdminPermissionsData!): ChannelAdmin
   follow(data: FollowData!): UserFollow!
@@ -242,6 +258,7 @@ type Mutation {
   signIn(data: SignInData!): AuthResponse!
   signUp(data: SignUpData!): AuthResponse!
   unfollow(data: FollowData!): UserFollow
+  updatePost(data: UpdatePostData!, id: ID!): Post
   updateSelf(data: UpdateSelfData!): User
   uploadImage(data: UploadImageData!): Image
   validateResetEmailToken(data: ValidateResetEmailTokenData!): User
@@ -257,9 +274,11 @@ type Post {
   admin: ID
   adminData: ChannelAdmin
   body: String!
+  bodyData: JSON!
   channel: ID!
   channelData: Channel!
-  cover: String!
+  cover: ID
+  coverData: Image
   description: String
   id: ID!
   publishAt: Date
@@ -333,6 +352,17 @@ input SignUpData {
   lastname: Name
   password: Password!
   username: Username!
+}
+
+input UpdatePostData {
+  body: JSON
+  cover: ID
+  description: String
+  publishAt: Date
+  published: Boolean
+  subtitle: String
+  tags: [String!]
+  title: String
 }
 
 input UpdateSelfData {

@@ -70,6 +70,18 @@ export interface NexusGenInputs {
   CheckUsernameData: { // input type
     username: NexusGenScalars['Username']; // Username!
   }
+  CreatePostData: { // input type
+    admin?: string | null; // ID
+    body: NexusGenScalars['JSON']; // JSON!
+    channel: string; // ID!
+    cover?: string | null; // ID
+    description?: string | null; // String
+    publishAt?: NexusGenScalars['Date'] | null; // Date
+    published?: boolean | null; // Boolean
+    subtitle?: string | null; // String
+    tags?: string[] | null; // [String!]
+    title: string; // String!
+  }
   EditAdminPermissionsData: { // input type
     admin: string; // ID!
     channel: string; // ID!
@@ -122,6 +134,16 @@ export interface NexusGenInputs {
     lastname?: NexusGenScalars['Name'] | null; // Name
     password: NexusGenScalars['Password']; // Password!
     username: NexusGenScalars['Username']; // Username!
+  }
+  UpdatePostData: { // input type
+    body?: NexusGenScalars['JSON'] | null; // JSON
+    cover?: string | null; // ID
+    description?: string | null; // String
+    publishAt?: NexusGenScalars['Date'] | null; // Date
+    published?: boolean | null; // Boolean
+    subtitle?: string | null; // String
+    tags?: string[] | null; // [String!]
+    title?: string | null; // String
   }
   UpdateSelfData: { // input type
     avatar?: NexusGenScalars['Upload'] | null; // Upload
@@ -268,7 +290,7 @@ export interface NexusGenObjects {
     admin?: string | null; // ID
     body: string; // String!
     channel: string; // ID!
-    cover: string; // String!
+    cover?: string | null; // ID
     description?: string | null; // String
     id: string; // ID!
     publishAt?: NexusGenScalars['Date'] | null; // Date
@@ -447,6 +469,9 @@ export interface NexusGenFieldTypes {
     checkEmail: boolean; // Boolean!
     checkHandle: boolean | null; // Boolean
     checkUsername: boolean; // Boolean!
+    createPost: NexusGenRootTypes['Post'] | null; // Post
+    deleteAnnouncement: NexusGenRootTypes['Announcement'] | null; // Announcement
+    deletePost: NexusGenRootTypes['Post'] | null; // Post
     dislike: NexusGenRootTypes['AnnouncementDislike']; // AnnouncementDislike!
     editAdminPermissions: NexusGenRootTypes['ChannelAdmin'] | null; // ChannelAdmin
     follow: NexusGenRootTypes['UserFollow']; // UserFollow!
@@ -462,6 +487,7 @@ export interface NexusGenFieldTypes {
     signIn: NexusGenRootTypes['AuthResponse']; // AuthResponse!
     signUp: NexusGenRootTypes['AuthResponse']; // AuthResponse!
     unfollow: NexusGenRootTypes['UserFollow'] | null; // UserFollow
+    updatePost: NexusGenRootTypes['Post'] | null; // Post
     updateSelf: NexusGenRootTypes['User'] | null; // User
     uploadImage: NexusGenRootTypes['Image'] | null; // Image
     validateResetEmailToken: NexusGenRootTypes['User'] | null; // User
@@ -472,9 +498,11 @@ export interface NexusGenFieldTypes {
     admin: string | null; // ID
     adminData: NexusGenRootTypes['ChannelAdmin'] | null; // ChannelAdmin
     body: string; // String!
+    bodyData: NexusGenScalars['JSON']; // JSON!
     channel: string; // ID!
     channelData: NexusGenRootTypes['Channel']; // Channel!
-    cover: string; // String!
+    cover: string | null; // ID
+    coverData: NexusGenRootTypes['Image'] | null; // Image
     description: string | null; // String
     id: string; // ID!
     publishAt: NexusGenScalars['Date'] | null; // Date
@@ -665,6 +693,9 @@ export interface NexusGenFieldTypeNames {
     checkEmail: 'Boolean'
     checkHandle: 'Boolean'
     checkUsername: 'Boolean'
+    createPost: 'Post'
+    deleteAnnouncement: 'Announcement'
+    deletePost: 'Post'
     dislike: 'AnnouncementDislike'
     editAdminPermissions: 'ChannelAdmin'
     follow: 'UserFollow'
@@ -680,6 +711,7 @@ export interface NexusGenFieldTypeNames {
     signIn: 'AuthResponse'
     signUp: 'AuthResponse'
     unfollow: 'UserFollow'
+    updatePost: 'Post'
     updateSelf: 'User'
     uploadImage: 'Image'
     validateResetEmailToken: 'User'
@@ -690,9 +722,11 @@ export interface NexusGenFieldTypeNames {
     admin: 'ID'
     adminData: 'ChannelAdmin'
     body: 'String'
+    bodyData: 'JSON'
     channel: 'ID'
     channelData: 'Channel'
-    cover: 'String'
+    cover: 'ID'
+    coverData: 'Image'
     description: 'String'
     id: 'ID'
     publishAt: 'Date'
@@ -772,6 +806,15 @@ export interface NexusGenArgTypes {
     checkUsername: { // args
       data: NexusGenInputs['CheckUsernameData']; // CheckUsernameData!
     }
+    createPost: { // args
+      data: NexusGenInputs['CreatePostData']; // CreatePostData!
+    }
+    deleteAnnouncement: { // args
+      id: string; // ID!
+    }
+    deletePost: { // args
+      id: string; // ID!
+    }
     dislike: { // args
       announcement: string; // ID!
     }
@@ -816,6 +859,10 @@ export interface NexusGenArgTypes {
     }
     unfollow: { // args
       data: NexusGenInputs['FollowData']; // FollowData!
+    }
+    updatePost: { // args
+      data: NexusGenInputs['UpdatePostData']; // UpdatePostData!
+      id: string; // ID!
     }
     updateSelf: { // args
       data: NexusGenInputs['UpdateSelfData']; // UpdateSelfData!

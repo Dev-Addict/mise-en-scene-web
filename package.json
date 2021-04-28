@@ -8,7 +8,11 @@
   },
   "dependencies": {
     "@apollo/client": "^3.3.12",
+    "@draft-js-plugins/buttons": "^4.1.0",
+    "@draft-js-plugins/editor": "^4.1.0",
     "@draft-js-plugins/emoji": "^4.4.0",
+    "@draft-js-plugins/inline-toolbar": "^4.1.1",
+    "@draft-js-plugins/linkify": "^4.1.0",
     "@types/apollo-upload-client": "^14.1.0",
     "@types/draft-js": "^0.11.1",
     "@types/emoji-mart": "^3.0.4",

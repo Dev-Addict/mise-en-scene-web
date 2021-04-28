@@ -2,6 +2,7 @@ export * from './cards';
 export * from './input';
 export * from './native';
 export * from './view';
+export * from './a.component';
 export * from './errors.component';
 export * from './flex.component';
 export * from './slide-message.component';

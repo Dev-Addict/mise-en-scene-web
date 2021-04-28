@@ -62,7 +62,7 @@ export const Tabs: FC<Props> = ({tabs, activeCode, onTab}) => {
 	const renderTabs = () =>
 		tabs.map(({name, code}) => (
 			<Tab key={code} active={code === activeCode} onClick={onTabClick(code)}>
-				<Text center>{name}</Text>
+				<Text center text={name} />
 			</Tab>
 		));
 

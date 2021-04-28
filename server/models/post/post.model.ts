@@ -51,7 +51,7 @@ export interface PostModel {
 	subtitle?: string;
 	description?: string;
 	tags: string[];
-	body: string[];
+	body: string;
 	published: boolean;
 	publishedAt: Date | number;
 	publishAt?: Date | number;

@@ -1,6 +1,5 @@
 import styled, {css} from 'styled-components';
 
-import {Text} from '../../text.component';
 import {StyledProps} from '../../../../types';
 
 interface ContainerProps {
@@ -77,14 +76,18 @@ export const UserDetails = styled.div<UserDetailsProps>`
 	}
 `;
 
-export const Time = styled(Text)<StyledProps>`
+export const LeftSideContainer = styled.div`
 	position: absolute;
 	left: 0;
 	top: 50%;
 	transform: translateY(-50%);
 	background-color: ${({theme: {background}}) => background};
 	padding-right: 2px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 `;
+
 export const SideAvatar = styled.div`
 	@media only screen and (max-width: 1000px) {
 		display: none;

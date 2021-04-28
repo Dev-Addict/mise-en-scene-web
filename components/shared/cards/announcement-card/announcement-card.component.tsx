@@ -7,13 +7,14 @@ import {Text} from '../../text.component';
 import {
 	Body,
 	Container,
+	LeftSideContainer,
 	SideAvatar,
 	SmallAvatar,
-	Time,
 	UserDetails,
 } from './announcement-card-components.component';
 import {useDate, useUserDisplayName, useWindowSize} from '../../../../hooks';
 import {AnnouncementCardActions} from './announcement-card-actions.component';
+import {AnnouncementCardDelete} from './announcement-card-delete.component';
 
 interface Props {
 	announcement: Announcement;
@@ -50,7 +51,7 @@ export const AnnouncementCard: FC<Props> = ({
 		text
 			?.split('\n')
 			?.map((text, index) =>
-				text ? <Text key={index}>{text}</Text> : <Text>&nbsp;</Text>
+				text ? <Text key={index} text={text} /> : <Text text=" " />
 			);
 
 	return (
@@ -64,14 +65,15 @@ export const AnnouncementCard: FC<Props> = ({
 						<Avatar user={userData} size={50} />
 					</SmallAvatar>
 					<Link href={`/users/${userData?.username || 'no'}`}>
-						<Text hover>{displayName}</Text>
+						<Text hover text={displayName?.toString()} />
 					</Link>
 					<Link href={`/users/${userData?.username || 'no'}`}>
-						<Text lowOpacity hover>
-							@{userData?.username}
-						</Text>
+						<Text lowOpacity hover text={`@${userData?.username || ''}`} />
 					</Link>
-					<Time>{date}</Time>
+					<LeftSideContainer>
+						<Text text={date} />
+						<AnnouncementCardDelete announcement={localAnnouncement} />
+					</LeftSideContainer>
 				</UserDetails>
 				{renderText()}
 				{reAnnouncementData && (

@@ -36,12 +36,8 @@ export const ChannelDetail: FC<Props> = ({channel: {cover, name, handle}}) => {
 		<Container>
 			<Cover src={`/image/channel/cover/${cover || 'default.svg'}`} />
 			<Detail>
-				<Text size={Size.HUGE} maxLines={1}>
-					{name}
-				</Text>
-				<Text size={Size.BIG} lowOpacity maxLines={1}>
-					@{handle}
-				</Text>
+				<Text size={Size.HUGE} maxLines={1} text={name} />
+				<Text size={Size.BIG} lowOpacity maxLines={1} text={`@${handle}`} />
 				<Filler />
 				<FollowDetail showFollowings={false} />
 			</Detail>

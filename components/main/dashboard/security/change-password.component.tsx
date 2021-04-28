@@ -23,7 +23,7 @@ export const ChangePassword = () => {
 
 	return (
 		<div>
-			<Text>آیا می خواهید رمزعبور خود را تغییر دهید؟</Text>
+			<Text text="آیا می خواهید رمزعبور خود را تغییر دهید؟" />
 			<SlideMessage
 				message="ایمیل ارسال شد!"
 				view={

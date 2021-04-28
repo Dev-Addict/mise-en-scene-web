@@ -1,13 +1,10 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
-import styled from 'styled-components';
 
 import {FileInput} from './file-input.component';
 import {Image as ImageView} from '../../view';
 import {Image} from '../../../../types';
 import {uploadImage} from '../../../../helpers';
 import {useComponentSize, useThemeImage} from '../../../../hooks';
-
-const Container = styled.div``;
 
 interface Props {
 	disabled?: boolean;
@@ -26,16 +23,22 @@ export const ImageInput: FC<Props> = ({
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	const [image, setImage] = useState<Image | undefined>(undefined);
+	const [loading, setLoading] = useState<boolean>(false);
 
 	const {width} = useComponentSize(containerRef);
 
-	const onImageClick = () => () => !disabled && inputRef.current?.click();
+	const onImageClick = () => () =>
+		!(disabled || loading) && inputRef.current?.click();
 	const onFileSelect = () => async (files: File[]) => {
 		if (files[0]) {
+			setLoading(true);
+
 			const image = await uploadImage({image: files[0]});
 
 			setImage(image);
 			onImageChange && onImageChange(image);
+
+			setLoading(false);
 		}
 	};
 
@@ -47,17 +50,19 @@ export const ImageInput: FC<Props> = ({
 		<>
 			<FileInput
 				onFilesSelect={onFileSelect()}
-				disabled={disabled}
+				disabled={disabled || loading}
 				inputRef={inputRef}
 			/>
-			<Container onClick={onImageClick()} ref={containerRef}>
+			<div onClick={onImageClick()} ref={containerRef}>
 				<ImageView
 					image={image}
 					defaultSrc={logo}
 					width={image ? undefined : width}
 					height={image ? undefined : width}
+					disabled={disabled || loading}
+					active
 				/>
-			</Container>
+			</div>
 		</>
 	);
 };

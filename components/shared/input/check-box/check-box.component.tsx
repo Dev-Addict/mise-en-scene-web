@@ -50,7 +50,7 @@ export const CheckBox: FC<Props> = ({
 						<CheckMark />
 					</CheckedBox>
 				</Box>
-				<Text size={Size.LARGE}>{text}</Text>
+				<Text size={Size.LARGE} text={text} />
 			</CheckBoxContainer>
 			<Error show={showError}>{(touched && error) || <>&nbsp;</>}</Error>
 		</Container>

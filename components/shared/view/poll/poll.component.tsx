@@ -85,9 +85,10 @@ export const Poll: FC<Props> = ({
 
 	return (
 		<Container>
-			<Text size={Size.HUGE}>{question}</Text>
+			<Text size={Size.HUGE} text={question} />
 			{renderOptions()}
-			<Votes size={Size.LARGE}>{votes}</Votes> <Votes lowOpacity>رای</Votes>
+			<Votes size={Size.LARGE} text={votes?.toString()} />{' '}
+			<Votes lowOpacity text="رای" />
 		</Container>
 	);
 };

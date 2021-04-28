@@ -81,7 +81,7 @@ export const AnnouncementCardActionsReact: FC<Props> = ({
 				onClick={onReact(Reaction.LIKE)}>
 				<Image src={isLiked ? likeFill : like} width={20} height={20} />
 				<Side>
-					<Text>{likeNumber}</Text>
+					<Text text={likeNumber.toString()} />
 				</Side>
 			</Item>
 			<Item
@@ -90,7 +90,7 @@ export const AnnouncementCardActionsReact: FC<Props> = ({
 				onClick={onReact(Reaction.DISLIKE)}>
 				<Image src={isDisliked ? likeFill : like} width={20} height={20} />
 				<Side>
-					<Text>{dislikeNumber}</Text>
+					<Text text={dislikeNumber.toString()} />
 				</Side>
 			</Item>
 		</>

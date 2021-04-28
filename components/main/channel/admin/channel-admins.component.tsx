@@ -35,15 +35,11 @@ export const ChannelAdmins: FC<Props> = ({channel}) => {
 			{loading && (
 				<div>
 					<Animation data={animationData} />
-					<Text size={Size.MASSIVE} center>
-						در حال بارگذاری مدیر ها...
-					</Text>
+					<Text size={Size.MASSIVE} center text="در حال بارگذاری مدیر ها..." />
 				</div>
 			)}
 			{!loading && !admins.length && (
-				<Text size={Size.MASSIVE} center>
-					این کانال هیج مدیری ندارد!
-				</Text>
+				<Text size={Size.MASSIVE} center text="این کانال هیج مدیری ندارد!" />
 			)}
 			{!!admins.length && admins.length !== results && (
 				<Button outline disabled={loading} primary onClick={onLoadMoreClick()}>

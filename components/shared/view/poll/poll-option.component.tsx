@@ -28,9 +28,10 @@ export const PollOption: FC<Props> = ({
 }) => {
 	return (
 		<OptionContainer>
-			<OptionVotes voted={!!myVote}>
-				{Math.floor(((votes || 0) / (pollVotes || 0) || 0) * 100)} %
-			</OptionVotes>
+			<OptionVotes
+				voted={!!myVote}
+				text={`${Math.floor(((votes || 0) / (pollVotes || 0) || 0) * 100)} %`}
+			/>
 			<Option
 				voted={!!myVote}
 				onClick={onOptionClick(index || 0)}

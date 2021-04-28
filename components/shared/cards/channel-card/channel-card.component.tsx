@@ -63,12 +63,8 @@ export const ChannelCard: FC<Props> = ({channel, width}) => {
 				src={`/image/channel/cover/${cover || 'default.svg'}`}
 				size={150}
 			/>
-			<Text size={Size.HUGE} maxLines={1} width={width - 20}>
-				{name}
-			</Text>
-			<Text lowOpacity maxLines={1} width={width - 20}>
-				@{handle}
-			</Text>
+			<Text size={Size.HUGE} maxLines={1} width={width - 20} text={name} />
+			<Text lowOpacity maxLines={1} width={width - 20} text={`@${handle}`} />
 			<Filler />
 			{isOwnerOrAccepted ? (
 				<ChannelCardOwnerActions handle={handle} verified={verified} />

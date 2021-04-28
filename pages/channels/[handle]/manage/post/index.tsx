@@ -12,7 +12,7 @@ import {useAuth} from '../../../../../hooks';
 import {cookieParser} from '../../../../../utils';
 
 const Body = styled.div`
-	margin: auto auto 80px;
+	margin: auto;
 	padding: 10px;
 	width: 700px;
 
@@ -68,7 +68,7 @@ const Post: NextPage<Props & InitialProps, InitialProps> = ({
 			<Meta title={`مدیدریت کانال ${localChannel.name}`} />
 			<Header setTheme={setTheme} />
 			<Body>
-				<PostBody />
+				<PostBody channel={localChannel} />
 			</Body>
 		</div>
 	);

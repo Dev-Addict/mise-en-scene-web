@@ -4,9 +4,10 @@ import {EditorState} from 'draft-js';
 
 import {Body, SubmitContainer} from '../../sign/sign-components.component';
 import {Button, Errors} from '../../../shared';
+import {PostInputs} from './post-inputs.component';
 import {Color} from '../../../../data';
 import {Image} from '../../../../types';
-import {PostInputs} from './post-inputs.component';
+import {postValidator} from '../../validators';
 
 export interface PostFields {
 	cover: Image | undefined;
@@ -36,7 +37,10 @@ export const PostForm: FC<Props> = ({
 	submitText,
 }) => {
 	return (
-		<Formik initialValues={initialValues} onSubmit={onSubmit}>
+		<Formik
+			initialValues={initialValues}
+			onSubmit={onSubmit}
+			validate={postValidator}>
 			{({isSubmitting}: FormikProps<PostFields>) => (
 				<Body>
 					<PostInputs />

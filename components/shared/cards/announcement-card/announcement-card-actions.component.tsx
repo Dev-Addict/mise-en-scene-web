@@ -70,7 +70,7 @@ export const AnnouncementCardActions: FC<Props> = ({
 				<Item>
 					<Image src={comment} width={20} height={20} />
 					<Side>
-						<Text>{comments}</Text>
+						<Text text={comments?.toString()} />
 					</Side>
 				</Item>
 			</Link>
@@ -78,7 +78,7 @@ export const AnnouncementCardActions: FC<Props> = ({
 				<Item>
 					<Image src={repeat} width={20} height={20} />
 					<Side>
-						<Text>{reAnnouncements}</Text>
+						<Text text={reAnnouncements?.toString()} />
 					</Side>
 				</Item>
 			</Link>

@@ -1,5 +1,5 @@
 import React, {FC, useRef} from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 
 import {Image as ImageModel, StyledProps} from '../../../types';
 import {useComponentSize} from '../../../hooks';
@@ -7,6 +7,8 @@ import {useComponentSize} from '../../../hooks';
 interface ContainerProps {
 	width?: number;
 	height?: number;
+	disabled?: boolean;
+	active?: boolean;
 }
 
 const Container = styled.div<StyledProps & ContainerProps>`
@@ -15,6 +17,23 @@ const Container = styled.div<StyledProps & ContainerProps>`
 	overflow: hidden;
 	width: ${({width}) => width};
 	height: ${({height}) => height};
+
+	${({active}) =>
+		active &&
+		css`
+			cursor: pointer;
+
+			&:hover {
+				opacity: 0.5;
+			}
+		`}
+
+	${({disabled}) =>
+		disabled &&
+		css`
+			cursor: default;
+			opacity: 0.5;
+		`}
 `;
 
 const Img = styled.img`
@@ -28,6 +47,8 @@ interface Props {
 	width?: number;
 	height?: number;
 	defaultSrc?: string;
+	disabled?: boolean;
+	active?: boolean;
 }
 
 export const Image: FC<Props> = ({
@@ -35,13 +56,20 @@ export const Image: FC<Props> = ({
 	width: fWidth,
 	height: fHeight,
 	defaultSrc,
+	disabled = false,
+	active = false,
 }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	const {width: containerWidth} = useComponentSize(containerRef);
 
 	return (
-		<Container ref={containerRef} width={fWidth} height={fHeight}>
+		<Container
+			ref={containerRef}
+			width={fWidth}
+			height={fHeight}
+			disabled={disabled}
+			active={active}>
 			<Img
 				src={image ? `/image/${image?.directory}/${image?.image}` : defaultSrc}
 				width={fWidth || containerWidth}

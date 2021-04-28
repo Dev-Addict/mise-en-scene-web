@@ -54,7 +54,7 @@ export const ComingSoon = () => {
 			<ImageContainer>
 				<Image src={construction} width={1625} height={1000} />
 			</ImageContainer>
-			<Text size={Size.MASSIVE}>به زودی...</Text>
+			<Text size={Size.MASSIVE} text="به زودی..." />
 		</Container>
 	);
 };

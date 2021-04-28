@@ -36,10 +36,8 @@ export const Username: FC<Props> = ({user}) => {
 
 	return (
 		<Container>
-			<Text size={Size.MASSIVE}>{displayName}</Text>
-			<Text size={Size.MEDIUM} lowOpacity>
-				@{user.username}
-			</Text>
+			<Text size={Size.MASSIVE} text={displayName || ''} />
+			<Text size={Size.MEDIUM} lowOpacity text={`@${user.username || ''}`} />
 		</Container>
 	);
 };

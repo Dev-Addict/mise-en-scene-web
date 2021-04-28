@@ -1,7 +1,7 @@
 import {createGlobalStyle, css} from 'styled-components';
 
 interface Props {
-	open: boolean;
+	open?: boolean;
 }
 
 export const OpenModalStyle = createGlobalStyle<Props>`

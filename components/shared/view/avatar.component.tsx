@@ -19,7 +19,7 @@ export const Avatar: FC<Props> = ({user, size = 200, src}) => {
 		<Cover
 			size={size}
 			src={`/image/user/avatar/${src || localUser?.avatar || 'default.svg'}`}
-			link={src ? `/users/${localUser?.username || 'no'}` : undefined}
+			link={localUser ? `/users/${localUser?.username || 'no'}` : undefined}
 		/>
 	);
 };

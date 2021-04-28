@@ -70,7 +70,7 @@ export const ImagesGallery: FC<Props> = ({images}) => {
 					<div onClick={onGalleryClick()}>
 						<MoreContainer>
 							<NImage src={gallery} width="30px" height="30px" />
-							<Text>باز کردن گالری</Text>
+							<Text text="باز کردن گالری" />
 						</MoreContainer>
 					</div>
 				</SideContainer>

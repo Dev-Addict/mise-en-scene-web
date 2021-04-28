@@ -23,7 +23,7 @@ export const ChangeEmail = () => {
 
 	return (
 		<div>
-			<Text>آیا می خواهید ایمیل خود را تغییر دهید؟</Text>
+			<Text text="آیا می خواهید ایمیل خود را تغییر دهید؟" />
 			<SlideMessage
 				message="ایمیل ارسال شد!"
 				view={

@@ -45,14 +45,15 @@ export const AdminCard: FC<Props> = ({
 		<Container accepted={accepted}>
 			<Avatar user={userData} size={50} />
 			<Link href={`/users/${userData?.username || 'no'}`}>
-				<Text maxLines={1} active>
-					{name}
-				</Text>
+				<Text maxLines={1} active text={name || ''} />
 			</Link>
 			<Link href={`/users/${userData?.username || 'no'}`}>
-				<Text maxLines={1} lowOpacity active>
-					@{userData?.username}
-				</Text>
+				<Text
+					maxLines={1}
+					lowOpacity
+					active
+					text={`@${userData?.username || ''}`}
+				/>
 			</Link>
 			<AdminCardActions channel={channel} admin={admin} />
 		</Container>

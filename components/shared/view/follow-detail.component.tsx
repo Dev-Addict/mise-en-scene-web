@@ -28,19 +28,15 @@ export const FollowDetail: FC<Props> = ({
 }) => {
 	return (
 		<Container>
-			<Text size={Size.SMALL}>{followers}</Text>
-			<Text size={Size.SMALL}>&nbsp;</Text>
-			<Text size={Size.SMALL} lowOpacity>
-				دنبال کننده
-			</Text>
+			<Text size={Size.SMALL} text={followers?.toString()} />
+			<Text size={Size.SMALL} text=" " />
+			<Text size={Size.SMALL} lowOpacity text="دنبال کننده" />
 			<Filler />
 			{showFollowings && (
 				<>
-					<Text size={Size.SMALL}>{followings}</Text>
-					<Text size={Size.SMALL}>&nbsp;</Text>
-					<Text size={Size.SMALL} lowOpacity>
-						دنبال می کند
-					</Text>
+					<Text size={Size.SMALL} text={followings?.toString()} />
+					<Text size={Size.SMALL} text=" " />
+					<Text size={Size.SMALL} lowOpacity text="دنبال می کند" />
 				</>
 			)}
 		</Container>
