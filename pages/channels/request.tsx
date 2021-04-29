@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {
 	Logo,
@@ -31,10 +31,11 @@ const Header = styled.div`
 
 const Request = () => {
 	const router = useRouter();
+	const {asPath} = router;
 
 	const [errors, setErrors] = useState<string[]>([]);
 
-	const {token} = useAuth();
+	const {token, isSigned, isLoading} = useAuth();
 
 	const [requestChannel] = useMutation<
 		RequestChannelMutationData,
@@ -81,6 +82,10 @@ const Request = () => {
 
 		setSubmitting(false);
 	};
+
+	useEffect(() => {
+		if (!isSigned && !isLoading) router.push(`/sign?callback=${asPath}`);
+	}, [isSigned, isLoading]);
 
 	return (
 		<div>

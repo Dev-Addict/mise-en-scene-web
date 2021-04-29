@@ -13,7 +13,7 @@ const fields: {
 	EDIT_OTHERS_POST: 'EDIT_OTHERS_POST',
 	DELETE_POST: 'DELETE_POST',
 	CREATE_NEW_ADMIN: 'CREATE_NEW_ADMIN',
-	DELETE_ADMIN: 'DELETE_ADMIN',
+	REMOVE_ADMIN: 'REMOVE_ADMIN',
 	EDIT_ADMINS_PERMISSIONS: 'EDIT_ADMINS_PERMISSIONS',
 };
 
@@ -61,7 +61,7 @@ export const AdminPermissionsInputs: FC<Props> = ({myAdmin}) => {
 			</InputContainer>
 			<InputContainer>
 				<Field
-					name={fields.DELETE_ADMIN}
+					name={fields.REMOVE_ADMIN}
 					component={FormikCheckBox}
 					text="قابلیت حذف کردن مدیر"
 					disabled={isDisabled(ChannelAdminPermission.DELETE_ADMIN)}

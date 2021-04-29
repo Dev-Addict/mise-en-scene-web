@@ -18,7 +18,7 @@ const initialValues: AdminPermissionsFields = {
 	EDIT_OTHERS_POST: true,
 	EDIT_ADMINS_PERMISSIONS: false,
 	DELETE_POST: true,
-	DELETE_ADMIN: false,
+	REMOVE_ADMIN: false,
 	CREATE_NEW_ADMIN: false,
 	POST: true,
 };

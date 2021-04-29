@@ -17,6 +17,7 @@ interface InitialProps {
 const AddAdmin: NextPage<Props & InitialProps, InitialProps> = ({
 	admin,
 	channel,
+	setTheme,
 }) => {
 	const router = useRouter();
 	const {asPath} = router;
@@ -41,7 +42,11 @@ const AddAdmin: NextPage<Props & InitialProps, InitialProps> = ({
 	return (
 		<div>
 			<Meta title={`اضافه کردن مدیر به کانال ${channel?.name}`} />
-			<AddAdminView admin={localAdmin} channel={localChannel} />
+			<AddAdminView
+				admin={localAdmin}
+				channel={localChannel}
+				setTheme={setTheme}
+			/>
 		</div>
 	);
 };

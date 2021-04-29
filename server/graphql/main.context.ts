@@ -36,6 +36,7 @@ import {
 	IMovieRating,
 	IMovieRole,
 	IMovieVideo,
+	INotification,
 	IPost,
 	IUser,
 	IUserFollow,
@@ -45,6 +46,7 @@ import {
 	MovieRating,
 	MovieRole,
 	MovieVideo,
+	Notification,
 	Post,
 	User,
 	UserFollow,
@@ -75,6 +77,7 @@ export interface MainContext {
 		MovieRating: Model<IMovieRating>;
 		MovieRole: Model<IMovieRole>;
 		MovieVideo: Model<IMovieVideo>;
+		Notification: Model<INotification>;
 		Post: Model<IPost>;
 		User: Model<IUser>;
 		UserFollow: Model<IUserFollow>;
@@ -108,6 +111,7 @@ export const mainContext: ContextFunction<ExpressContext, MainContext> = ({
 		MovieRating,
 		MovieRole,
 		MovieVideo,
+		Notification,
 		Post,
 		User,
 		UserFollow,

@@ -1,11 +1,16 @@
 import React, {useEffect} from 'react';
 import {NextPage} from 'next';
 import {useRouter} from 'next/router';
-import Error from 'next/error';
 import styled from 'styled-components';
 import Cookie from 'js-cookie';
 
-import {Announce, AnnouncementCard, Header, Meta} from '../../../components';
+import {
+	Announce,
+	AnnouncementCard,
+	Error,
+	Header,
+	Meta,
+} from '../../../components';
 import {Announcement, Props} from '../../../types';
 import {useAuth, useWindowSize} from '../../../hooks';
 import {cookieParser} from '../../../utils';
@@ -43,7 +48,7 @@ const ReAnnounce: NextPage<Props & InitialProps, InitialProps> = ({
 	const {height} = useWindowSize();
 
 	if (!announcement)
-		return <Error statusCode={404} title="گفت و گو پیدا نشد!" />;
+		return <Error code={404} title="گفت و گو پیدا نشد!" setTheme={setTheme} />;
 
 	const onAnnounce = () => () => router.push(`/users/${user?.username}`);
 

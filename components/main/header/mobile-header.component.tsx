@@ -6,6 +6,7 @@ import {Sign} from './sign.component';
 import {useThemeImage} from 'hooks';
 import {StyledProps} from 'types';
 import {OpenModalStyle, Filler} from 'components';
+import {Notifications} from './notifications.component';
 
 const MenuButtonContainer = styled.div`
 	display: none;
@@ -81,6 +82,7 @@ export const MobileHeader: FC<Props> = ({isOpen, setOpen, sign = true}) => {
 					<Image src={arrowLeft} width="40px" height="40px" />
 				</ArrowContainer>
 				<Filler />
+				<Notifications mobile />
 				{sign && <Sign mobile />}
 			</MobileHeaderContainer>
 		</>

@@ -50,7 +50,7 @@ export const useOwnedChannels = () => {
 				await refetch();
 			}
 		})();
-	}, [channels]);
+	}, [channels, loading, data]);
 
 	return {
 		loading,

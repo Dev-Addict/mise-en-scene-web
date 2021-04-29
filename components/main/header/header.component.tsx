@@ -4,9 +4,10 @@ import styled, {css} from 'styled-components';
 import {Logo} from './logo.component';
 import {ThemeSwitch} from './theme-switch.component';
 import {MobileHeader} from './mobile-header.component';
-import {ThemeMode} from '../../../types';
 import {HeaderBody} from './header-body.component';
 import {Sign} from './sign.component';
+import {Notifications} from './notifications.component';
+import {ThemeMode} from '../../../types';
 
 interface ContainerProps {
 	sign?: boolean;
@@ -46,6 +47,7 @@ export const Header: FC<Props> = ({setTheme, sign = true}) => {
 			<BodyFiller />
 			<HeaderBody isOpen={isOpen} setOpen={setOpen} />
 			<ThemeSwitch setTheme={setTheme} />
+			<Notifications />
 			{sign && <Sign />}
 			<MobileHeader isOpen={isOpen} setOpen={setOpen} sign={sign} />
 		</Container>

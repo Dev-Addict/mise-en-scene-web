@@ -17,6 +17,7 @@ interface InitialProps {
 const EditAdmin: NextPage<Props & InitialProps, InitialProps> = ({
 	admin,
 	channel,
+	setTheme,
 }) => {
 	const router = useRouter();
 	const {asPath} = router;
@@ -41,7 +42,11 @@ const EditAdmin: NextPage<Props & InitialProps, InitialProps> = ({
 	return (
 		<div>
 			<Meta title={`ویرایش مدیر ${channel?.name}`} />
-			<EditAdminView admin={localAdmin} channel={localChannel} />
+			<EditAdminView
+				admin={localAdmin}
+				channel={localChannel}
+				setTheme={setTheme}
+			/>
 		</div>
 	);
 };

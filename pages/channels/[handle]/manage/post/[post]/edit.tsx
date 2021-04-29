@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {NextPage} from 'next';
 import {useRouter} from 'next/router';
-import Error from 'next/error';
 import Cookie from 'js-cookie';
 import styled from 'styled-components';
 
@@ -12,7 +11,7 @@ import {
 	Props,
 } from '../../../../../../types';
 import {useAuth} from '../../../../../../hooks';
-import {EditPost, Header, Meta} from '../../../../../../components';
+import {EditPost, Error, Header, Meta} from '../../../../../../components';
 import {cookieParser} from '../../../../../../utils';
 import {findChannel, getChannelPost} from '../../../../../../helpers';
 
@@ -57,12 +56,25 @@ const Edit: NextPage<Props & InitialProps, InitialProps> = ({
 	}, [post]);
 
 	if (!localChannel)
-		return <Error statusCode={404} title="کانالی با این هندل وجود ندارد." />;
+		return (
+			<Error
+				code={404}
+				title="کانالی با این هندل وجود ندارد."
+				setTheme={setTheme}
+			/>
+		);
 
-	if (!localPost) return <Error statusCode={404} title="مطلب پیدا نشد." />;
+	if (!localPost)
+		return <Error code={404} title="مطلب پیدا نشد." setTheme={setTheme} />;
 
 	if (!localChannel.verified)
-		return <Error statusCode={403} title="کانال هنوز تایید نشده است." />;
+		return (
+			<Error
+				code={403}
+				title="کانال هنوز تایید نشده است."
+				setTheme={setTheme}
+			/>
+		);
 
 	if (
 		localChannel.owner !== user?.id &&
@@ -75,7 +87,11 @@ const Edit: NextPage<Props & InitialProps, InitialProps> = ({
 		post?.adminData?.id !== user?.id
 	)
 		return (
-			<Error statusCode={403} title="شما اجازه دسترسی به این صفحه را ندارید!" />
+			<Error
+				code={403}
+				title="شما اجازه دسترسی به این صفحه را ندارید!"
+				setTheme={setTheme}
+			/>
 		);
 
 	return (

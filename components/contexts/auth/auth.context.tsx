@@ -70,6 +70,7 @@ export interface AuthContextType {
 	) => Promise<SignResponse>;
 	resetEmail: (variables: ResetEmailData) => Promise<SignResponse>;
 	updateSelf: (variables: UpdateSelfData) => Promise<SignResponse>;
+	markNotificationsRead: () => void;
 	signOut: () => void;
 	user: User | null;
 	token?: string;
@@ -105,6 +106,7 @@ export const AuthContext = createContext<AuthContextType>({
 		success: false,
 		errors: ['سیستم آماده نیست.'],
 	}),
+	markNotificationsRead: () => {},
 	user: null,
 	token: undefined,
 });

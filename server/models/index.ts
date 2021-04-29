@@ -6,6 +6,7 @@ export * from './geo';
 export * from './gif';
 export * from './image';
 export * from './movie';
+export * from './notification';
 export * from './post';
 export * from './user';
 export * from './any.model';

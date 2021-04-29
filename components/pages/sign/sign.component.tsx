@@ -17,7 +17,7 @@ interface Props {
 }
 
 export const Sign: FC<Props> = ({state}) => {
-	const [localState, setLocalState] = useState(state || SignState.SIGN_UP);
+	const [localState, setLocalState] = useState(state || SignState.SIGN_IN);
 
 	const onSignItemClick = () => ({value}: SwitchItem) =>
 		setLocalState(value as SignState);

@@ -1,6 +1,7 @@
 import {mutationField, nonNull} from 'nexus';
 import {AnnouncementLike} from '../../models';
-import {protect} from '../../../../utils';
+import {AppError, protect} from '../../../../utils';
+import {NotificationType} from '../../../../../types';
 
 export const likeMutation = mutationField('like', {
 	type: nonNull(AnnouncementLike),
@@ -10,9 +11,22 @@ export const likeMutation = mutationField('like', {
 	async resolve(
 		_root,
 		{announcement},
-		{req, models: {User, AnnouncementLike, AnnouncementDislike}}
+		{
+			req,
+			models: {
+				User,
+				AnnouncementLike,
+				AnnouncementDislike,
+				Announcement,
+				Notification,
+			},
+		}
 	) {
 		const {id} = (await protect(req, User))!;
+
+		const announcementData = await Announcement.findById(announcement);
+
+		if (!announcementData) throw new AppError('0xE000084', 404);
 
 		await AnnouncementDislike.findOneAndDelete({announcement, user: id});
 
@@ -27,6 +41,19 @@ export const likeMutation = mutationField('like', {
 			return <any>announcementLike;
 		}
 
-		return <any>await AnnouncementLike.create({announcement, user: id});
+		const newAnnouncementLike = await AnnouncementLike.create({
+			announcement,
+			user: id,
+		});
+
+		if (announcementData.user.toString() !== id.toString())
+			await Notification.create({
+				to: announcementData.user,
+				type: NotificationType.LIKE,
+				announcement,
+				user: id,
+			});
+
+		return <any>newAnnouncementLike;
 	},
 });

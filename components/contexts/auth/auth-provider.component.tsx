@@ -49,6 +49,10 @@ export const AuthProvider: FC = ({children}) => {
 		loadUser().then().catch();
 	}, []);
 
+	const markNotificationsRead = () => () => {
+		setUser((user) => user && {...user, notifications: 0});
+	};
+
 	return (
 		<AuthContext.Provider
 			value={{
@@ -63,6 +67,7 @@ export const AuthProvider: FC = ({children}) => {
 				signOut: signOut({setUser, setSigned, setToken}),
 				signUp: signUp({setUser, setSigned, setToken}),
 				updateSelf: updateSelf({setUser, token}),
+				markNotificationsRead: markNotificationsRead(),
 				token,
 				user,
 			}}>

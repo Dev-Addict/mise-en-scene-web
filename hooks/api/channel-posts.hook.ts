@@ -51,7 +51,7 @@ export const useChannelPosts = (channel: string) => {
 				await refetch();
 			}
 		})();
-	}, [posts]);
+	}, [posts, loading, data]);
 
 	const reload = async () => {
 		setPage(1);

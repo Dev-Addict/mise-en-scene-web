@@ -11,9 +11,11 @@ export const SIGN_UP_MUTATION = gql`
 				email
 				avatar
 				birthday
+				gender
 				username
 				bio
 				displayName
+				notifications
 			}
 		}
 	}

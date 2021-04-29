@@ -15,6 +15,7 @@ export const SIGN_IN_MUTATION = gql`
 				username
 				bio
 				displayName
+				notifications
 			}
 		}
 	}

@@ -1,0 +1,9 @@
+export enum NotificationType {
+	FOLLOW = 'FOLLOW',
+	UNFOLLOW = 'UNFOLLOW',
+	LIKE = 'LIKE',
+	DISLIKE = 'DISLIKE',
+	COMMENT = 'COMMENT',
+	RE_ANNOUNCEMENT = 'RE_ANNOUNCEMENT',
+	POST = 'POST',
+}

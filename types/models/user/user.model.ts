@@ -15,4 +15,5 @@ export interface User {
 	followers?: number;
 	isFollowed?: boolean;
 	followings?: number;
+	notifications?: number;
 }

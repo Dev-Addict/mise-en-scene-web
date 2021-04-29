@@ -66,5 +66,10 @@ export const User = objectType({
 				return <any>Announcement.find({user: id});
 			},
 		});
+		t.nonNull.int('notifications', {
+			resolve({id}, _args, {models: {Notification}}) {
+				return Notification.countDocuments({to: id, seen: false});
+			},
+		});
 	},
 });

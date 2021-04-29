@@ -2,6 +2,7 @@ export * from './api';
 export * from './contexts';
 export * from './size';
 export * from './date.hook';
+export * from './error-value.hook';
 export * from './force-update.hook';
 export * from './mode-theme.hook';
 export * from './progress-bar.hook';

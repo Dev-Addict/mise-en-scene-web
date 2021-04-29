@@ -4,6 +4,7 @@ import {Announcement} from '../../models';
 import {AnnounceData} from '../inputs';
 import {saveImage} from '../../../utils';
 import {AppError, protect} from '../../../../utils';
+import {NotificationType} from '../../../../../types';
 
 export const AnnounceMutation = mutationField('announce', {
 	type: Announcement,
@@ -13,7 +14,7 @@ export const AnnounceMutation = mutationField('announce', {
 	async resolve(
 		_root,
 		{data: {text, images, gif, poll, publishAt, reAnnouncement, comment}},
-		{models: {Announcement, AnnouncementPoll, Image, User}, req}
+		{models: {Announcement, AnnouncementPoll, Image, User, Notification}, req}
 	) {
 		if (!reAnnouncement && !text) throw new AppError('0xE00004A', 400);
 		if (reAnnouncement && comment) throw new AppError('0xE000055', 400);
@@ -42,7 +43,7 @@ export const AnnounceMutation = mutationField('announce', {
 
 		if (poll) pollId = (await AnnouncementPoll.create(poll)).id;
 
-		return <any>await Announcement.create({
+		const announcement = await Announcement.create({
 			user,
 			text,
 			gif,
@@ -53,5 +54,31 @@ export const AnnounceMutation = mutationField('announce', {
 			reAnnouncement,
 			comment,
 		});
+
+		if (comment) {
+			const toAnnouncement = await Announcement.findById(comment);
+
+			if (user !== toAnnouncement?.user)
+				await Notification.create({
+					to: toAnnouncement?.user,
+					type: NotificationType.COMMENT,
+					announcement: comment,
+					user,
+				});
+		}
+
+		if (reAnnouncement) {
+			const toAnnouncement = await Announcement.findById(reAnnouncement);
+
+			if (user !== toAnnouncement?.user)
+				await Notification.create({
+					to: toAnnouncement?.user,
+					type: NotificationType.RE_ANNOUNCEMENT,
+					announcement: comment,
+					user,
+				});
+		}
+
+		return <any>announcement;
 	},
 });

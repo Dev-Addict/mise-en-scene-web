@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {NextPage} from 'next';
-import Error from 'next/error';
 import Cookie from 'js-cookie';
 
 import {
 	AnnouncementProvider,
+	Error,
 	Header,
 	Meta,
 	User as UserDetail,
@@ -30,7 +30,8 @@ const User: NextPage<Props & InitialProps, InitialProps> = ({
 		setUserState(user);
 	}, [user]);
 
-	if (!userState) return <Error statusCode={404} title="کاربر پیدا نشد!" />;
+	if (!userState)
+		return <Error code={404} title="کاربر پیدا نشد!" setTheme={setTheme} />;
 
 	return (
 		<AnnouncementProvider

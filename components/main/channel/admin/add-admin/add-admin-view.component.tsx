@@ -1,18 +1,24 @@
-import React, {FC, useEffect} from 'react';
+import React, {Dispatch, FC, SetStateAction, useEffect} from 'react';
 import {useRouter} from 'next/router';
-import Error from 'next/error';
 
-import {Channel, ChannelAdminPermission, User} from '../../../../../types';
 import {SignHeader} from '../../../sign';
+import {Error} from '../../../error';
 import {AddAdmin} from './add-amin.component';
 import {useAuth} from '../../../../../hooks';
+import {
+	Channel,
+	ChannelAdminPermission,
+	ThemeMode,
+	User,
+} from '../../../../../types';
 
 interface Props {
 	admin?: User;
 	channel?: Channel;
+	setTheme: Dispatch<SetStateAction<ThemeMode>>;
 }
 
-export const AddAdminView: FC<Props> = ({admin, channel}) => {
+export const AddAdminView: FC<Props> = ({admin, channel, setTheme}) => {
 	const router = useRouter();
 	const {asPath} = router.query;
 
@@ -23,35 +29,57 @@ export const AddAdminView: FC<Props> = ({admin, channel}) => {
 	}, [asPath, isSigned, isLoading]);
 
 	if (!channel)
-		return <Error statusCode={404} title="کانالی با این هندل وجود ندارد." />;
+		return (
+			<Error
+				code={404}
+				title="کانالی با این هندل وجود ندارد."
+				setTheme={setTheme}
+			/>
+		);
 
 	if (!channel.verified)
-		return <Error statusCode={404} title="کانال هنوز تایید نشده است." />;
+		return (
+			<Error
+				code={404}
+				title="کانال هنوز تایید نشده است."
+				setTheme={setTheme}
+			/>
+		);
 
 	if (!admin)
 		return (
 			<Error
-				statusCode={404}
+				code={404}
 				title="کاربری با ایمیل یا نام کاربری وارد شده وجود ندارد."
+				setTheme={setTheme}
 			/>
 		);
 
 	if (channel.ownerData?.id === admin.id)
 		return (
 			<Error
-				statusCode={401}
+				code={401}
 				title="امکان اضافه کردن صاحب کانال به عنوان ادمین وجود ندارد."
+				setTheme={setTheme}
 			/>
 		);
 
 	if (channel.admins?.some(({userData}) => userData?.id === admin.id))
 		return (
-			<Error statusCode={401} title="ادمین قبلا به کانال اضافه شده است." />
+			<Error
+				code={401}
+				title="ادمین قبلا به کانال اضافه شده است."
+				setTheme={setTheme}
+			/>
 		);
 
 	if (channel.owner !== user?.id && !channel.myAdmin)
 		return (
-			<Error statusCode={403} title="شما اجازه دسترسی به این صفحه را ندارید!" />
+			<Error
+				code={403}
+				title="شما اجازه دسترسی به این صفحه را ندارید!"
+				setTheme={setTheme}
+			/>
 		);
 
 	if (
@@ -59,7 +87,11 @@ export const AddAdminView: FC<Props> = ({admin, channel}) => {
 		channel.myAdmin.permissions?.includes(ChannelAdminPermission.POST)
 	)
 		return (
-			<Error statusCode={403} title="شما اجازه دسترسی به این صفحه را ندارید!" />
+			<Error
+				code={403}
+				title="شما اجازه دسترسی به این صفحه را ندارید!"
+				setTheme={setTheme}
+			/>
 		);
 
 	return (

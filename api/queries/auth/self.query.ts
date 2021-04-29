@@ -13,6 +13,7 @@ export const SELF_QUERY = gql`
 			username
 			bio
 			displayName
+			notifications
 		}
 	}
 `;

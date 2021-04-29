@@ -18,7 +18,7 @@ export interface AdminPermissionsFields {
 	EDIT_OTHERS_POST: boolean;
 	CREATE_NEW_ADMIN: boolean;
 	EDIT_ADMINS_PERMISSIONS: boolean;
-	DELETE_ADMIN: boolean;
+	REMOVE_ADMIN: boolean;
 	DELETE_POST: boolean;
 }
 

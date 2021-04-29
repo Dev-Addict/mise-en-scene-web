@@ -130,3 +130,4 @@
 0xE000081: couldn't find the post with provided `id`.
 0xE000082: couldn't find the channel with post.
 0xE000083: you don't have permission to get this post.
+0xE000084: couldn't find the announcement with provided `announcement`.

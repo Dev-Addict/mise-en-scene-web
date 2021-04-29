@@ -174,6 +174,7 @@ export interface NexusGenInputs {
 export interface NexusGenEnums {
   ChannelAdminPermission: "CREATE_NEW_ADMIN" | "DELETE_POST" | "EDIT_ADMINS_PERMISSIONS" | "EDIT_OTHERS_POST" | "POST" | "REMOVE_ADMIN"
   Gender: "CUSTOM" | "FEMALE" | "MALE"
+  NotificationType: "COMMENT" | "DISLIKE" | "FOLLOW" | "LIKE" | "POST" | "RE_ANNOUNCEMENT" | "UNFOLLOW"
 }
 
 export interface NexusGenScalars {
@@ -286,6 +287,21 @@ export interface NexusGenObjects {
     width: number; // Float!
   }
   Mutation: {};
+  Notification: { // root type
+    announcement?: string | null; // ID
+    id: string; // ID!
+    post?: string | null; // ID
+    seen: boolean; // Boolean!
+    to: string; // ID!
+    type: NexusGenEnums['NotificationType']; // NotificationType!
+    user?: string | null; // ID
+  }
+  NotificationsResponse: { // root type
+    docs: NexusGenRootTypes['Notification'][]; // [Notification!]!
+    limit: number; // Int!
+    page: number; // Int!
+    results: number; // Int!
+  }
   Post: { // root type
     admin?: string | null; // ID
     body: string; // String!
@@ -500,6 +516,25 @@ export interface NexusGenFieldTypes {
     validateResetPasswordToken: NexusGenRootTypes['User'] | null; // User
     vote: NexusGenRootTypes['AnnouncementPollResult'] | null; // AnnouncementPollResult
   }
+  Notification: { // field return type
+    announcement: string | null; // ID
+    announcementData: NexusGenRootTypes['User'] | null; // User
+    id: string; // ID!
+    post: string | null; // ID
+    postData: NexusGenRootTypes['Post'] | null; // Post
+    seen: boolean; // Boolean!
+    to: string; // ID!
+    toData: NexusGenRootTypes['User']; // User!
+    type: NexusGenEnums['NotificationType']; // NotificationType!
+    user: string | null; // ID
+    userData: NexusGenRootTypes['User'] | null; // User
+  }
+  NotificationsResponse: { // field return type
+    docs: NexusGenRootTypes['Notification'][]; // [Notification!]!
+    limit: number; // Int!
+    page: number; // Int!
+    results: number; // Int!
+  }
   Post: { // field return type
     admin: string | null; // ID
     adminData: NexusGenRootTypes['ChannelAdmin'] | null; // ChannelAdmin
@@ -533,6 +568,7 @@ export interface NexusGenFieldTypes {
     findGifs: NexusGenRootTypes['Gif'][]; // [Gif!]!
     findUser: NexusGenRootTypes['User'] | null; // User
     myAnnouncements: NexusGenRootTypes['AnnouncementsResponse'] | null; // AnnouncementsResponse
+    myNotifications: NexusGenRootTypes['NotificationsResponse'] | null; // NotificationsResponse
     ownedChannels: NexusGenRootTypes['ChannelsResponse'] | null; // ChannelsResponse
     self: NexusGenRootTypes['User']; // User!
     trendingGifs: NexusGenRootTypes['Gif'][]; // [Gif!]!
@@ -556,6 +592,7 @@ export interface NexusGenFieldTypes {
     id: string; // ID!
     isFollowed: boolean; // Boolean!
     lastname: NexusGenScalars['Name'] | null; // Name
+    notifications: number; // Int!
     username: NexusGenScalars['Username']; // Username!
   }
   UserFollow: { // field return type
@@ -732,6 +769,25 @@ export interface NexusGenFieldTypeNames {
     validateResetPasswordToken: 'User'
     vote: 'AnnouncementPollResult'
   }
+  Notification: { // field return type name
+    announcement: 'ID'
+    announcementData: 'User'
+    id: 'ID'
+    post: 'ID'
+    postData: 'Post'
+    seen: 'Boolean'
+    to: 'ID'
+    toData: 'User'
+    type: 'NotificationType'
+    user: 'ID'
+    userData: 'User'
+  }
+  NotificationsResponse: { // field return type name
+    docs: 'Notification'
+    limit: 'Int'
+    page: 'Int'
+    results: 'Int'
+  }
   Post: { // field return type name
     admin: 'ID'
     adminData: 'ChannelAdmin'
@@ -765,6 +821,7 @@ export interface NexusGenFieldTypeNames {
     findGifs: 'Gif'
     findUser: 'User'
     myAnnouncements: 'AnnouncementsResponse'
+    myNotifications: 'NotificationsResponse'
     ownedChannels: 'ChannelsResponse'
     self: 'User'
     trendingGifs: 'Gif'
@@ -788,6 +845,7 @@ export interface NexusGenFieldTypeNames {
     id: 'ID'
     isFollowed: 'Boolean'
     lastname: 'Name'
+    notifications: 'Int'
     username: 'Username'
   }
   UserFollow: { // field return type name
@@ -939,6 +997,11 @@ export interface NexusGenArgTypes {
     }
     myAnnouncements: { // args
       filter?: NexusGenScalars['JSON'] | null; // JSON
+      limit?: number | null; // Int
+      page?: number | null; // Int
+      sort?: NexusGenScalars['JSON'] | null; // JSON
+    }
+    myNotifications: { // args
       limit?: number | null; // Int
       page?: number | null; // Int
       sort?: NexusGenScalars['JSON'] | null; // JSON

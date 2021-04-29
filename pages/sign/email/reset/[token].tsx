@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {NextPage} from 'next';
 import {useRouter} from 'next/router';
-import Error from 'next/error';
 import {FormikHelpers} from 'formik/dist/types';
 
 import {
+	Error,
 	Meta,
 	ResetEmailFields,
 	ResetEmailForm,
@@ -28,6 +28,7 @@ const Reset: NextPage<Props & InitialProps, InitialProps> = ({
 	user,
 	exists,
 	expired,
+	setTheme,
 }) => {
 	const router = useRouter();
 	const {callback, token} = router.query;
@@ -37,13 +38,16 @@ const Reset: NextPage<Props & InitialProps, InitialProps> = ({
 	const {resetEmail} = useAuth();
 
 	if (!exists)
-		return <Error statusCode={404} title="نشانه بازیابی پیدا نشد." />;
+		return (
+			<Error code={404} title="نشانه بازیابی پیدا نشد." setTheme={setTheme} />
+		);
 
 	if (expired)
 		return (
 			<Error
-				statusCode={410}
+				code={410}
 				title="زمان استفاده از نشانه وارد شده گذشته است لطفا دوباره است. لطفا دوباره تلاش کنید."
+				setTheme={setTheme}
 			/>
 		);
 
