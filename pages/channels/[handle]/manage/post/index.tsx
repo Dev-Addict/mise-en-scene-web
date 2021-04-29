@@ -4,7 +4,7 @@ import {useRouter} from 'next/router';
 import styled from 'styled-components';
 import Cookie from 'js-cookie';
 
-import {Error, Header, Meta, PostBody} from '../../../../../components';
+import {ErrorPage, Header, Meta, PostBody} from '../../../../../components';
 import {findChannel} from '../../../../../helpers';
 import {Channel, ChannelAdminPermission, Props} from '../../../../../types';
 import {useAuth} from '../../../../../hooks';
@@ -45,7 +45,7 @@ const Post: NextPage<Props & InitialProps, InitialProps> = ({
 
 	if (!localChannel)
 		return (
-			<Error
+			<ErrorPage
 				code={404}
 				title="کانالی با این هندل وجود ندارد."
 				setTheme={setTheme}
@@ -54,7 +54,7 @@ const Post: NextPage<Props & InitialProps, InitialProps> = ({
 
 	if (!localChannel.verified)
 		return (
-			<Error
+			<ErrorPage
 				code={404}
 				title="کانال هنوز تایید نشده است."
 				setTheme={setTheme}
@@ -63,7 +63,7 @@ const Post: NextPage<Props & InitialProps, InitialProps> = ({
 
 	if (localChannel.owner !== user?.id && !localChannel.myAdmin)
 		return (
-			<Error
+			<ErrorPage
 				code={403}
 				title="شما اجازه دسترسی به این صفحه را ندارید!"
 				setTheme={setTheme}
@@ -75,7 +75,7 @@ const Post: NextPage<Props & InitialProps, InitialProps> = ({
 		localChannel.myAdmin.permissions?.includes(ChannelAdminPermission.POST)
 	)
 		return (
-			<Error
+			<ErrorPage
 				code={403}
 				title="شما اجازه دسترسی به این صفحه را ندارید!"
 				setTheme={setTheme}

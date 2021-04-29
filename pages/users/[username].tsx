@@ -4,7 +4,7 @@ import Cookie from 'js-cookie';
 
 import {
 	AnnouncementProvider,
-	Error,
+	ErrorPage,
 	Header,
 	Meta,
 	User as UserDetail,
@@ -31,7 +31,7 @@ const User: NextPage<Props & InitialProps, InitialProps> = ({
 	}, [user]);
 
 	if (!userState)
-		return <Error code={404} title="کاربر پیدا نشد!" setTheme={setTheme} />;
+		return <ErrorPage code={404} title="کاربر پیدا نشد!" setTheme={setTheme} />;
 
 	return (
 		<AnnouncementProvider

@@ -11,7 +11,7 @@ import {
 	Props,
 } from '../../../../../../types';
 import {useAuth} from '../../../../../../hooks';
-import {EditPost, Error, Header, Meta} from '../../../../../../components';
+import {EditPost, ErrorPage, Header, Meta} from '../../../../../../components';
 import {cookieParser} from '../../../../../../utils';
 import {findChannel, getChannelPost} from '../../../../../../helpers';
 
@@ -57,7 +57,7 @@ const Edit: NextPage<Props & InitialProps, InitialProps> = ({
 
 	if (!localChannel)
 		return (
-			<Error
+			<ErrorPage
 				code={404}
 				title="کانالی با این هندل وجود ندارد."
 				setTheme={setTheme}
@@ -65,11 +65,11 @@ const Edit: NextPage<Props & InitialProps, InitialProps> = ({
 		);
 
 	if (!localPost)
-		return <Error code={404} title="مطلب پیدا نشد." setTheme={setTheme} />;
+		return <ErrorPage code={404} title="مطلب پیدا نشد." setTheme={setTheme} />;
 
 	if (!localChannel.verified)
 		return (
-			<Error
+			<ErrorPage
 				code={403}
 				title="کانال هنوز تایید نشده است."
 				setTheme={setTheme}
@@ -87,7 +87,7 @@ const Edit: NextPage<Props & InitialProps, InitialProps> = ({
 		post?.adminData?.id !== user?.id
 	)
 		return (
-			<Error
+			<ErrorPage
 				code={403}
 				title="شما اجازه دسترسی به این صفحه را ندارید!"
 				setTheme={setTheme}

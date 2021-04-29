@@ -4,7 +4,7 @@ import {useRouter} from 'next/router';
 import {FormikHelpers} from 'formik/dist/types';
 
 import {
-	Error,
+	ErrorPage,
 	Meta,
 	ResetPasswordFields,
 	ResetPasswordForm,
@@ -34,18 +34,22 @@ const Reset: NextPage<Props & InitialProps, InitialProps> = ({
 	const router = useRouter();
 	const {callback, token} = router.query;
 
-	const [errors, setErrors] = useState<string[]>([]);
+	const [errors, setErrorPages] = useState<string[]>([]);
 
 	const {resetPassword} = useAuth();
 
 	if (!exists)
 		return (
-			<Error code={404} title="نشانه بازیابی پیدا نشد." setTheme={setTheme} />
+			<ErrorPage
+				code={404}
+				title="نشانه بازیابی پیدا نشد."
+				setTheme={setTheme}
+			/>
 		);
 
 	if (expired)
 		return (
-			<Error
+			<ErrorPage
 				code={410}
 				title="زمان استفاده از نشانه وارد شده گذشته است لطفا دوباره است. لطفا دوباره تلاش کنید."
 				setTheme={setTheme}
@@ -64,7 +68,7 @@ const Reset: NextPage<Props & InitialProps, InitialProps> = ({
 		});
 
 		if (response.success) await router.push(callback?.toString() || '/');
-		else setErrors(response.errors);
+		else setErrorPages(response.errors);
 
 		setSubmitting(false);
 	};

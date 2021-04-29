@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import {Channel, Post as PostModel, Props} from '../../../../../../types';
 import {useAuth} from '../../../../../../hooks';
-import {Error, Header, Meta, Post} from '../../../../../../components';
+import {ErrorPage, Header, Meta, Post} from '../../../../../../components';
 import {cookieParser} from '../../../../../../utils';
 import {findChannel, getChannelPost} from '../../../../../../helpers';
 
@@ -52,7 +52,7 @@ const Preview: NextPage<Props & InitialProps, InitialProps> = ({
 
 	if (!localChannel)
 		return (
-			<Error
+			<ErrorPage
 				code={404}
 				title="کانالی با این هندل وجود ندارد."
 				setTheme={setTheme}
@@ -60,11 +60,11 @@ const Preview: NextPage<Props & InitialProps, InitialProps> = ({
 		);
 
 	if (!localPost)
-		return <Error code={404} title="مطلب پیدا نشد." setTheme={setTheme} />;
+		return <ErrorPage code={404} title="مطلب پیدا نشد." setTheme={setTheme} />;
 
 	if (!localChannel.verified)
 		return (
-			<Error
+			<ErrorPage
 				code={403}
 				title="کانال هنوز تایید نشده است."
 				setTheme={setTheme}
@@ -73,7 +73,7 @@ const Preview: NextPage<Props & InitialProps, InitialProps> = ({
 
 	if (localChannel.owner !== user?.id && !localChannel.myAdmin)
 		return (
-			<Error
+			<ErrorPage
 				code={403}
 				title="شما اجازه دسترسی به این صفحه را ندارید!"
 				setTheme={setTheme}

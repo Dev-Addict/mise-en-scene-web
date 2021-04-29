@@ -8,7 +8,7 @@ import {
 	User,
 } from '../../../../../types';
 import {SignHeader} from '../../../sign';
-import {Error} from '../../../error';
+import {ErrorPage} from '../../../error';
 import {EditAdmin} from './edit-amin.component';
 import {useAuth} from '../../../../../hooks';
 
@@ -30,7 +30,7 @@ export const EditAdminView: FC<Props> = ({admin, channel, setTheme}) => {
 
 	if (!channel)
 		return (
-			<Error
+			<ErrorPage
 				code={404}
 				title="کانالی با این هندل وجود ندارد."
 				setTheme={setTheme}
@@ -39,7 +39,7 @@ export const EditAdminView: FC<Props> = ({admin, channel, setTheme}) => {
 
 	if (!channel.verified)
 		return (
-			<Error
+			<ErrorPage
 				code={404}
 				title="کانال هنوز تایید نشده است."
 				setTheme={setTheme}
@@ -48,7 +48,7 @@ export const EditAdminView: FC<Props> = ({admin, channel, setTheme}) => {
 
 	if (!admin)
 		return (
-			<Error
+			<ErrorPage
 				code={404}
 				setTheme={setTheme}
 				title="کاربری با ایمیل یا نام کاربری وارد شده وجود ندارد."
@@ -57,7 +57,7 @@ export const EditAdminView: FC<Props> = ({admin, channel, setTheme}) => {
 
 	if (channel.ownerData?.id === admin.id)
 		return (
-			<Error
+			<ErrorPage
 				code={401}
 				title="امکان ویرایش صاحب کانال وجود ندارد."
 				setTheme={setTheme}
@@ -66,7 +66,7 @@ export const EditAdminView: FC<Props> = ({admin, channel, setTheme}) => {
 
 	if (!channel.admins?.some(({userData}) => userData?.id === admin.id))
 		return (
-			<Error
+			<ErrorPage
 				code={401}
 				title="ادمین قبلا به کانال اضافه نشده است."
 				setTheme={setTheme}
@@ -75,7 +75,7 @@ export const EditAdminView: FC<Props> = ({admin, channel, setTheme}) => {
 
 	if (channel.owner !== user?.id && !channel.myAdmin)
 		return (
-			<Error
+			<ErrorPage
 				code={403}
 				title="شما اجازه دسترسی به این صفحه را ندارید!"
 				setTheme={setTheme}
@@ -89,7 +89,7 @@ export const EditAdminView: FC<Props> = ({admin, channel, setTheme}) => {
 		)
 	)
 		return (
-			<Error
+			<ErrorPage
 				code={403}
 				title="شما اجازه دسترسی به این صفحه را ندارید!"
 				setTheme={setTheme}

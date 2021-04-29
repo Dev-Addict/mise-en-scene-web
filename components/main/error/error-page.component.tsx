@@ -10,7 +10,7 @@ interface Props {
 	title?: string;
 }
 
-export const Error: FC<Props> = ({setTheme, code, title}) => {
+export const ErrorPage: FC<Props> = ({setTheme, code, title}) => {
 	return (
 		<div>
 			<Header setTheme={setTheme} />

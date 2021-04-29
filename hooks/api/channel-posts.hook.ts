@@ -1,19 +1,19 @@
 import {useEffect, useState} from 'react';
 import {useQuery} from '@apollo/client';
-import Cookie from 'js-cookie';
 
-import {Post} from '../../types';
+import {ChannelAdmin} from '../../types';
 import {
 	CHANNEL_POSTS_QUERY,
 	ChannelPostsQueryData,
 	ChannelPostsQueryVariables,
 } from '../../api';
+import {useAuth} from '../contexts';
 
 export const useChannelPosts = (channel: string) => {
-	const [posts, setPosts] = useState<Post[]>([]);
+	const [posts, setPosts] = useState<ChannelAdmin[]>([]);
 	const [page, setPage] = useState(1);
 
-	const token = Cookie.get('auth-token');
+	const {token} = useAuth();
 
 	const {data, loading, refetch} = useQuery<
 		ChannelPostsQueryData,
@@ -41,7 +41,7 @@ export const useChannelPosts = (channel: string) => {
 				data.channelPosts.docs[data.channelPosts.docs.length - 1]?.id
 		)
 			setPosts((posts) => [...posts, ...data.channelPosts.docs]);
-	}, [data]);
+	}, [data, loading]);
 
 	useEffect(() => {
 		(async () => {

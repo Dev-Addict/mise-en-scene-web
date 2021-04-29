@@ -7,7 +7,7 @@ import Cookie from 'js-cookie';
 import {
 	Announce,
 	AnnouncementCard,
-	Error,
+	ErrorPage,
 	Header,
 	Meta,
 } from '../../../components';
@@ -48,7 +48,9 @@ const ReAnnounce: NextPage<Props & InitialProps, InitialProps> = ({
 	const {height} = useWindowSize();
 
 	if (!announcement)
-		return <Error code={404} title="گفت و گو پیدا نشد!" setTheme={setTheme} />;
+		return (
+			<ErrorPage code={404} title="گفت و گو پیدا نشد!" setTheme={setTheme} />
+		);
 
 	const onAnnounce = () => () => router.push(`/users/${user?.username}`);
 

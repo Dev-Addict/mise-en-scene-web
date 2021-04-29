@@ -2,7 +2,7 @@ import React, {Dispatch, FC, SetStateAction, useEffect} from 'react';
 import {useRouter} from 'next/router';
 
 import {SignHeader} from '../../../sign';
-import {Error} from '../../../error';
+import {ErrorPage} from '../../../error';
 import {AddAdmin} from './add-amin.component';
 import {useAuth} from '../../../../../hooks';
 import {
@@ -30,7 +30,7 @@ export const AddAdminView: FC<Props> = ({admin, channel, setTheme}) => {
 
 	if (!channel)
 		return (
-			<Error
+			<ErrorPage
 				code={404}
 				title="کانالی با این هندل وجود ندارد."
 				setTheme={setTheme}
@@ -39,7 +39,7 @@ export const AddAdminView: FC<Props> = ({admin, channel, setTheme}) => {
 
 	if (!channel.verified)
 		return (
-			<Error
+			<ErrorPage
 				code={404}
 				title="کانال هنوز تایید نشده است."
 				setTheme={setTheme}
@@ -48,7 +48,7 @@ export const AddAdminView: FC<Props> = ({admin, channel, setTheme}) => {
 
 	if (!admin)
 		return (
-			<Error
+			<ErrorPage
 				code={404}
 				title="کاربری با ایمیل یا نام کاربری وارد شده وجود ندارد."
 				setTheme={setTheme}
@@ -57,7 +57,7 @@ export const AddAdminView: FC<Props> = ({admin, channel, setTheme}) => {
 
 	if (channel.ownerData?.id === admin.id)
 		return (
-			<Error
+			<ErrorPage
 				code={401}
 				title="امکان اضافه کردن صاحب کانال به عنوان ادمین وجود ندارد."
 				setTheme={setTheme}
@@ -66,7 +66,7 @@ export const AddAdminView: FC<Props> = ({admin, channel, setTheme}) => {
 
 	if (channel.admins?.some(({userData}) => userData?.id === admin.id))
 		return (
-			<Error
+			<ErrorPage
 				code={401}
 				title="ادمین قبلا به کانال اضافه شده است."
 				setTheme={setTheme}
@@ -75,7 +75,7 @@ export const AddAdminView: FC<Props> = ({admin, channel, setTheme}) => {
 
 	if (channel.owner !== user?.id && !channel.myAdmin)
 		return (
-			<Error
+			<ErrorPage
 				code={403}
 				title="شما اجازه دسترسی به این صفحه را ندارید!"
 				setTheme={setTheme}
@@ -87,7 +87,7 @@ export const AddAdminView: FC<Props> = ({admin, channel, setTheme}) => {
 		channel.myAdmin.permissions?.includes(ChannelAdminPermission.POST)
 	)
 		return (
-			<Error
+			<ErrorPage
 				code={403}
 				title="شما اجازه دسترسی به این صفحه را ندارید!"
 				setTheme={setTheme}
