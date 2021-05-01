@@ -15,7 +15,7 @@ export const NotificationMessage: FC<Props> = ({
 	const displayName = useUserDisplayName(userData || {});
 
 	switch (type) {
-		case NotificationType.FOLLOW:
+		case NotificationType.UNFOLLOW:
 			return (
 				<>
 					<Link href={`/users/${userData?.username || 'no'}`}>
@@ -24,7 +24,7 @@ export const NotificationMessage: FC<Props> = ({
 					دیگر شما را دنبال نمی کند!
 				</>
 			);
-		case NotificationType.UNFOLLOW:
+		case NotificationType.FOLLOW:
 			return (
 				<>
 					<Link href={`/users/${userData?.username || 'no'}`}>

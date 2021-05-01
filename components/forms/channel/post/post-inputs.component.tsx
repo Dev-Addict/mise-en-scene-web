@@ -79,7 +79,7 @@ export const PostInputs = () => {
 				<Field
 					component={FormikEditor}
 					label="مطلب"
-					placeholder="متن مطب"
+					placeholder="متن مطلب"
 					name={fields.body}
 				/>
 			</InputContainer>

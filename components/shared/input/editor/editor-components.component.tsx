@@ -34,40 +34,32 @@ export const EditorContainer = styled.div<StyledProps & EditorContainerProps>`
 	outline: none;
 	font-size: 18px;
 	user-select: auto;
-
 	&:disabled {
 		opacity: 0.5;
 	}
-
 	& .DraftEditor-root {
 		max-width: 100%;
-
 		& * {
 			user-select: auto;
 			z-index: 0;
 		}
 	}
-
 	& .public-DraftEditorPlaceholder-root .public-DraftEditorPlaceholder-inner {
 		color: ${({theme: {foreground}}) => foreground}80;
 		direction: rtl;
 	}
-
 	& .public-DraftEditor-content {
 		min-height: 140px;
 	}
-
 	& * {
 		user-select: auto;
 	}
-
 	${({readOnly}) =>
 		readOnly &&
 		css`
 			border-right: none;
 			padding: 0;
 			margin: 0;
-
 			& * {
 				user-select: none;
 			}
@@ -96,7 +88,6 @@ export const ControlContainer = styled.div<StyledProps & ControlContainerProps>`
 	justify-content: center;
 	cursor: pointer;
 	right: 0;
-
 	&:hover {
 		opacity: 0.5;
 	}
@@ -121,7 +112,6 @@ export const Error = styled.div<StyledProps & ErrorProps>`
 	direction: rtl;
 	color: ${({theme: {error}}) => error};
 	font-size: 14px;
-
 	${({show}) =>
 		!show &&
 		css`

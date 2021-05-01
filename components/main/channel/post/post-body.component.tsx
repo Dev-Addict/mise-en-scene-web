@@ -2,7 +2,7 @@ import React, {FC, useState} from 'react';
 import {useRouter} from 'next/router';
 import {useMutation} from '@apollo/client';
 import {GraphQLError} from 'graphql';
-import {EditorState, convertToRaw} from 'draft-js';
+import {EditorState} from 'draft-js';
 import {FormikHelpers} from 'formik';
 
 import {PostFields, PostForm} from '../../../forms';
@@ -12,7 +12,11 @@ import {
 	CreatePostMutationVariables,
 } from '../../../../api';
 import {useAuth} from '../../../../hooks';
-import {editorStateToRawText, errorParser} from '../../../../utils';
+import {
+	editorStatesToContentConvertor,
+	editorStateToRawText,
+	errorParser,
+} from '../../../../utils';
 import {Channel} from '../../../../types';
 
 const initialValues: PostFields = {
@@ -62,7 +66,7 @@ export const PostBody: FC<Props> = ({channel: {id, myAdmin, handle}}) => {
 		try {
 			await createPost({
 				variables: {
-					body: convertToRaw(body.getCurrentContent()),
+					body: editorStatesToContentConvertor(body),
 					title: editorStateToRawText(title, ' '),
 					description: editorStateToRawText(description, ' '),
 					subtitle: editorStateToRawText(subtitle, ' '),

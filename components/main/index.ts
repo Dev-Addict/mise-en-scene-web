@@ -7,5 +7,6 @@ export * from './header';
 export * from './notification';
 export * from './post';
 export * from './posting';
+export * from './search';
 export * from './sign';
 export * from './user';

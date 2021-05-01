@@ -1,7 +1,7 @@
 import styled, {css} from 'styled-components';
 
 import {Color} from '../../../../data';
-import {StyledProps} from '../../../../types';
+import {Size, StyledProps} from '../../../../types';
 
 interface Props {
 	color?: Color;
@@ -18,13 +18,15 @@ interface Props {
 	left?: number;
 	minWidth?: number;
 	flex?: number;
+	size?: Size;
 }
 
 export const Button = styled.button<StyledProps & Props>`
 	display: inline-block;
 	background-color: ${({theme: {accent}}) => accent};
 	color: ${({theme: {foreground}, color}) => color || foreground};
-	font-size: 16px;
+	font-size: ${({size = Size.MEDIUM}) =>
+		16 + (Object.values(Size).findIndex((v) => v === size) - 2) * 2}px;
 	padding: 8px 20px;
 	border-radius: 4px;
 	cursor: pointer;
@@ -92,8 +94,8 @@ export const Button = styled.button<StyledProps & Props>`
 		css`
 			width: 100%;
 		`}
-	
-	${({floating, top, right, bottom, left}) =>
+
+  ${({floating, top, right, bottom, left}) =>
 		floating &&
 		css`
 			position: fixed;

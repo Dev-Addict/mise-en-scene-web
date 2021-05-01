@@ -14,7 +14,7 @@ export const MyNotificationsQuery = queryField('myNotifications', {
 	},
 	async resolve(
 		_root,
-		{page, limit = 10, sort = {updatedAt: 1}},
+		{page, limit = 10, sort = {_id: -1}},
 		{req, models: {User, Notification}}
 	) {
 		const {id} = (await protect(req, User))!;

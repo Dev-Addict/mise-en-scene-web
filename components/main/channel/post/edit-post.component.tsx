@@ -2,8 +2,7 @@ import React, {FC, useState} from 'react';
 import {useRouter} from 'next/router';
 import {GraphQLError} from 'graphql';
 import {useMutation} from '@apollo/client';
-import {EditorState, convertToRaw, convertFromRaw} from 'draft-js';
-import {createEditorStateWithText} from '@draft-js-plugins/editor';
+import {EditorState, ContentState} from 'draft-js';
 import {FormikHelpers} from 'formik';
 
 import {PostFields, PostForm} from '../../../forms';
@@ -13,7 +12,12 @@ import {
 	UpdatePostMutationVariables,
 } from '../../../../api';
 import {useAuth} from '../../../../hooks';
-import {editorStateToRawText, errorParser} from '../../../../utils';
+import {
+	editorStateFromRawDataParser,
+	editorStatesToContentConvertor,
+	editorStateToRawText,
+	errorParser,
+} from '../../../../utils';
 import {Channel, Post} from '../../../../types';
 
 const initialValues: PostFields = {
@@ -78,7 +82,7 @@ export const EditPost: FC<Props> = ({
 			await updatePost({
 				variables: {
 					id: id || '',
-					body: convertToRaw(body.getCurrentContent()),
+					body: editorStatesToContentConvertor(body),
 					title: editorStateToRawText(title, ' '),
 					description: editorStateToRawText(description, ' '),
 					subtitle: editorStateToRawText(subtitle, ' '),
@@ -109,18 +113,24 @@ export const EditPost: FC<Props> = ({
 				onSubmit={onSubmit()}
 				errors={errors}
 				initialValues={{
-					title: title ? createEditorStateWithText(title) : initialValues.title,
+					title: title
+						? EditorState.createWithContent(ContentState.createFromText(title))
+						: initialValues.title,
 					subtitle: subtitle
-						? createEditorStateWithText(subtitle)
+						? EditorState.createWithContent(
+								ContentState.createFromText(subtitle)
+						  )
 						: initialValues.subtitle,
 					cover: coverData ? coverData : initialValues.cover,
 					tags: tags ? tags : initialValues.tags,
 					publish: published ? published : initialValues.publish,
 					body: bodyData
-						? EditorState.createWithContent(convertFromRaw(bodyData as any))
+						? editorStateFromRawDataParser(bodyData)
 						: initialValues.body,
 					description: description
-						? createEditorStateWithText(description)
+						? EditorState.createWithContent(
+								ContentState.createFromText(description)
+						  )
 						: initialValues.description,
 					publishAt: publishAt ? new Date(publishAt) : initialValues.publishAt,
 				}}
