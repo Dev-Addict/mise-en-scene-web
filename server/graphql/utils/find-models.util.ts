@@ -6,7 +6,7 @@ export const findModels = async <T extends AnyModel>(
 	Model: Model<T>,
 	page = 1,
 	limit = 10,
-	sort = {updatedAt: 1},
+	sort = {updatedAt: 1} as {[key: string]: any},
 	filter = {}
 ) => {
 	const skip = (page - 1) * limit;

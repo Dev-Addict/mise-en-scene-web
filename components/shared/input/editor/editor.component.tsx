@@ -80,7 +80,7 @@ export const Editor: FC<Props> = ({
 				const newState = EditorState.set(editorState, {currentContent});
 
 				setEditorState(
-					AtomicBlockUtils.insertAtomicBlock(newState, entityKey, ' ')
+					AtomicBlockUtils.insertAtomicBlock(newState, entityKey, 'I')
 				);
 			}
 

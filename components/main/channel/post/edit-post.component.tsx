@@ -2,7 +2,12 @@ import React, {FC, useState} from 'react';
 import {useRouter} from 'next/router';
 import {GraphQLError} from 'graphql';
 import {useMutation} from '@apollo/client';
-import {EditorState, ContentState} from 'draft-js';
+import {
+	EditorState,
+	ContentState,
+	convertFromRaw,
+	convertToRaw,
+} from 'draft-js';
 import {FormikHelpers} from 'formik';
 
 import {PostFields, PostForm} from '../../../forms';
@@ -12,12 +17,7 @@ import {
 	UpdatePostMutationVariables,
 } from '../../../../api';
 import {useAuth} from '../../../../hooks';
-import {
-	editorStateFromRawDataParser,
-	editorStatesToContentConvertor,
-	editorStateToRawText,
-	errorParser,
-} from '../../../../utils';
+import {editorStateToRawText, errorParser} from '../../../../utils';
 import {Channel, Post} from '../../../../types';
 
 const initialValues: PostFields = {
@@ -82,7 +82,7 @@ export const EditPost: FC<Props> = ({
 			await updatePost({
 				variables: {
 					id: id || '',
-					body: editorStatesToContentConvertor(body),
+					body: convertToRaw(body.getCurrentContent()),
 					title: editorStateToRawText(title, ' '),
 					description: editorStateToRawText(description, ' '),
 					subtitle: editorStateToRawText(subtitle, ' '),
@@ -125,7 +125,7 @@ export const EditPost: FC<Props> = ({
 					tags: tags ? tags : initialValues.tags,
 					publish: published ? published : initialValues.publish,
 					body: bodyData
-						? editorStateFromRawDataParser(bodyData)
+						? EditorState.createWithContent(convertFromRaw(bodyData as any))
 						: initialValues.body,
 					description: description
 						? EditorState.createWithContent(

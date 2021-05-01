@@ -30,8 +30,14 @@ export const ChannelPostsQuery = queryField('channelPosts', {
 		if (channel.owner.toString() !== user.id && !myAdmin)
 			throw new AppError('0xE000080', 403);
 
-		return <any>findModels(Post, page || 1, limit || 10, undefined, {
-			channel: channelId,
-		});
+		return <any>findModels(
+			Post,
+			page || 1,
+			limit || 10,
+			{_id: -1},
+			{
+				channel: channelId,
+			}
+		);
 	},
 });

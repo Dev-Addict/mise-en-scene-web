@@ -3,7 +3,6 @@ import {Post as PostModel, Size} from '../../../types';
 import {Editor, Image, Text} from '../../shared';
 import {useThemeImage} from '../../../hooks';
 import {convertFromRaw, EditorState} from 'draft-js';
-import {editorStateFromRawDataParser} from '../../../utils';
 
 interface Props {
 	post: PostModel;
@@ -15,7 +14,7 @@ export const Post: FC<Props> = ({
 	const logo = useThemeImage('/assets/logo/mes-$mode.svg');
 
 	const body = bodyData
-		? editorStateFromRawDataParser(bodyData)
+		? EditorState.createWithContent(convertFromRaw(bodyData as any))
 		: EditorState.createEmpty();
 
 	return (
