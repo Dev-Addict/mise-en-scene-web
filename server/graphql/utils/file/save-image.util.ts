@@ -1,15 +1,16 @@
 import {join} from 'path';
 import {createWriteStream, existsSync, mkdirSync} from 'fs';
+import Jimp from 'jimp';
 import {FileUpload} from 'graphql-upload';
 
-import {AppError, getExtension} from '../../../utils';
-import {imageSize} from './image-size.util';
+import {AppError} from '../../../utils';
+import {streamToBufferConvertor} from '../convertor';
 
 export const saveImage = async (
 	file: Promise<FileUpload>,
 	directory: string
 ) => {
-	const {createReadStream, mimetype, filename: clientFilename} = await file;
+	const {createReadStream, mimetype} = await file;
 
 	if (!mimetype || mimetype.split('/')[0] !== 'image')
 		throw new AppError('0xE000009', 400);
@@ -18,9 +19,7 @@ export const saveImage = async (
 	const filename = `image-${directory.replace(
 		/\//g,
 		'-'
-	)}-${Date.now()}-${Math.random().toString(16)}.${getExtension(
-		clientFilename
-	)}`;
+	)}-${Date.now()}-${Math.random().toString(16)}.jpg`;
 	const directoryPath = join(
 		__dirname,
 		`../../../../dynamic/image/${directory}`
@@ -28,13 +27,17 @@ export const saveImage = async (
 	const path = join(directoryPath, filename);
 	if (!existsSync(directoryPath)) mkdirSync(directoryPath);
 
-	stream.pipe(createWriteStream(path));
+	const buffer = await streamToBufferConvertor(stream);
 
-	const {width, height} = await imageSize(stream);
+	const image = await Jimp.read(buffer);
+
+	await image.quality(90).resize(700, Jimp.AUTO).write(path);
+
+	stream.pipe(createWriteStream(path));
 
 	return {
 		filename,
-		width,
-		height,
+		width: 700,
+		height: image.bitmap.height,
 	};
 };

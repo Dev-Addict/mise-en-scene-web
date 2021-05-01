@@ -1,3 +1,4 @@
+export * from './convertor';
 export * from './file';
 export * from './helpers';
 export * from './compile-error.util';
