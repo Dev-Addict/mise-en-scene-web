@@ -8,6 +8,7 @@ import {
 	Body,
 	Container,
 	LeftSideContainer,
+	ReplyContainer,
 	SideAvatar,
 	SmallAvatar,
 	UserDetails,
@@ -15,6 +16,7 @@ import {
 import {useDate, useUserDisplayName, useWindowSize} from '../../../../hooks';
 import {AnnouncementCardActions} from './announcement-card-actions.component';
 import {AnnouncementCardDelete} from './announcement-card-delete.component';
+import {PostCard} from '../post-card';
 
 interface Props {
 	announcement: Announcement;
@@ -36,6 +38,7 @@ export const AnnouncementCard: FC<Props> = ({
 		gifData,
 		pollData,
 		publishedAt,
+		replyData,
 	} = localAnnouncement;
 
 	const {width} = useWindowSize();
@@ -76,6 +79,11 @@ export const AnnouncementCard: FC<Props> = ({
 					</LeftSideContainer>
 				</UserDetails>
 				{renderText()}
+				{replyData && (
+					<ReplyContainer>
+						<PostCard post={replyData} />
+					</ReplyContainer>
+				)}
 				{reAnnouncementData && (
 					<AnnouncementCard
 						announcement={reAnnouncementData}

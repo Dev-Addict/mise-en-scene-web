@@ -28,6 +28,7 @@ export const useChannelPosts = (channel: string) => {
 				Authorization: `Bearer ${token}`,
 			},
 		},
+		notifyOnNetworkStatusChange: true,
 	});
 
 	const loadMore = () => () => {
@@ -60,7 +61,10 @@ export const useChannelPosts = (channel: string) => {
 	};
 
 	return {
-		loading,
+		loading:
+			loading ||
+			(!loading && !posts.length && data?.channelPosts?.results) ||
+			false,
 		posts,
 		loadMore: loadMore(),
 		results: data?.channelPosts?.results,

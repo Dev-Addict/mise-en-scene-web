@@ -1,4 +1,5 @@
 export * from './admin';
+export * from './channel';
 export * from './post';
-export * from './channel-detail.component';
+export * from './edit-channel.component';
 export * from './owned-channels.component';

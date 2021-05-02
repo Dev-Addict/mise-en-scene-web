@@ -14,6 +14,7 @@ import {
 	CastVideo,
 	Channel,
 	ChannelAdmin,
+	ChannelFollow,
 	Company,
 	Gif,
 	IAnnouncement,
@@ -26,6 +27,7 @@ import {
 	ICastVideo,
 	IChannel,
 	IChannelAdmin,
+	IChannelFollow,
 	ICompany,
 	IGif,
 	IImage,
@@ -38,6 +40,7 @@ import {
 	IMovieVideo,
 	INotification,
 	IPost,
+	IPostRating,
 	IUser,
 	IUserFollow,
 	Movie,
@@ -48,6 +51,7 @@ import {
 	MovieVideo,
 	Notification,
 	Post,
+	PostRating,
 	User,
 	UserFollow,
 } from '../models';
@@ -68,6 +72,7 @@ export interface MainContext {
 		CastVideo: Model<ICastVideo>;
 		Channel: Model<IChannel>;
 		ChannelAdmin: Model<IChannelAdmin>;
+		ChannelFollow: Model<IChannelFollow>;
 		Company: Model<ICompany>;
 		Gif: Model<IGif>;
 		Image: Model<IImage>;
@@ -79,6 +84,7 @@ export interface MainContext {
 		MovieVideo: Model<IMovieVideo>;
 		Notification: Model<INotification>;
 		Post: Model<IPost>;
+		PostRating: Model<IPostRating>;
 		User: Model<IUser>;
 		UserFollow: Model<IUserFollow>;
 	};
@@ -102,6 +108,7 @@ export const mainContext: ContextFunction<ExpressContext, MainContext> = ({
 		CastVideo,
 		Channel,
 		ChannelAdmin,
+		ChannelFollow,
 		Company,
 		Gif,
 		Image,
@@ -113,6 +120,7 @@ export const mainContext: ContextFunction<ExpressContext, MainContext> = ({
 		MovieVideo,
 		Notification,
 		Post,
+		PostRating,
 		User,
 		UserFollow,
 	},

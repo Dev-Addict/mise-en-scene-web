@@ -1,46 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {NextPage} from 'next';
 import {useRouter} from 'next/router';
-import Link from 'next/link';
-import styled from 'styled-components';
 import Cookie from 'js-cookie';
 
-import {
-	AdminFinder,
-	Button,
-	ChannelAdmins,
-	ChannelDetail,
-	ChannelPosts,
-	ErrorPage,
-	Filler,
-	Header,
-	Meta,
-	Row,
-	Text,
-} from '../../../../components';
+import {Channel, ErrorPage, Header, Meta} from '../../../../components';
 import {findChannel} from '../../../../helpers';
-import {Channel, Props, Size} from '../../../../types';
+import {Channel as ChannelModel, Props} from '../../../../types';
 import {useAuth} from '../../../../hooks';
 import {cookieParser} from '../../../../utils';
-import {Color} from '../../../../data';
-
-const Body = styled.div`
-	margin: auto auto 80px;
-	padding: 10px;
-	width: 700px;
-
-	@media only screen and (max-width: 800px) {
-		width: auto;
-	}
-`;
-
-const HeaderRow = styled(Row)`
-	align-items: center;
-	justify-content: space-between;
-`;
 
 interface InitialProps {
-	channel?: Channel;
+	channel?: ChannelModel;
 }
 
 const ManageChannel: NextPage<Props & InitialProps, InitialProps> = ({
@@ -93,27 +63,7 @@ const ManageChannel: NextPage<Props & InitialProps, InitialProps> = ({
 		<div>
 			<Meta title={`مدیدریت کانال ${localChannel.name}`} />
 			<Header setTheme={setTheme} />
-			<Body>
-				<ChannelDetail channel={localChannel} />
-				<Filler minHeight={30} />
-				<Text size={Size.HUGE} text="مدیر ها" />
-				<AdminFinder channel={localChannel} />
-				<ChannelAdmins channel={localChannel} />
-				<Filler minHeight={30} />
-				<HeaderRow>
-					<Link href={`/channels/${localChannel.handle}/manage/post`}>
-						<Button
-							primary
-							type="button"
-							color={Color.GHOST_WHITE}
-							minWidth={120}>
-							ساخت مطلب
-						</Button>
-					</Link>
-					<Text size={Size.HUGE} text="مطالب" />
-				</HeaderRow>
-				<ChannelPosts channel={localChannel} />
-			</Body>
+			<Channel channel={localChannel} manage setChannel={setLocalChannel} />
 		</div>
 	);
 };

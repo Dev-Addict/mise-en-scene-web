@@ -91,6 +91,25 @@ export const ANNOUNCEMENT_QUERY = gql`
 			}
 			reAnnouncements
 			comments
+			replyData {
+				id
+				title
+				channelData {
+					id
+					handle
+					cover
+				}
+				coverData {
+					alt
+					directory
+					image
+					width
+					height
+				}
+				publishedAt
+				subtitle
+				rating
+			}
 		}
 	}
 `;

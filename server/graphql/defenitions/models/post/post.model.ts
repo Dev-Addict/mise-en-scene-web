@@ -4,6 +4,9 @@ import {DateScalar, JSONScalar} from '../../scalars';
 import {Channel, ChannelAdmin} from '../channel';
 import {Image} from '../image';
 import {readJson} from '../../../utils';
+import {PostRating} from './post-rating.model';
+import {protect} from '../../../../utils';
+import {Types} from 'mongoose';
 
 export const Post = objectType({
 	name: 'Post',
@@ -20,14 +23,15 @@ export const Post = objectType({
 		t.string('subtitle');
 		t.string('description');
 		t.nonNull.list.nonNull.string('tags');
-		t.nonNull.string('body');
-		t.nonNull.field('bodyData', {
+		t.string('body');
+		t.field('bodyData', {
 			type: JSONScalar,
 			resolve({body}, _args) {
-				return readJson(body, 'post');
+				return body && readJson(body, 'post');
 			},
 		});
 		t.field('publishAt', {type: DateScalar});
+		t.nonNull.field('publishedAt', {type: DateScalar});
 		t.nonNull.boolean('published');
 		t.nonNull.id('channel');
 		t.nonNull.field('channelData', {
@@ -39,8 +43,51 @@ export const Post = objectType({
 		t.id('admin');
 		t.field('adminData', {
 			type: ChannelAdmin,
-			async resolve({admin}, _args, {models: {ChannelAdmin}}) {
+			resolve({admin}, _args, {models: {ChannelAdmin}}) {
 				return <any>ChannelAdmin.findById(admin);
+			},
+		});
+		t.nonNull.int('rating', {
+			async resolve({id}, _args, {models: {PostRating}}) {
+				return (
+					(
+						await PostRating.aggregate([
+							{
+								$match: {
+									post: Types.ObjectId(id),
+								},
+							},
+							{
+								$group: {
+									_id: '$post',
+									rating: {
+										$avg: '$rating',
+									},
+								},
+							},
+						])
+					)[0]?.rating || 0
+				);
+			},
+		});
+		t.nonNull.int('raters', {
+			resolve({id}, _args, {models: {PostRating}}) {
+				return PostRating.countDocuments({post: id});
+			},
+		});
+		t.field('myRating', {
+			type: PostRating,
+			async resolve({id}, _args, {req, models: {PostRating, User}}) {
+				const user = req.user || (await protect(req, User));
+
+				return user
+					? <any>(
+							PostRating.findOne({
+								post: Types.ObjectId(id) as any,
+								user: user._id,
+							})
+					  )
+					: undefined;
 			},
 		});
 	},

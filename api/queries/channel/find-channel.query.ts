@@ -11,6 +11,8 @@ export const FIND_CHANNEL_QUERY = gql`
 			verified
 			cover
 			owner
+			isFollowed
+			followers
 			ownerData {
 				id
 				username

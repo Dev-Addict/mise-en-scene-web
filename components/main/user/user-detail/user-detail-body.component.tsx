@@ -48,10 +48,7 @@ export const UserDetailBody: FC<Props> = ({user, setUser}) => {
 			<SpaceDivider size={Size.SMALL} />
 			<Controls>
 				{user.username !== authUser?.username && (
-					<>
-						<UserFollowControl setUser={setUser} user={user} />
-						<SpaceDivider size={Size.TINY} />
-					</>
+					<UserFollowControl setUser={setUser} user={user} />
 				)}
 				{user.username === authUser?.username && (
 					<>
@@ -66,6 +63,7 @@ export const UserDetailBody: FC<Props> = ({user, setUser}) => {
 						</Control>
 					</>
 				)}
+				<SpaceDivider size={Size.TINY} />
 			</Controls>
 		</Container>
 	);

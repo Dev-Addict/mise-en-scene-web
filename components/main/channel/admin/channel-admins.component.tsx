@@ -49,7 +49,11 @@ export const ChannelAdmins: FC<Props> = ({channel}) => {
 				<Text size={Size.MASSIVE} center text="این کانال هیج مدیری ندارد!" />
 			)}
 			{!!admins.length && admins.length !== results && (
-				<Button outline disabled={loading} primary onClick={onLoadMoreClick()}>
+				<Button
+					outline
+					disabled={!!loading}
+					primary
+					onClick={onLoadMoreClick()}>
 					بارگذاری بیشتر
 				</Button>
 			)}

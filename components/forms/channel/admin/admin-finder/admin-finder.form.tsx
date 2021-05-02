@@ -1,7 +1,8 @@
 import React, {FC} from 'react';
-import {Formik, FormikHelpers, FormikProps} from 'formik';
+import {Form, Formik, FormikHelpers, FormikProps} from 'formik';
+import styled from 'styled-components';
 
-import {Body, SubmitContainer} from '../../../sign/sign-components.component';
+import {SubmitContainer} from '../../../sign/sign-components.component';
 import {Button, Errors} from '../../../../shared';
 import {Color} from '../../../../../data';
 import {AdminKeyInputs} from './admin-finder-inputs.component';
@@ -10,6 +11,20 @@ import {adminFinderValidator} from '../../../validators';
 export interface AdminFinderFields {
 	authKey: string;
 }
+
+export const Body = styled(Form)`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position: relative;
+	left: 50%;
+	transform: translateX(-50%);
+	margin-bottom: 30px;
+
+	@media only screen and (max-width: 800px) {
+		width: auto;
+	}
+`;
 
 interface Props {
 	onSubmit: (

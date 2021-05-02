@@ -5,7 +5,7 @@ export const headerRoutes = [
 	},
 	{
 		name: 'پست ها',
-		path: '/post',
+		path: '/posts',
 	},
 	{
 		name: 'گفت و گو ها',

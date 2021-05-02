@@ -1,1 +1,2 @@
-export * from './post.component';
+export * from './post';
+export * from './posts.component';

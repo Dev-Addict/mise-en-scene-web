@@ -4,3 +4,4 @@ export * from './channel-posts.hook';
 export * from './gifs.hook';
 export * from './notifications.hook';
 export * from './owned-channels.hook';
+export * from './posts-query.hook';

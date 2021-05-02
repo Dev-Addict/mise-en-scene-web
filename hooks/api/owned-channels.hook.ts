@@ -27,6 +27,7 @@ export const useOwnedChannels = () => {
 				Authorization: `Bearer ${token}`,
 			},
 		},
+		notifyOnNetworkStatusChange: true,
 	});
 
 	const loadMore = () => () => {
@@ -59,7 +60,10 @@ export const useOwnedChannels = () => {
 	};
 
 	return {
-		loading,
+		loading:
+			loading ||
+			(!loading && !channels.length && data?.ownedChannels?.results) ||
+			false,
 		channels,
 		loadMore: loadMore(),
 		results: data?.ownedChannels?.results,

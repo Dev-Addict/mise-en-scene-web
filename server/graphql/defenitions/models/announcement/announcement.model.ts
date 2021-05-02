@@ -8,6 +8,7 @@ import {AnnouncementLike} from './announcement-like.model';
 import {AnnouncementDislike} from './announcement-dislike.model';
 import {User} from '../user';
 import {protect} from '../../../../utils';
+import {Post} from '../post';
 
 export const Announcement = objectType({
 	name: 'Announcement',
@@ -119,6 +120,13 @@ export const Announcement = objectType({
 			type: list(nonNull(Announcement)),
 			resolve({id}, _args, {models: {Announcement}}) {
 				return <any>Announcement.find({comment: id});
+			},
+		});
+		t.id('reply');
+		t.field('replyData', {
+			type: Post,
+			resolve({reply}, _args, {models: {Post}}) {
+				return <any>Post.findById(reply);
 			},
 		});
 	},

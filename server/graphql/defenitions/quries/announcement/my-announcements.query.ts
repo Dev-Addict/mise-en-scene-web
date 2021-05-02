@@ -41,29 +41,31 @@ export const MyAnnouncementsQuery = queryField('myAnnouncements', {
 			.limit(limit || 10)
 			.sort(sort || '-publishedAt');
 
-		const [{total}] = await Announcement.aggregate([
-			{
-				$match: {
-					user: {
-						$in: userIds,
+		const total = (
+			await Announcement.aggregate([
+				{
+					$match: {
+						user: {
+							$in: userIds,
+						},
 					},
 				},
-			},
-			{
-				$group: {
-					_id: null,
-					total: {
-						$sum: 1,
+				{
+					$group: {
+						_id: null,
+						total: {
+							$sum: 1,
+						},
 					},
 				},
-			},
-		]);
+			])
+		)[0]?.total;
 
 		return {
 			docs: <any>announcements,
 			limit: limit || 10,
 			page: page || 1,
-			results: total,
+			results: total || 0,
 		};
 	},
 });

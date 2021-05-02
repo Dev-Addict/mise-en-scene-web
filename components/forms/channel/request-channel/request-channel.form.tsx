@@ -10,6 +10,7 @@ import {Button, Errors} from '../../../shared';
 import {Color} from '../../../../data';
 import {RequestChannelInputs} from './request-channel-inputs.component';
 import {requestChannelValidator} from '../../validators';
+import {Channel} from '../../../../types';
 
 export interface RequestChannelFields {
 	name: string;
@@ -24,22 +25,28 @@ interface Props {
 	) => void | Promise<any>;
 	errors: string[];
 	initialValues: RequestChannelFields;
+	defaultCover?: string;
+	submitText?: string;
+	channel?: Channel;
 }
 
 export const RequestChannelForm: FC<Props> = ({
 	errors,
 	initialValues,
 	onSubmit,
+	defaultCover,
+	submitText = 'درخواست کانال',
+	channel,
 }) => {
 	return (
 		<Formik
 			initialValues={initialValues}
 			onSubmit={onSubmit}
-			validate={requestChannelValidator}>
+			validate={requestChannelValidator(channel)}>
 			{({isSubmitting}: FormikProps<RequestChannelFields>) => (
 				<Body>
 					<ProfileHeader>درخواست کانال جدید</ProfileHeader>
-					<RequestChannelInputs />
+					<RequestChannelInputs defaultCover={defaultCover} />
 					<Errors errors={errors} />
 					<SubmitContainer>
 						<Button
@@ -47,7 +54,7 @@ export const RequestChannelForm: FC<Props> = ({
 							color={Color.GHOST_WHITE}
 							type="submit"
 							disabled={isSubmitting}>
-							درخواست کانال
+							{submitText}
 						</Button>
 					</SubmitContainer>
 				</Body>

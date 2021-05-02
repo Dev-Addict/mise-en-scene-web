@@ -17,6 +17,7 @@ export interface WriteFields {
 	gallery: File[] | undefined;
 	reAnnouncement: string | undefined;
 	comment: string | undefined;
+	reply: string | undefined;
 }
 
 interface Props {

@@ -1,4 +1,5 @@
 import {gql} from '@apollo/client';
+
 import {Announcement} from '../../../types';
 
 export const ANNOUNCE_MUTATION = gql`
@@ -10,6 +11,7 @@ export const ANNOUNCE_MUTATION = gql`
 		$publishAt: Date
 		$reAnnouncement: ID
 		$comment: ID
+		$reply: ID
 	) {
 		announce(
 			data: {
@@ -20,6 +22,7 @@ export const ANNOUNCE_MUTATION = gql`
 				publishAt: $publishAt
 				reAnnouncement: $reAnnouncement
 				comment: $comment
+				reply: $reply
 			}
 		) {
 			id
@@ -40,6 +43,7 @@ export interface AnnounceMutationVariables {
 	publishAt?: string;
 	reAnnouncement?: string;
 	comment?: string;
+	reply?: string;
 }
 
 export interface AnnounceMutationData {

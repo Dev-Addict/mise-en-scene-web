@@ -37,7 +37,7 @@ const User: NextPage<Props & InitialProps, InitialProps> = ({
 		<AnnouncementProvider
 			filter={{user: userState.id, comment: {exists: false}}}>
 			<div>
-				<Meta title={`پروفایل ${displayName}`} />
+				<Meta title={`مشخصات ${displayName}`} />
 				<Header setTheme={setTheme} />
 				<UserDetail user={userState} setUser={setUserState} />
 			</div>

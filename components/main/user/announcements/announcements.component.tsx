@@ -31,7 +31,7 @@ export const Announcements = () => {
 				</div>
 			)}
 			{!loading && !announcements.length && (
-				<Text size={Size.MASSIVE} center text="هنوز پستی وجود ندارد!" />
+				<Text size={Size.MASSIVE} center text="هنوز گفت و گویی وجود ندارد!" />
 			)}
 			{!!announcements.length && announcements.length !== results && (
 				<Button outline disabled={loading} primary onClick={onLoadMoreClick()}>

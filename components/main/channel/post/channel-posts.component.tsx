@@ -42,7 +42,11 @@ export const ChannelPosts: FC<Props> = ({channel: {id}, channel}) => {
 				<Text size={Size.MASSIVE} center text="این کانال هیج مطلبی ندارد!" />
 			)}
 			{!!posts.length && posts.length !== results && (
-				<Button outline disabled={loading} primary onClick={onLoadMoreClick()}>
+				<Button
+					outline
+					primary
+					onClick={onLoadMoreClick()}
+					disabled={!!loading}>
 					بارگذاری بیشتر
 				</Button>
 			)}

@@ -30,7 +30,7 @@ export const User = objectType({
 			},
 		});
 		t.nonNull.field('followersData', {
-			type: UserFollow,
+			type: nonNull(list(nonNull(UserFollow))),
 			resolve({id}, _args, {models: {UserFollow}}) {
 				return <any>UserFollow.find({following: id});
 			},
@@ -41,7 +41,7 @@ export const User = objectType({
 			},
 		});
 		t.nonNull.field('followingsData', {
-			type: UserFollow,
+			type: nonNull(list(nonNull(UserFollow))),
 			resolve({id}, _args, {models: {UserFollow}}) {
 				return <any>UserFollow.find({follower: id});
 			},

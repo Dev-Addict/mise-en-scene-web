@@ -3,11 +3,11 @@ import {Document, model, Schema, Types} from 'mongoose';
 const userFollowSchema = new Schema({
 	follower: {
 		type: Types.ObjectId,
-		required: [true, ''],
+		required: [true, '0xE000089'],
 	},
 	following: {
 		type: Types.ObjectId,
-		required: [true, ''],
+		required: [true, '0xE00008A'],
 	},
 });
 

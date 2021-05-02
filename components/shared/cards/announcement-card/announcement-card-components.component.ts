@@ -101,3 +101,10 @@ export const SmallAvatar = styled.div`
 		display: inline-flex;
 	}
 `;
+
+export const ReplyContainer = styled.div`
+	direction: ltr;
+	border-radius: 10px;
+	padding: 10px;
+	border: 2px solid ${({theme: {foreground}}) => foreground};
+`;

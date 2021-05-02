@@ -52,11 +52,15 @@ export interface NexusGenInputs {
     poll?: NexusGenInputs['AnnouncementPollData'] | null; // AnnouncementPollData
     publishAt?: NexusGenScalars['Date'] | null; // Date
     reAnnouncement?: string | null; // ID
+    reply?: string | null; // ID
     text?: string | null; // String
   }
   AnnouncementPollData: { // input type
     options: string[]; // [String!]!
     question: string; // String!
+  }
+  ChannelFollowData: { // input type
+    following: string; // ID!
   }
   CheckAuthKeyData: { // input type
     authKey: NexusGenScalars['AuthKey']; // AuthKey!
@@ -92,6 +96,10 @@ export interface NexusGenInputs {
   }
   ForgotPasswordData: { // input type
     authKey: NexusGenScalars['AuthKey']; // AuthKey!
+  }
+  RatePostData: { // input type
+    post: string; // ID!
+    rating: number; // Int!
   }
   RejectAdminData: { // input type
     channel: string; // ID!
@@ -134,6 +142,11 @@ export interface NexusGenInputs {
     lastname?: NexusGenScalars['Name'] | null; // Name
     password: NexusGenScalars['Password']; // Password!
     username: NexusGenScalars['Username']; // Username!
+  }
+  UpdateChannelData: { // input type
+    cover?: NexusGenScalars['Upload'] | null; // Upload
+    handle?: NexusGenScalars['Username'] | null; // Username
+    name?: string | null; // String
   }
   UpdatePostData: { // input type
     body?: NexusGenScalars['JSON'] | null; // JSON
@@ -204,6 +217,7 @@ export interface NexusGenObjects {
     published: boolean; // Boolean!
     publishedAt: NexusGenScalars['Date']; // Date!
     reAnnouncement?: string | null; // ID
+    reply?: string | null; // ID
     text?: string | null; // String
     user: string; // ID!
   }
@@ -264,6 +278,11 @@ export interface NexusGenObjects {
     page: number; // Int!
     results: number; // Int!
   }
+  ChannelFollow: { // root type
+    follower: string; // ID!
+    following: string; // ID!
+    id: string; // ID!
+  }
   ChannelsResponse: { // root type
     docs: NexusGenRootTypes['Channel'][]; // [Channel!]!
     limit: number; // Int!
@@ -304,16 +323,23 @@ export interface NexusGenObjects {
   }
   Post: { // root type
     admin?: string | null; // ID
-    body: string; // String!
+    body?: string | null; // String
     channel: string; // ID!
     cover?: string | null; // ID
     description?: string | null; // String
     id: string; // ID!
     publishAt?: NexusGenScalars['Date'] | null; // Date
     published: boolean; // Boolean!
+    publishedAt: NexusGenScalars['Date']; // Date!
     subtitle?: string | null; // String
     tags: string[]; // [String!]!
     title: string; // String!
+  }
+  PostRating: { // root type
+    id: string; // ID!
+    post: string; // ID!
+    rating: number; // Int!
+    user: string; // ID!
   }
   PostsResponse: { // root type
     docs: NexusGenRootTypes['Post'][]; // [Post!]!
@@ -383,6 +409,8 @@ export interface NexusGenFieldTypes {
     reAnnouncementData: NexusGenRootTypes['Announcement'] | null; // Announcement
     reAnnouncements: number; // Int!
     reAnnouncementsData: NexusGenRootTypes['Announcement'][]; // [Announcement!]!
+    reply: string | null; // ID
+    replyData: NexusGenRootTypes['Post'] | null; // Post
     text: string | null; // String
     user: string; // ID!
     userData: NexusGenRootTypes['User']; // User!
@@ -438,8 +466,11 @@ export interface NexusGenFieldTypes {
   Channel: { // field return type
     admins: NexusGenRootTypes['ChannelAdmin'][]; // [ChannelAdmin!]!
     cover: string; // String!
+    followers: number; // Int!
+    followersData: NexusGenRootTypes['ChannelFollow'][]; // [ChannelFollow!]!
     handle: NexusGenScalars['Username']; // Username!
     id: string; // ID!
+    isFollowed: boolean; // Boolean!
     myAdmin: NexusGenRootTypes['ChannelAdmin'] | null; // ChannelAdmin
     name: string; // String!
     owner: string; // ID!
@@ -460,6 +491,13 @@ export interface NexusGenFieldTypes {
     limit: number; // Int!
     page: number; // Int!
     results: number; // Int!
+  }
+  ChannelFollow: { // field return type
+    follower: string; // ID!
+    followerData: NexusGenRootTypes['User']; // User!
+    following: string; // ID!
+    followingData: NexusGenRootTypes['Channel']; // Channel!
+    id: string; // ID!
   }
   ChannelsResponse: { // field return type
     docs: NexusGenRootTypes['Channel'][]; // [Channel!]!
@@ -497,8 +535,10 @@ export interface NexusGenFieldTypes {
     dislike: NexusGenRootTypes['AnnouncementDislike']; // AnnouncementDislike!
     editAdminPermissions: NexusGenRootTypes['ChannelAdmin'] | null; // ChannelAdmin
     follow: NexusGenRootTypes['UserFollow']; // UserFollow!
+    followChannel: NexusGenRootTypes['ChannelFollow']; // ChannelFollow!
     forgotPassword: NexusGenRootTypes['User'] | null; // User
     like: NexusGenRootTypes['AnnouncementLike']; // AnnouncementLike!
+    ratePost: NexusGenRootTypes['PostRating']; // PostRating!
     rejectAdmin: NexusGenRootTypes['ChannelAdmin'] | null; // ChannelAdmin
     removeAdmin: NexusGenRootTypes['ChannelAdmin'] | null; // ChannelAdmin
     requestChannel: NexusGenRootTypes['Channel']; // Channel!
@@ -509,6 +549,8 @@ export interface NexusGenFieldTypes {
     signIn: NexusGenRootTypes['AuthResponse']; // AuthResponse!
     signUp: NexusGenRootTypes['AuthResponse']; // AuthResponse!
     unfollow: NexusGenRootTypes['UserFollow'] | null; // UserFollow
+    unfollowChannel: NexusGenRootTypes['ChannelFollow'] | null; // ChannelFollow
+    updateChannel: NexusGenRootTypes['Channel'] | null; // Channel
     updatePost: NexusGenRootTypes['Post'] | null; // Post
     updateSelf: NexusGenRootTypes['User'] | null; // User
     uploadImage: NexusGenRootTypes['Image'] | null; // Image
@@ -538,19 +580,31 @@ export interface NexusGenFieldTypes {
   Post: { // field return type
     admin: string | null; // ID
     adminData: NexusGenRootTypes['ChannelAdmin'] | null; // ChannelAdmin
-    body: string; // String!
-    bodyData: NexusGenScalars['JSON']; // JSON!
+    body: string | null; // String
+    bodyData: NexusGenScalars['JSON'] | null; // JSON
     channel: string; // ID!
     channelData: NexusGenRootTypes['Channel']; // Channel!
     cover: string | null; // ID
     coverData: NexusGenRootTypes['Image'] | null; // Image
     description: string | null; // String
     id: string; // ID!
+    myRating: NexusGenRootTypes['PostRating'] | null; // PostRating
     publishAt: NexusGenScalars['Date'] | null; // Date
     published: boolean; // Boolean!
+    publishedAt: NexusGenScalars['Date']; // Date!
+    raters: number; // Int!
+    rating: number; // Int!
     subtitle: string | null; // String
     tags: string[]; // [String!]!
     title: string; // String!
+  }
+  PostRating: { // field return type
+    id: string; // ID!
+    post: string; // ID!
+    postData: NexusGenRootTypes['Post']; // Post!
+    rating: number; // Int!
+    user: string; // ID!
+    userData: NexusGenRootTypes['User']; // User!
   }
   PostsResponse: { // field return type
     docs: NexusGenRootTypes['Post'][]; // [Post!]!
@@ -569,7 +623,10 @@ export interface NexusGenFieldTypes {
     findUser: NexusGenRootTypes['User'] | null; // User
     myAnnouncements: NexusGenRootTypes['AnnouncementsResponse'] | null; // AnnouncementsResponse
     myNotifications: NexusGenRootTypes['NotificationsResponse'] | null; // NotificationsResponse
+    myPosts: NexusGenRootTypes['PostsResponse'] | null; // PostsResponse
     ownedChannels: NexusGenRootTypes['ChannelsResponse'] | null; // ChannelsResponse
+    post: NexusGenRootTypes['Post'] | null; // Post
+    posts: NexusGenRootTypes['PostsResponse'] | null; // PostsResponse
     self: NexusGenRootTypes['User']; // User!
     trendingGifs: NexusGenRootTypes['Gif'][]; // [Gif!]!
     userById: NexusGenRootTypes['User'] | null; // User
@@ -585,9 +642,9 @@ export interface NexusGenFieldTypes {
     email: NexusGenScalars['Email']; // Email!
     firstname: NexusGenScalars['Name'] | null; // Name
     followers: number; // Int!
-    followersData: NexusGenRootTypes['UserFollow']; // UserFollow!
+    followersData: NexusGenRootTypes['UserFollow'][]; // [UserFollow!]!
     followings: number; // Int!
-    followingsData: NexusGenRootTypes['UserFollow']; // UserFollow!
+    followingsData: NexusGenRootTypes['UserFollow'][]; // [UserFollow!]!
     gender: NexusGenEnums['Gender'] | null; // Gender
     id: string; // ID!
     isFollowed: boolean; // Boolean!
@@ -636,6 +693,8 @@ export interface NexusGenFieldTypeNames {
     reAnnouncementData: 'Announcement'
     reAnnouncements: 'Int'
     reAnnouncementsData: 'Announcement'
+    reply: 'ID'
+    replyData: 'Post'
     text: 'String'
     user: 'ID'
     userData: 'User'
@@ -691,8 +750,11 @@ export interface NexusGenFieldTypeNames {
   Channel: { // field return type name
     admins: 'ChannelAdmin'
     cover: 'String'
+    followers: 'Int'
+    followersData: 'ChannelFollow'
     handle: 'Username'
     id: 'ID'
+    isFollowed: 'Boolean'
     myAdmin: 'ChannelAdmin'
     name: 'String'
     owner: 'ID'
@@ -713,6 +775,13 @@ export interface NexusGenFieldTypeNames {
     limit: 'Int'
     page: 'Int'
     results: 'Int'
+  }
+  ChannelFollow: { // field return type name
+    follower: 'ID'
+    followerData: 'User'
+    following: 'ID'
+    followingData: 'Channel'
+    id: 'ID'
   }
   ChannelsResponse: { // field return type name
     docs: 'Channel'
@@ -750,8 +819,10 @@ export interface NexusGenFieldTypeNames {
     dislike: 'AnnouncementDislike'
     editAdminPermissions: 'ChannelAdmin'
     follow: 'UserFollow'
+    followChannel: 'ChannelFollow'
     forgotPassword: 'User'
     like: 'AnnouncementLike'
+    ratePost: 'PostRating'
     rejectAdmin: 'ChannelAdmin'
     removeAdmin: 'ChannelAdmin'
     requestChannel: 'Channel'
@@ -762,6 +833,8 @@ export interface NexusGenFieldTypeNames {
     signIn: 'AuthResponse'
     signUp: 'AuthResponse'
     unfollow: 'UserFollow'
+    unfollowChannel: 'ChannelFollow'
+    updateChannel: 'Channel'
     updatePost: 'Post'
     updateSelf: 'User'
     uploadImage: 'Image'
@@ -799,11 +872,23 @@ export interface NexusGenFieldTypeNames {
     coverData: 'Image'
     description: 'String'
     id: 'ID'
+    myRating: 'PostRating'
     publishAt: 'Date'
     published: 'Boolean'
+    publishedAt: 'Date'
+    raters: 'Int'
+    rating: 'Int'
     subtitle: 'String'
     tags: 'String'
     title: 'String'
+  }
+  PostRating: { // field return type name
+    id: 'ID'
+    post: 'ID'
+    postData: 'Post'
+    rating: 'Int'
+    user: 'ID'
+    userData: 'User'
   }
   PostsResponse: { // field return type name
     docs: 'Post'
@@ -822,7 +907,10 @@ export interface NexusGenFieldTypeNames {
     findUser: 'User'
     myAnnouncements: 'AnnouncementsResponse'
     myNotifications: 'NotificationsResponse'
+    myPosts: 'PostsResponse'
     ownedChannels: 'ChannelsResponse'
+    post: 'Post'
+    posts: 'PostsResponse'
     self: 'User'
     trendingGifs: 'Gif'
     userById: 'User'
@@ -904,11 +992,17 @@ export interface NexusGenArgTypes {
     follow: { // args
       data: NexusGenInputs['FollowData']; // FollowData!
     }
+    followChannel: { // args
+      data: NexusGenInputs['ChannelFollowData']; // ChannelFollowData!
+    }
     forgotPassword: { // args
       data: NexusGenInputs['ForgotPasswordData']; // ForgotPasswordData!
     }
     like: { // args
       announcement: string; // ID!
+    }
+    ratePost: { // args
+      data: NexusGenInputs['RatePostData']; // RatePostData!
     }
     rejectAdmin: { // args
       data: NexusGenInputs['RejectAdminData']; // RejectAdminData!
@@ -939,6 +1033,13 @@ export interface NexusGenArgTypes {
     }
     unfollow: { // args
       data: NexusGenInputs['FollowData']; // FollowData!
+    }
+    unfollowChannel: { // args
+      data: NexusGenInputs['ChannelFollowData']; // ChannelFollowData!
+    }
+    updateChannel: { // args
+      data: NexusGenInputs['UpdateChannelData']; // UpdateChannelData!
+      id: string; // ID!
     }
     updatePost: { // args
       data: NexusGenInputs['UpdatePostData']; // UpdatePostData!
@@ -1006,7 +1107,22 @@ export interface NexusGenArgTypes {
       page?: number | null; // Int
       sort?: NexusGenScalars['JSON'] | null; // JSON
     }
+    myPosts: { // args
+      filter?: NexusGenScalars['JSON'] | null; // JSON
+      limit?: number | null; // Int
+      page?: number | null; // Int
+      sort?: NexusGenScalars['JSON'] | null; // JSON
+    }
     ownedChannels: { // args
+      filter?: NexusGenScalars['JSON'] | null; // JSON
+      limit?: number | null; // Int
+      page?: number | null; // Int
+      sort?: NexusGenScalars['JSON'] | null; // JSON
+    }
+    post: { // args
+      id: string; // ID!
+    }
+    posts: { // args
       filter?: NexusGenScalars['JSON'] | null; // JSON
       limit?: number | null; // Int
       page?: number | null; // Int

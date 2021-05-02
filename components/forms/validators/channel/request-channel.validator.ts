@@ -8,8 +8,9 @@ import {
 	CheckHandleMutationData,
 	CheckHandleMutationVariables,
 } from '../../../../api';
+import {Channel} from '../../../../types';
 
-export const requestChannelValidator = async ({
+export const requestChannelValidator = (channel?: Channel) => async ({
 	handle,
 	name,
 }: RequestChannelFields): Promise<FormikErrors<RequestChannelFields>> => {
@@ -20,7 +21,7 @@ export const requestChannelValidator = async ({
 		errors.handle =
 			'هندل نامعتبر است. حداقل چهار کاراکتر با حروف انگلیسی و اعداد و آندرلاین.';
 	try {
-		if (!errors.handle)
+		if (!errors.handle && handle !== channel?.handle)
 			if (
 				!(
 					await apolloClient.mutate<

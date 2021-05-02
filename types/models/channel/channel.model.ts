@@ -12,4 +12,6 @@ export interface Channel {
 	verified?: boolean;
 	admins?: ChannelAdmin[];
 	myAdmin?: None<ChannelAdmin>;
+	isFollowed?: boolean;
+	followers?: number;
 }

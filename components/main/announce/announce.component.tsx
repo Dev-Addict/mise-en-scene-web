@@ -23,15 +23,22 @@ const initialValues: WriteFields = {
 	gallery: undefined,
 	reAnnouncement: undefined,
 	comment: undefined,
+	reply: undefined,
 };
 
 interface Props {
 	onAnnounce?: () => void;
 	reAnnouncement?: string;
 	comment?: string;
+	reply?: string;
 }
 
-export const Announce: FC<Props> = ({onAnnounce, reAnnouncement, comment}) => {
+export const Announce: FC<Props> = ({
+	onAnnounce,
+	reAnnouncement,
+	comment,
+	reply,
+}) => {
 	const router = useRouter();
 	const {asPath} = router;
 
@@ -46,7 +53,16 @@ export const Announce: FC<Props> = ({onAnnounce, reAnnouncement, comment}) => {
 	>(ANNOUNCE_MUTATION);
 
 	const onSubmit = () => async (
-		{text, gif, gallery, poll, publishAt, reAnnouncement, comment}: WriteFields,
+		{
+			text,
+			gif,
+			gallery,
+			poll,
+			publishAt,
+			reAnnouncement,
+			comment,
+			reply,
+		}: WriteFields,
 		{setSubmitting, resetForm}: FormikHelpers<WriteFields>
 	) => {
 		setSubmitting(true);
@@ -61,6 +77,7 @@ export const Announce: FC<Props> = ({onAnnounce, reAnnouncement, comment}) => {
 					publishAt: publishAt?.toString(),
 					reAnnouncement,
 					comment,
+					reply,
 				},
 				context: {
 					headers: {
@@ -107,6 +124,7 @@ export const Announce: FC<Props> = ({onAnnounce, reAnnouncement, comment}) => {
 				...initialValues,
 				reAnnouncement,
 				comment,
+				reply,
 			}}
 		/>
 	);

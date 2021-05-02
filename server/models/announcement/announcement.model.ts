@@ -37,6 +37,10 @@ const announcementSchema = new Schema(
 			type: Types.ObjectId,
 			ref: 'Announcement',
 		},
+		reply: {
+			type: Types.ObjectId,
+			ref: 'Post',
+		},
 	},
 	{timestamps: {updatedAt: 'publishedAt'}}
 );
@@ -52,6 +56,7 @@ export interface AnnouncementModel {
 	publishedAt: Date | number;
 	reAnnouncement?: string;
 	comment?: string;
+	reply?: string;
 }
 
 export interface IAnnouncement extends AnnouncementModel, Document {}

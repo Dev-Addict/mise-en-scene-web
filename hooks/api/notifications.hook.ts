@@ -27,6 +27,7 @@ export const useNotifications = () => {
 				Authorization: `Bearer ${token}`,
 			},
 		},
+		notifyOnNetworkStatusChange: true,
 	});
 
 	const loadMore = () => () => {

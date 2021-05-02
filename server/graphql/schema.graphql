@@ -19,6 +19,7 @@ input AnnounceData {
   poll: AnnouncementPollData
   publishAt: Date
   reAnnouncement: ID
+  reply: ID
   text: String
 }
 
@@ -47,6 +48,8 @@ type Announcement {
   reAnnouncementData: Announcement
   reAnnouncements: Int!
   reAnnouncementsData: [Announcement!]!
+  reply: ID
+  replyData: Post
   text: String
   user: ID!
   userData: User!
@@ -117,8 +120,11 @@ type AuthResponse {
 type Channel {
   admins: [ChannelAdmin!]!
   cover: String!
+  followers: Int!
+  followersData: [ChannelFollow!]!
   handle: Username!
   id: ID!
+  isFollowed: Boolean!
   myAdmin: ChannelAdmin
   name: String!
   owner: ID!
@@ -150,6 +156,18 @@ type ChannelAdminsResponse {
   limit: Int!
   page: Int!
   results: Int!
+}
+
+type ChannelFollow {
+  follower: ID!
+  followerData: User!
+  following: ID!
+  followingData: Channel!
+  id: ID!
+}
+
+input ChannelFollowData {
+  following: ID!
 }
 
 type ChannelsResponse {
@@ -246,8 +264,10 @@ type Mutation {
   dislike(announcement: ID!): AnnouncementDislike!
   editAdminPermissions(data: EditAdminPermissionsData!): ChannelAdmin
   follow(data: FollowData!): UserFollow!
+  followChannel(data: ChannelFollowData!): ChannelFollow!
   forgotPassword(data: ForgotPasswordData!): User
   like(announcement: ID!): AnnouncementLike!
+  ratePost(data: RatePostData!): PostRating!
   rejectAdmin(data: RejectAdminData!): ChannelAdmin
   removeAdmin(data: RemoveAdminData!): ChannelAdmin
   requestChannel(data: RequestChannelData!): Channel!
@@ -258,6 +278,8 @@ type Mutation {
   signIn(data: SignInData!): AuthResponse!
   signUp(data: SignUpData!): AuthResponse!
   unfollow(data: FollowData!): UserFollow
+  unfollowChannel(data: ChannelFollowData!): ChannelFollow
+  updateChannel(data: UpdateChannelData!, id: ID!): Channel
   updatePost(data: UpdatePostData!, id: ID!): Post
   updateSelf(data: UpdateSelfData!): User
   uploadImage(data: UploadImageData!): Image
@@ -304,19 +326,32 @@ scalar Password
 type Post {
   admin: ID
   adminData: ChannelAdmin
-  body: String!
-  bodyData: JSON!
+  body: String
+  bodyData: JSON
   channel: ID!
   channelData: Channel!
   cover: ID
   coverData: Image
   description: String
   id: ID!
+  myRating: PostRating
   publishAt: Date
   published: Boolean!
+  publishedAt: Date!
+  raters: Int!
+  rating: Int!
   subtitle: String
   tags: [String!]!
   title: String!
+}
+
+type PostRating {
+  id: ID!
+  post: ID!
+  postData: Post!
+  rating: Int!
+  user: ID!
+  userData: User!
 }
 
 type PostsResponse {
@@ -337,11 +372,19 @@ type Query {
   findUser(filter: JSON!): User
   myAnnouncements(filter: JSON, limit: Int, page: Int, sort: JSON): AnnouncementsResponse
   myNotifications(limit: Int, page: Int, sort: JSON): NotificationsResponse
+  myPosts(filter: JSON, limit: Int, page: Int, sort: JSON): PostsResponse
   ownedChannels(filter: JSON, limit: Int, page: Int, sort: JSON): ChannelsResponse
+  post(id: ID!): Post
+  posts(filter: JSON, limit: Int, page: Int, sort: JSON): PostsResponse
   self: User!
   trendingGifs(limit: Int, page: Int): [Gif!]!
   userById(id: ID!): User
   users(filter: JSON, limit: Int, page: Int, sort: JSON): UsersResponse
+}
+
+input RatePostData {
+  post: ID!
+  rating: Int!
 }
 
 input RejectAdminData {
@@ -395,6 +438,12 @@ input SignUpData {
   username: Username!
 }
 
+input UpdateChannelData {
+  cover: Upload
+  handle: Username
+  name: String
+}
+
 input UpdatePostData {
   body: JSON
   cover: ID
@@ -434,9 +483,9 @@ type User {
   email: Email!
   firstname: Name
   followers: Int!
-  followersData: UserFollow!
+  followersData: [UserFollow!]!
   followings: Int!
-  followingsData: UserFollow!
+  followingsData: [UserFollow!]!
   gender: Gender
   id: ID!
   isFollowed: Boolean!

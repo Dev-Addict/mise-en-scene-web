@@ -29,13 +29,13 @@ export const FollowDetail: FC<Props> = ({
 	return (
 		<Container>
 			<Text size={Size.SMALL} text={followers?.toString()} />
-			<Text size={Size.SMALL} text=" " />
+			&nbsp;
 			<Text size={Size.SMALL} lowOpacity text="دنبال کننده" />
 			<Filler />
 			{showFollowings && (
 				<>
 					<Text size={Size.SMALL} text={followings?.toString()} />
-					<Text size={Size.SMALL} text=" " />
+					&nbsp;
 					<Text size={Size.SMALL} lowOpacity text="دنبال می کند" />
 				</>
 			)}

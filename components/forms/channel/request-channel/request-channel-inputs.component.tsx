@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {Field} from 'formik';
 
 import {
@@ -17,7 +17,11 @@ const fields: {
 	cover: 'cover',
 };
 
-export const RequestChannelInputs = () => {
+interface Props {
+	defaultCover?: string;
+}
+
+export const RequestChannelInputs: FC<Props> = ({defaultCover}) => {
 	const username = useThemeImage('/assets/icons/user-name/user-name-$mode.svg');
 	const atSign = useThemeImage('/assets/icons/at-sign/at-sign-$mode.svg');
 
@@ -27,7 +31,10 @@ export const RequestChannelInputs = () => {
 				<Field
 					component={FormikAvatarInput}
 					name={fields.cover}
-					defaultSrc="/assets/icons/aligned-megaphone/aligned-megaphone-$mode.svg"
+					defaultSrc={
+						defaultCover ||
+						'/assets/icons/aligned-megaphone/aligned-megaphone-$mode.svg'
+					}
 				/>
 			</ProfileHeader>
 			<InputContainer>

@@ -5,6 +5,7 @@ import {Image} from '../image';
 import {AnnouncementPoll} from './announcement-poll.model';
 import {AnnouncementLike} from './announcement-like.model';
 import {AnnouncementDislike} from './announcement-dislike.model';
+import {Post} from '../post';
 
 export interface Announcement {
 	id?: string;
@@ -34,4 +35,6 @@ export interface Announcement {
 	commentData?: None<Announcement>;
 	comments?: number;
 	commentsData?: Announcement[];
+	reply?: None<string>;
+	replyData?: None<Post>;
 }

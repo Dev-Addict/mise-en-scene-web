@@ -1,5 +1,5 @@
 import {join} from 'path';
-import {createWriteStream, existsSync, mkdirSync} from 'fs';
+import {existsSync, mkdirSync} from 'fs';
 import Jimp from 'jimp';
 import {FileUpload} from 'graphql-upload';
 
@@ -32,8 +32,6 @@ export const saveImage = async (
 	const image = await Jimp.read(buffer);
 
 	await image.quality(90).resize(700, Jimp.AUTO).write(path);
-
-	stream.pipe(createWriteStream(path));
 
 	return {
 		filename,

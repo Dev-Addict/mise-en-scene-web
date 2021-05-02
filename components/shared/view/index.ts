@@ -1,6 +1,7 @@
 export * from './file-image';
 export * from './images-gallery';
 export * from './poll';
+export * from './rating';
 export * from './animation.component';
 export * from './avatar.component';
 export * from './cover.component';

@@ -16,6 +16,7 @@ export const useAdmins = (filter?: {[key: string]: any}) => {
 			page,
 			filter,
 		},
+		notifyOnNetworkStatusChange: true,
 	});
 
 	const loadMore = () => () => {
@@ -48,7 +49,8 @@ export const useAdmins = (filter?: {[key: string]: any}) => {
 	};
 
 	return {
-		loading,
+		loading:
+			loading || (!loading && !admins.length && data?.admins?.results) || false,
 		admins,
 		loadMore: loadMore(),
 		results: data?.admins?.results,

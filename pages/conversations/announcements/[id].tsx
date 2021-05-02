@@ -1,8 +1,8 @@
 import React, {useEffect} from 'react';
 import {NextPage} from 'next';
 import {useRouter} from 'next/router';
-import Error from 'next/error';
 import Cookie from 'js-cookie';
+import styled from 'styled-components';
 
 import {Announcement as AnnouncementModel, Props} from '../../../types';
 import {
@@ -10,13 +10,13 @@ import {
 	AnnouncementCard,
 	AnnouncementProvider,
 	Announcements,
+	ErrorPage,
 	Header,
 	Meta,
 } from '../../../components';
 import {cookieParser} from '../../../utils';
 import {useAuth} from '../../../hooks';
 import {getAnnouncement} from '../../../helpers';
-import styled from 'styled-components';
 
 const Container = styled.div`
 	width: 800px;
@@ -44,7 +44,9 @@ const Announcement: NextPage<Props & InitialProps, InitialProps> = ({
 	const {isSigned, isLoading} = useAuth();
 
 	if (!announcement)
-		return <Error statusCode={404} title="گفت و گو پیدا نشد!" />;
+		return (
+			<ErrorPage code={404} title="گفت و گو پیدا نشد!" setTheme={setTheme} />
+		);
 
 	useEffect(() => {
 		if (!isLoading && !isSigned) router.push(`/sign?callback=${asPath}`);
