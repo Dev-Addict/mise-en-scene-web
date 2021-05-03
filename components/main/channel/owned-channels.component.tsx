@@ -63,7 +63,11 @@ export const OwnedChannels = () => {
 				/>
 			)}
 			{!!channels.length && channels.length !== results && (
-				<Button outline disabled={loading} primary onClick={onLoadMoreClick()}>
+				<Button
+					outline
+					disabled={!!loading}
+					primary
+					onClick={onLoadMoreClick()}>
 					بارگذاری بیشتر
 				</Button>
 			)}

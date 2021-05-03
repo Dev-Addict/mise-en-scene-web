@@ -85,7 +85,7 @@ const Preview: NextPage<Props & InitialProps, InitialProps> = ({
 			<Meta title={`مدیدریت کانال ${localChannel.name} - ویرایش مطب`} />
 			<Header setTheme={setTheme} />
 			<Body>
-				<Post post={localPost} />
+				<Post post={localPost} setPost={setLocalPost} preview />
 			</Body>
 		</div>
 	);

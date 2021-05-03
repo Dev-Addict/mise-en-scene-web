@@ -13,6 +13,7 @@ import {Announcements} from '../../user';
 interface Props {
 	post: PostModel;
 	setPost: Dispatch<SetStateAction<PostModel | undefined>>;
+	preview?: boolean;
 }
 
 export const Post: FC<Props> = ({
@@ -29,6 +30,7 @@ export const Post: FC<Props> = ({
 	},
 	post,
 	setPost,
+	preview = false,
 }) => {
 	const logo = useThemeImage('/assets/logo/mes-$mode.svg');
 
@@ -58,14 +60,18 @@ export const Post: FC<Props> = ({
 			<Text text={description || undefined} lowOpacity />
 			<Editor value={body} readOnly />
 			<Filler minHeight={50} />
-			<YourIdea post={post} setPost={setPost} />
-			<Filler minHeight={50} />
-			<Text size={Size.BIG} text="گفت و گو" />
-			<Filler minHeight={20} />
-			<AnnouncementProvider filter={{reply: id}}>
-				{isSigned && <Announce reply={id} />}
-				<Announcements />
-			</AnnouncementProvider>
+			{!preview && (
+				<>
+					<YourIdea post={post} setPost={setPost} />
+					<Filler minHeight={50} />
+					<Text size={Size.BIG} text="گفت و گو" />
+					<Filler minHeight={20} />
+					<AnnouncementProvider filter={{reply: id}}>
+						{isSigned && <Announce reply={id} />}
+						<Announcements />
+					</AnnouncementProvider>
+				</>
+			)}
 		</div>
 	);
 };
