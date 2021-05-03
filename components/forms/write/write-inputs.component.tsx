@@ -30,6 +30,7 @@ const fields: {
 	gallery: 'gallery',
 	reAnnouncement: 'reAnnouncement',
 	comment: 'comment',
+	reply: 'reply',
 };
 
 interface Props {
