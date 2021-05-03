@@ -3,8 +3,10 @@ import logger from 'node-color-log';
 
 export const connectDb = () => {
 	const DB = (process.env.DATABASE_URL || '')
-		.replace('<password>', process.env.DATABASE_PASSWORD!)
-		.replace('<dbname>', process.env.DATABASE_NAME!);
+		.replace('<password>', process.env.DATABASE_PASSWORD || '')
+		.replace('<dbname>', process.env.DATABASE_NAME || '');
+
+	console.log(DB);
 
 	connect(DB, {
 		useNewUrlParser: true,
