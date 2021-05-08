@@ -24,6 +24,8 @@ export const MY_POSTS_QUERY = gql`
 				publishedAt
 				subtitle
 				rating
+				view
+				seen
 			}
 		}
 	}

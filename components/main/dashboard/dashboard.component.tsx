@@ -6,6 +6,7 @@ import {useAuth} from '../../../hooks';
 import {DashboardSide} from './dashboard-side.component';
 import {Header} from '../header';
 import {ThemeMode} from '../../../types';
+import {VerifyEmailMessage} from './verify-email-message.component';
 
 const Container = styled.div`
 	display: flex;
@@ -37,6 +38,7 @@ export const Dashboard: FC<Props> = ({children, setTheme}) => {
 		<Container>
 			<Body>
 				<Header setTheme={setTheme} sign={false} />
+				<VerifyEmailMessage />
 				{children}
 			</Body>
 			<DashboardSide />

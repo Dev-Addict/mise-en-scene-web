@@ -208,6 +208,14 @@ input CreatePostData {
 
 scalar Date
 
+enum Device {
+  DESKTOP
+  PHONE
+  TABLET
+  TV
+  UNKNOWN
+}
+
 input EditAdminPermissionsData {
   admin: ID!
   channel: ID!
@@ -285,6 +293,9 @@ type Mutation {
   uploadImage(data: UploadImageData!): Image
   validateResetEmailToken(data: ValidateResetEmailTokenData!): User
   validateResetPasswordToken(data: ValidateResetPasswordTokenData!): User
+  verifyEmail(data: VerifyEmailData!): AuthResponse
+  verifyEmailRequest(data: VerifyEmailRequestData!): User
+  view(data: ViewData!): View
   vote(data: VoteData!): AnnouncementPollResult
 }
 
@@ -321,6 +332,24 @@ type NotificationsResponse {
   results: Int!
 }
 
+enum OS {
+  ANDROID
+  BADA
+  BLACKBERRYOS_OS
+  CHROME_OS
+  FIRE_OS
+  IPAD_OS
+  IPHONE_OS
+  IPOD_OS
+  LINUX
+  MAC_OS
+  RASPBERRY_OS
+  SAMSUNG_OS
+  UNKNOWN
+  WINDOWS
+  WINDOWS_PHONE
+}
+
 scalar Password
 
 type Post {
@@ -339,10 +368,12 @@ type Post {
   published: Boolean!
   publishedAt: Date!
   raters: Int!
-  rating: Int!
+  rating: Float!
+  seen: Boolean!
   subtitle: String
   tags: [String!]!
   title: String!
+  view: Int!
 }
 
 type PostRating {
@@ -492,6 +523,8 @@ type User {
   lastname: Name
   notifications: Int!
   username: Username!
+  verified: Boolean!
+  verifiedEmail: Boolean!
 }
 
 type UserFollow {
@@ -517,6 +550,49 @@ input ValidateResetEmailTokenData {
 
 input ValidateResetPasswordTokenData {
   resetToken: String!
+}
+
+input VerifyEmailData {
+  verifyToken: String!
+}
+
+input VerifyEmailRequestData {
+  email: Email!
+}
+
+type View {
+  authed: Boolean!
+  bot: Boolean!
+  channel: ID
+  channelData: Channel
+  city: String!
+  conversations: Boolean!
+  country: String!
+  device: Device!
+  ended: Boolean!
+  id: ID!
+  ip: String!
+  latitude: String!
+  longitude: String!
+  os: OS!
+  page: String!
+  post: ID
+  postData: Post
+  posts: Boolean!
+  timeSpent: Int!
+  user: ID
+  userData: User
+  version: String!
+  viewEnd: Date!
+  viewStart: Date!
+}
+
+input ViewData {
+  channel: ID
+  conversations: Boolean
+  page: String!
+  post: ID
+  posts: Boolean
 }
 
 input VoteData {

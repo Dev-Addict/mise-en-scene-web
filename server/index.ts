@@ -10,11 +10,11 @@ config({
 import next from 'next';
 import logger from 'node-color-log';
 
+import {server} from './server';
 import {app} from './app';
+import {apolloServer} from './graphql';
 import {connectDb} from './utils';
-import {apolloServer} from './graphql/apollo.server';
 
-const port = process.env.PORT || 3000;
 const nextApp = next({dev});
 const handle = nextApp.getRequestHandler();
 
@@ -25,14 +25,7 @@ nextApp
 	.then(() => {
 		app.all('*', (req, res) => handle(req, res));
 
-		app.listen(port, (err?: any) => {
-			if (err) throw err;
-
-			logger.info(`🚀 server is running at http://localhost:${port}.`);
-			logger.info(
-				`☄️ apollo server is running at http://localhost:${port}${apolloServer.graphqlPath}.`
-			);
-		});
+		server(app);
 
 		connectDb();
 	})

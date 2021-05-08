@@ -12,7 +12,7 @@ import {
 } from '../../../../components';
 import {useAuth} from '../../../../hooks';
 import {Props, User} from '../../../../types';
-import {validateResetEmailTokenHelper} from '../../../../helpers';
+import {validateResetEmailToken} from '../../../../helpers';
 
 const initialValues: ResetEmailFields = {
 	email: '',
@@ -87,7 +87,7 @@ const Reset: NextPage<Props & InitialProps, InitialProps> = ({
 };
 
 Reset.getInitialProps = async ({query: {token}}) => {
-	return validateResetEmailTokenHelper(token as string);
+	return validateResetEmailToken(token as string);
 };
 
 export default Reset;

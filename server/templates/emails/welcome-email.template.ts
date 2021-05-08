@@ -1,60 +1,97 @@
 import {compile as compilePug} from 'pug';
 
 export const welcomeEmailTemplate = compilePug(`
-html
+doctype html
+html(lang='en')
   head
+    meta(charset='UTF-8')
     link(rel='preconnect' href='https://fonts.gstatic.com')
     link(href='https://fonts.googleapis.com/css2?family=Lalezar&display=swap' rel='stylesheet')
-    style(type='text/css').
+    style.
       * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Lalezar', cursive;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Lalezar', cursive;
+      color: #363636;
+      transition: all 336ms;
+      user-select: none;
       }
-      
       html, body {
-        background-color: #F8F7FF;
-        color: #363636;
-        font-size: 14px;
+      background-color: #F8F7FF;
+      color: #363636;
+      font-size: 14px;
       }
-      
       body {
-        padding: 10px 20px;
-        direction: rtl;
+      padding: 10px 20px;
+      direction: rtl;
       }
-      
       .logo-container {
-        text-align: center;
-        font-size: 20px;
+      text-align: center;
+      font-size: 24px;
       }
-      
+      .logo-container:hover {
+      opacity: 0.5;
+      }
+      .logo-link {
+      text-decoration: none;
+      color: #363636;
+      }
+      .logo-text {
+      margin-top: -25px;
+      }
       .logo {
-        width: 60px;
-        height: 60px;
+      width: 60px;
+      height: 60px;
       }
-      
       .button {
-        font-size: 16px;
-        \tpadding: 8px 20px;
-        border-radius: 4px;
-        cursor: pointer;
-        border: none;
-        outline: none;
-        text-align: center;
-        background-color: #00AEFF;
-        color: #F8F7FF;
+      font-size: 16px;
+      padding: 8px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      border: none;
+      outline: none;
+      text-align: center;
+      background-color: #00AEFF;
+      color: #F8F7FF;
+      margin: 10px 0;
       }
-      
+      .button:hover {
+      opacity: 0.5;
+      box-shadow: 3px 0 6px 0 #00AEFF29;
+      }
       .center {
-        position: relative;
-        right: 50%;
-        transform: translateX(50%);
+      position: relative;
+      right: 50%;
+      transform: translateX(50%);
+      }
+      .message {
+      padding: 10px;
+      font-size: 16px;
       }
   body
-    div(class='logo-container')
-      a(href='https://google.com'): img(src='https://global-uploads.webflow.com/5e157547d6f791d34ea4e2bf/5e17558f848f82e664c09d67_logo-dark.svg' class='logo')
-      div میزانسن 
-    div سلام به میزانسن خوش آمدید
-    a(href='https://google.com'): button(class='button center') تایید ایمیل
+    .logo-container
+      a.logo-link(href=home_url)
+        img.logo(src='https://www.miseenscene.ir/_next/image?url=%2Fassets%2Flogo%2Fmes-light.svg&w=128&q=75')
+        .logo-text میزانسن
+    .message
+      | به میزانسن خوش آمدید.
+      br
+      | حالا شما به تمام قابلیت‌های اصلی سایت میزانسن دسترسی پیدا کردید.
+      br
+      | تیم میزانسن تلاش کرده فضایی نو و کاربردی برای همه فیلمبازها به وجود بیاورد که امیدواریم به هدفمان رسیده باشیم.
+    .message
+      | لطفا در اسرع وقت ایمیل خود را تایید کنید و در صورتی که شما درخواست اکانت نداده اید، جهت دریافت اکانت با تغییر پسورد آن اقدام کنید.
+    a(href=verify_url)
+      button.button.center
+        | تایید ایمیل
+    .message
+      | شما تنها ده دقیقه تا نابودی خودکار لینک تایید زمان دارید!
+    .message
+      | با سپاس از انتخاب میزانسن!
 `);
+
+export interface WelcomeEmailTemplateVariables {
+	home_url: string;
+	verify_url: string;
+}

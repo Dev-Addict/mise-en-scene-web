@@ -12,6 +12,7 @@ export const useProgressBar = () => {
 		router.events.on('routeChangeStart', routeChangeStart);
 		router.events.on('routeChangeComplete', routeChangeComplete);
 		router.events.on('routeChangeError', routeChangeComplete);
+
 		return () => {
 			router.events.off('routeChangeStart', routeChangeStart);
 			router.events.off('routeChangeComplete', routeChangeComplete);

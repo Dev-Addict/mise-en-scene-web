@@ -1,14 +1,29 @@
 import React, {FC} from 'react';
 import Link from 'next/link';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 
 import {Post, Size} from '../../../../types';
 import {Cover, Image, Rating} from '../../view';
 import {Text} from '../../text.component';
+import {Row} from '../../flex.component';
 import {useDate, useThemeImage} from '../../../../hooks';
 
-const Container = styled.div`
-	margin-bottom: 20px;
+interface ContainerProps {
+	single?: boolean;
+}
+
+const Container = styled.div<ContainerProps>`
+	padding: 10px 0;
+	margin-bottom: 10px;
+	border-bottom: 2px solid ${({theme: {foreground}}) => foreground}40;
+
+	${({single = false}) =>
+		single &&
+		css`
+			padding: 0;
+			margin: 0;
+			border: none;
+		`}
 `;
 
 const DetailContainer = styled.div`
@@ -26,33 +41,50 @@ const Generics = styled.div`
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	margin-bottom: 10px;
+	margin: -15px 0 10px 0;
 `;
 
 interface Props {
 	post: Post;
+	single?: boolean;
 }
 
 export const PostCard: FC<Props> = ({
-	post: {coverData, title, subtitle, channelData, id, publishedAt, rating},
+	post: {
+		view,
+		coverData,
+		title,
+		subtitle,
+		channelData,
+		id,
+		publishedAt,
+		rating,
+	},
+	single = false,
 }) => {
 	const logo = useThemeImage('/assets/logo/mes-$mode.svg');
 
 	const time = useDate(publishedAt);
 
 	return (
-		<Container>
+		<Container single={single}>
 			<Link href={`/posts/${id}`}>
-				<Image image={coverData || undefined} defaultSrc={logo} active />
+				<div>
+					<Image image={coverData || undefined} defaultSrc={logo} active />
+				</div>
 			</Link>
 			<Generics>
-				<Text size={Size.SMALL} text={time} />
-				<Rating rating={rating} />
+				<Row>
+					<Text size={Size.TINY} text={time} />
+					&nbsp;-&nbsp;
+					<Text size={Size.TINY} text={`${view || 0} بازدید`} />
+				</Row>
+				<Rating rating={rating} ratio={0.8} />
 			</Generics>
 			<DetailContainer>
 				<Link href={`/posts/${id}`}>
 					<Details>
-						<Text size={Size.BIG} text={title} active />
+						<Text size={Size.LARGE} text={title} active />
 						<Text text={subtitle || undefined} active />
 					</Details>
 				</Link>

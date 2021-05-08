@@ -26,6 +26,7 @@ export const ResetEmailMutation = mutationField('resetEmail', {
 			throw new AppError('0xE00005F', 400);
 
 		user.email = email;
+		user.verifiedEmail = true;
 
 		await user.save();
 

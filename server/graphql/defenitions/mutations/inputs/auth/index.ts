@@ -11,3 +11,5 @@ export * from './sign-up-data.input';
 export * from './update-self.input';
 export * from './validate-reset-email-token.input';
 export * from './validate-reset-password-token.input';
+export * from './verify-email.input';
+export * from './verify-email-request.input';

@@ -1,10 +1,15 @@
 import React from 'react';
-import {useTheme} from 'styled-components';
+import styled, {useTheme} from 'styled-components';
 
 import {movieLoaderDark, movieLoaderLight} from '../../../assets';
 import {Animation, PostCard, Button, Text} from '../../shared';
 import {usePosts} from '../../../hooks';
 import {Size, Theme, ThemeMode} from '../../../types';
+import {AdInjector} from '../../shared/ads/ad-injector.component';
+
+const Container = styled.div`
+	margin-bottom: 80px;
+`;
 
 export const Posts = () => {
 	const {mode} = useTheme() as Theme;
@@ -16,10 +21,17 @@ export const Posts = () => {
 
 	const onLoadMoreClick = () => () => !loading && loadMore();
 
-	const renderPosts = () => posts.map((post) => <PostCard post={post} />);
+	const renderPosts = () => (
+		<AdInjector
+			adId="pos-article-display-card-24145"
+			items={posts.map((post) => (
+				<PostCard post={post} key={post.id} />
+			))}
+		/>
+	);
 
 	return (
-		<div>
+		<Container>
 			{renderPosts()}
 			{loading && (
 				<div>
@@ -35,6 +47,6 @@ export const Posts = () => {
 					بارگذاری بیشتر
 				</Button>
 			)}
-		</div>
+		</Container>
 	);
 };

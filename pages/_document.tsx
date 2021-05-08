@@ -26,6 +26,8 @@ class Document extends NDocument<Props> {
 	}
 
 	render(): JSX.Element {
+		const now = new Date();
+
 		return (
 			<Html lang="ir-fa">
 				<Head>
@@ -33,6 +35,12 @@ class Document extends NDocument<Props> {
 					<link
 						href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap"
 						rel="stylesheet"
+					/>
+					<script
+						async
+						src={`https://cdn.yektanet.com/js/miseenscene.ir/native-miseenscene.ir-17194.js?v=${now
+							.getFullYear()
+							.toString()}0${now.getMonth()}0${now.getDate()}0${now.getHours()}`}
 					/>
 					{this.props.styleTags}
 				</Head>

@@ -8,7 +8,7 @@ import {
 } from '../../../api';
 import {User} from '../../../types';
 
-export const validateResetEmailTokenHelper = async (resetToken: string) => {
+export const validateResetEmailToken = async (resetToken: string) => {
 	let user: User | undefined = undefined;
 	let expired = false;
 

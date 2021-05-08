@@ -13,9 +13,12 @@ export const RESET_EMAIL_MUTATION = gql`
 				email
 				avatar
 				birthday
+				gender
 				username
 				bio
 				displayName
+				notifications
+				verifiedEmail
 			}
 		}
 	}

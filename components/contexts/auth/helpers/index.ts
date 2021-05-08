@@ -7,3 +7,5 @@ export * from './sign-in.helper';
 export * from './sign-out.helper';
 export * from './sign-up.helper';
 export * from './update-self.helper';
+export * from './verify-email.helper';
+export * from './verify-email-request.helper';

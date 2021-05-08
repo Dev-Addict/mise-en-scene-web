@@ -5,6 +5,15 @@ export const useForceUpdate = () => {
 
 	useEffect(() => {
 		setMounted(true);
+
+		const immediate = setImmediate(() => {
+			setMounted(true);
+		});
+
+		return () => {
+			setMounted(false);
+			clearImmediate(immediate);
+		};
 	}, []);
 
 	return isMounted;

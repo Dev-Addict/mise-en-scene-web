@@ -71,5 +71,7 @@ export const User = objectType({
 				return Notification.countDocuments({to: id, seen: false});
 			},
 		});
+		t.nonNull.boolean('verified');
+		t.nonNull.boolean('verifiedEmail');
 	},
 });

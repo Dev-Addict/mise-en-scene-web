@@ -32,9 +32,9 @@ export const ForgotPasswordMutation = mutationField('forgotPassword', {
 		await user.save();
 
 		const mailVariables: ForgotPasswordEmailTemplateVariables = {
-			home_page: `${BASE_URL}/`,
+			home_url: `${BASE_URL}/`,
 			reset_url: `${BASE_URL}/sign/password/reset/${resetToken}`,
-			logo: `${BASE_URL}/assets/logo/mes-light.svg`,
+			name: user.displayName || user.firstname || user.username,
 		};
 
 		await mailService.sendMail(forgotPasswordEmailTemplate, mailVariables, {

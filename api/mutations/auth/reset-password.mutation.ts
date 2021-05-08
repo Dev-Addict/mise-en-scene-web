@@ -12,9 +12,12 @@ export const RESET_PASSWORD_MUTATION = gql`
 				email
 				avatar
 				birthday
+				gender
 				username
 				bio
 				displayName
+				notifications
+				verifiedEmail
 			}
 		}
 	}

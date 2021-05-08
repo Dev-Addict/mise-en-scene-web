@@ -4,8 +4,8 @@ import {User} from '../../models';
 import {ResetPasswordRequestData} from '../inputs';
 import {AppError} from '../../../../utils';
 import {
-	forgotPasswordEmailTemplate,
-	ForgotPasswordEmailTemplateVariables,
+	requestResetPasswordEmailTemplate,
+	RequestResetPasswordEmailTemplateVariables,
 } from '../../../../templates';
 import {BASE_URL} from '../../../../../config';
 
@@ -33,16 +33,20 @@ export const ResetPasswordRequestMutation = mutationField(
 			const resetToken = user.createPasswordResetToken();
 			await user.save();
 
-			const mailVariables: ForgotPasswordEmailTemplateVariables = {
-				home_page: `${BASE_URL}/`,
+			const mailVariables: RequestResetPasswordEmailTemplateVariables = {
+				home_url: `${BASE_URL}/`,
 				reset_url: `${BASE_URL}/sign/password/reset/${resetToken}`,
-				logo: `${BASE_URL}/assets/logo/mes-light.svg`,
+				name: user.displayName || user.firstname || user.username,
 			};
 
-			await mailService.sendMail(forgotPasswordEmailTemplate, mailVariables, {
-				to: user.email,
-				subject: '!رمز عبور خود را بازنشانی کنید',
-			});
+			await mailService.sendMail(
+				requestResetPasswordEmailTemplate,
+				mailVariables,
+				{
+					to: user.email,
+					subject: '!رمز عبور خود را بازنشانی کنید',
+				}
+			);
 
 			return <any>user;
 		},

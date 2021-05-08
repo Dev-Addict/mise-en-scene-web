@@ -2,7 +2,12 @@ import React from 'react';
 import {NextPage} from 'next';
 import styled from 'styled-components';
 
-import {ChangeEmail, ChangePassword, Dashboard} from '../../components';
+import {
+	ChangeEmail,
+	ChangePassword,
+	Dashboard,
+	VerifyEmail,
+} from '../../components';
 import {Props} from '../../types';
 
 const Body = styled.div`
@@ -28,6 +33,9 @@ const Security: NextPage<Props> = ({setTheme}) => {
 				</ActionContainer>
 				<ActionContainer>
 					<ChangeEmail />
+				</ActionContainer>
+				<ActionContainer>
+					<VerifyEmail />
 				</ActionContainer>
 			</Body>
 		</Dashboard>

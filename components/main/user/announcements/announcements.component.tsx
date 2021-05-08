@@ -1,12 +1,17 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {useTheme} from 'styled-components';
 
 import {movieLoaderDark, movieLoaderLight} from '../../../../assets';
 import {Animation, AnnouncementCard, Button, Text} from '../../../shared';
 import {useAnnouncements} from '../../../../hooks';
 import {Size, Theme, ThemeMode} from '../../../../types';
+import {AdInjector} from '../../../shared/ads/ad-injector.component';
 
-export const Announcements = () => {
+interface Props {
+	reply?: boolean;
+}
+
+export const Announcements: FC<Props> = ({reply = true}) => {
 	const {mode} = useTheme() as Theme;
 
 	const {announcements, loading, loadMore, results} = useAnnouncements();
@@ -16,10 +21,14 @@ export const Announcements = () => {
 
 	const onLoadMoreClick = () => () => !loading && loadMore();
 
-	const renderAnnouncements = () =>
-		announcements.map((announcement) => (
-			<AnnouncementCard announcement={announcement} />
-		));
+	const renderAnnouncements = () => (
+		<AdInjector
+			adId="pos-article-display-card-24062"
+			items={announcements.map((announcement) => (
+				<AnnouncementCard announcement={announcement} reply={reply} />
+			))}
+		/>
+	);
 
 	return (
 		<div>

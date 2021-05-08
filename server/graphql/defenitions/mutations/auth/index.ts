@@ -11,3 +11,5 @@ export * from './sign-up.mutation';
 export * from './update-self.mutation';
 export * from './validate-reset-email-token.mutation';
 export * from './validate-reset-password-token.mutation';
+export * from './verify-email.mutation';
+export * from './verify-email-request.mutation';

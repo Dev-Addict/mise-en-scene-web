@@ -26,6 +26,7 @@ export const ResetPasswordMutation = mutationField('resetPassword', {
 			throw new AppError('0xE00005B', 400);
 
 		user.password = password;
+		user.verifiedEmail = true;
 
 		await user.save();
 

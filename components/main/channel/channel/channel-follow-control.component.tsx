@@ -78,7 +78,8 @@ export const ChannelFollowControl: FC<Props> = ({channel, setChannel}) => {
 			circular
 			onClick={channel.isFollowed ? onUnfollowClick() : onFollowClick()}
 			color={channel.isFollowed ? undefined : Color.GHOST_WHITE}
-			disabled={channel.isFollowed ? unfollowLoading : followLoading}>
+			disabled={channel.isFollowed ? unfollowLoading : followLoading}
+			minWidth={channel.isFollowed ? 119 : 109}>
 			{channel.isFollowed ? 'دنبال نکردن' : 'دنبال کردن'}
 		</Control>
 	);

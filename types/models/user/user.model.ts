@@ -16,4 +16,6 @@ export interface User {
 	isFollowed?: boolean;
 	followings?: number;
 	notifications?: number;
+	verified?: boolean;
+	verifiedEmail?: boolean;
 }

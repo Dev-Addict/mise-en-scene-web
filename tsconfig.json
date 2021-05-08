@@ -19,7 +19,10 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "typeRoots": [
+      "@types"
+    ]
   },
   "include": [
     "next-env.d.ts",

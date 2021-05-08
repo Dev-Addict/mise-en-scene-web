@@ -27,6 +27,10 @@ export interface UserModel {
 	emailChangedAt?: number;
 	emailResetToken?: string;
 	emailResetTokenExpiresAt?: number;
+	emailVerifyToken?: string;
+	emailVerifyTokenExpiresAt?: number;
+	verified: boolean;
+	verifiedEmail: boolean;
 }
 
 export interface UserBaseDocument extends Document, UserModel {}
@@ -115,6 +119,20 @@ const userSchema = new Schema<UserBaseDocument>({
 	emailResetTokenExpiresAt: {
 		type: Date,
 	},
+	emailVerifyToken: {
+		type: String,
+	},
+	emailVerifyTokenExpiresAt: {
+		type: Date,
+	},
+	verifiedEmail: {
+		type: Boolean,
+		default: false,
+	},
+	verified: {
+		type: Boolean,
+		default: false,
+	},
 });
 
 userSchema.methods.correctPassword = async function (
@@ -166,6 +184,19 @@ userSchema.methods.createEmailResetToken = function () {
 	return resetToken;
 };
 
+userSchema.methods.createEmailVerifyToken = function () {
+	const verifyToken = crypto.randomBytes(32).toString('hex');
+
+	this.emailVerifyToken = crypto
+		.createHash('sha256')
+		.update(verifyToken)
+		.digest('hex');
+
+	this.emailVerifyTokenExpiresAt = Date.now() + 10 * 60 * 1000;
+
+	return verifyToken;
+};
+
 export interface IUser extends UserModel, Document {
 	correctPassword(
 		candidatePassword: string,
@@ -177,6 +208,8 @@ export interface IUser extends UserModel, Document {
 	createPasswordResetToken(): string;
 
 	createEmailResetToken(): string;
+
+	createEmailVerifyToken(): string;
 }
 
 userSchema.pre<IUser>('save', async function (next) {

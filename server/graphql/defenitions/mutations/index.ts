@@ -5,3 +5,4 @@ export * from './image';
 export * from './inputs';
 export * from './post';
 export * from './social';
+export * from './view';

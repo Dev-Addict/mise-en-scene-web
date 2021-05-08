@@ -10,7 +10,7 @@ import {
 	Meta,
 	Tabs,
 } from '../../components';
-import {useAuth} from '../../hooks';
+import {useAuth, useView} from '../../hooks';
 import {Props} from '../../types';
 import {useRouter} from 'next/router';
 import {conversationsTabs} from '../../data';
@@ -49,6 +49,8 @@ const Conversations: NextPage<
 	const {isSigned} = useAuth();
 
 	const [isMy, setMy] = useState(my);
+
+	useView({page: '/conversations', conversations: true});
 
 	const onTab = () => (tab: string) => setMy(tab === 'my');
 

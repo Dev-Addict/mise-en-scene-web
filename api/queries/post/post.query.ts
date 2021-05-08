@@ -13,6 +13,7 @@ export const POST_QUERY = gql`
 				followers
 				handle
 				name
+				isFollowed
 			}
 			coverData {
 				alt
@@ -28,6 +29,7 @@ export const POST_QUERY = gql`
 			publishedAt
 			rating
 			raters
+			view
 			myRating {
 				rating
 			}

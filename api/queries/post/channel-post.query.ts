@@ -24,6 +24,7 @@ export const CHANNEL_POST_QUERY = gql`
 			subtitle
 			tags
 			title
+			view
 		}
 	}
 `;

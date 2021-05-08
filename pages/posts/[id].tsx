@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {NextPage} from 'next';
-import {useRouter} from 'next/router';
 import Cookie from 'js-cookie';
 import styled from 'styled-components';
 
 import {Post as PostModel, Props} from '../../types';
 import {ErrorPage, Header, Meta, Post} from '../../components';
 import {cookieParser} from '../../utils';
-import {useAuth} from '../../hooks';
+import {useView} from '../../hooks';
 import {getPost} from '../../helpers';
 
 const Container = styled.div`
@@ -30,16 +29,13 @@ const PostPage: NextPage<Props & InitialProps, InitialProps> = ({
 	setTheme,
 	post,
 }) => {
-	const router = useRouter();
-	const {asPath} = router;
-
 	const [localPost, setLocalPost] = useState(post);
 
-	const {isSigned, isLoading} = useAuth();
-
-	useEffect(() => {
-		if (!isLoading && !isSigned) router.push(`/sign?callback=${asPath}`);
-	}, []);
+	useView({
+		page: `/posts/${localPost?.id}`,
+		post: localPost?.id,
+		channel: localPost?.channelData?.id,
+	});
 
 	useEffect(() => {
 		setLocalPost(post);

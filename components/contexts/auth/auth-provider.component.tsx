@@ -13,6 +13,8 @@ import {
 	signOut,
 	signUp,
 	updateSelf,
+	verifyEmail,
+	verifyEmailRequest,
 } from './helpers';
 import {User} from '../../../types';
 
@@ -63,6 +65,8 @@ export const AuthProvider: FC = ({children}) => {
 				resetEmailRequest: resetEmailRequest(),
 				resetPassword: resetPassword({setUser, setSigned, setToken}),
 				resetPasswordRequest: resetPasswordRequest(),
+				verifyEmail: verifyEmail({setUser, setSigned, setToken}),
+				verifyEmailRequest: verifyEmailRequest(),
 				signIn: signIn({setUser, setSigned, setToken}),
 				signOut: signOut({setUser, setSigned, setToken}),
 				signUp: signUp({setUser, setSigned, setToken}),

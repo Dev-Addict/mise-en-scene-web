@@ -1,8 +1,9 @@
 import React, {Dispatch, FC, SetStateAction} from 'react';
 
 import {Header} from '../header';
-import {ErrorMessage} from './error-message.component';
 import {ThemeMode} from '../../../types';
+import {useErrorValue} from '../../../hooks';
+import {IllustrationMessage} from '../../shared';
 
 interface Props {
 	setTheme: Dispatch<SetStateAction<ThemeMode>>;
@@ -11,10 +12,12 @@ interface Props {
 }
 
 export const ErrorPage: FC<Props> = ({setTheme, code, title}) => {
+	const {image, message} = useErrorValue(code, title);
+
 	return (
 		<div>
 			<Header setTheme={setTheme} />
-			<ErrorMessage code={code} title={title} />
+			<IllustrationMessage message={message} image={image} />
 		</div>
 	);
 };

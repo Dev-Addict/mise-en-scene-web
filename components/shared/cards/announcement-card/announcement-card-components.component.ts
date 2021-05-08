@@ -17,7 +17,7 @@ export const Container = styled.div<ContainerProps>`
 	${({border}) =>
 		border &&
 		css`
-			border: 3px solid ${({theme: {foreground}}) => foreground};
+			border: 3px solid ${({theme: {primary}}) => primary}40;
 		`}
 `;
 
@@ -43,7 +43,7 @@ export const Body = styled.div<StyledProps & BodyProps>`
 	${({border}) =>
 		border &&
 		css`
-			border-bottom: 3px solid ${({theme: {foreground}}) => foreground};
+			border-bottom: 3px solid ${({theme: {primary}}) => primary}40;
 		`}
 `;
 
@@ -106,5 +106,5 @@ export const ReplyContainer = styled.div`
 	direction: ltr;
 	border-radius: 10px;
 	padding: 10px;
-	border: 2px solid ${({theme: {foreground}}) => foreground};
+	border: 2px solid ${({theme: {foreground}}) => foreground}40;
 `;

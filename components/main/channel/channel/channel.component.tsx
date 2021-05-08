@@ -5,6 +5,9 @@ import {Channel as ChannelModel} from '../../../../types';
 import {ChannelDetail} from './channel-detail.component';
 import {ManagerPosts} from './manager-posts.component';
 import {AdminsControl} from './admins-control.component';
+import {Posts} from '../../post';
+import {PostProvider} from '../../../contexts';
+import {Filler} from '../../../shared';
 
 const Container = styled.div`
 	margin: 20px 100px;
@@ -43,16 +46,20 @@ interface Props {
 
 export const Channel: FC<Props> = ({channel, manage, setChannel}) => {
 	return (
-		<Container>
-			<ChannelDetail
-				channel={channel}
-				manage={manage}
-				setChannel={setChannel}
-			/>
-			<Body>
-				{manage && <AdminsControl channel={channel} />}
-				{manage && <ManagerPosts channel={channel} />}
-			</Body>
-		</Container>
+		<PostProvider filter={{channel: channel.id}}>
+			<Container>
+				<ChannelDetail
+					channel={channel}
+					manage={manage}
+					setChannel={setChannel}
+				/>
+				<Body>
+					{manage && <AdminsControl channel={channel} />}
+					{manage && <ManagerPosts channel={channel} />}
+					<Posts />
+					<Filler minHeight={80} />
+				</Body>
+			</Container>
+		</PostProvider>
 	);
 };

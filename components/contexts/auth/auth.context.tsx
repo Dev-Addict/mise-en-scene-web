@@ -35,6 +35,14 @@ export interface ResetEmailData {
 	email: string;
 }
 
+export interface VerifyEmailRequestData {
+	email: string;
+}
+
+export interface VerifyEmailData {
+	verifyToken: string;
+}
+
 export interface UpdateSelfData {
 	avatar?: None<File>;
 	bio?: None<string>;
@@ -69,6 +77,10 @@ export interface AuthContextType {
 		variables: ResetEmailRequestData
 	) => Promise<SignResponse>;
 	resetEmail: (variables: ResetEmailData) => Promise<SignResponse>;
+	verifyEmailRequest: (
+		variables: VerifyEmailRequestData
+	) => Promise<SignResponse>;
+	verifyEmail: (variables: VerifyEmailData) => Promise<SignResponse>;
 	updateSelf: (variables: UpdateSelfData) => Promise<SignResponse>;
 	markNotificationsRead: () => void;
 	signOut: () => void;
@@ -99,6 +111,14 @@ export const AuthContext = createContext<AuthContextType>({
 		errors: ['سیستم آماده نیست.'],
 	}),
 	resetEmail: async () => ({
+		success: false,
+		errors: ['سیستم آماده نیست.'],
+	}),
+	verifyEmailRequest: async () => ({
+		success: false,
+		errors: ['سیستم آماده نیست.'],
+	}),
+	verifyEmail: async () => ({
 		success: false,
 		errors: ['سیستم آماده نیست.'],
 	}),

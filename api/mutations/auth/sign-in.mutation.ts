@@ -16,6 +16,7 @@ export const SIGN_IN_MUTATION = gql`
 				bio
 				displayName
 				notifications
+				verifiedEmail
 			}
 		}
 	}

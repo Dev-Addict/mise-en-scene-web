@@ -14,6 +14,7 @@ export const SELF_QUERY = gql`
 			bio
 			displayName
 			notifications
+			verifiedEmail
 		}
 	}
 `;

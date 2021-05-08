@@ -43,6 +43,7 @@ import {
 	IPostRating,
 	IUser,
 	IUserFollow,
+	IView,
 	Movie,
 	MovieAward,
 	MovieImage,
@@ -54,6 +55,7 @@ import {
 	PostRating,
 	User,
 	UserFollow,
+	View,
 } from '../models';
 import {MailService} from '../utils';
 import {Request} from '../types';
@@ -87,6 +89,7 @@ export interface MainContext {
 		PostRating: Model<IPostRating>;
 		User: Model<IUser>;
 		UserFollow: Model<IUserFollow>;
+		View: Model<IView>;
 	};
 	mailService: MailService;
 }
@@ -123,6 +126,7 @@ export const mainContext: ContextFunction<ExpressContext, MainContext> = ({
 		PostRating,
 		User,
 		UserFollow,
+		View,
 	},
 	mailService: MailService.getInstance(),
 });

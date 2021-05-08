@@ -4,7 +4,7 @@ import {useRouter} from 'next/router';
 import styled from 'styled-components';
 
 import {Header, Meta, PostProvider, Posts, Tabs} from '../../components';
-import {useAuth} from '../../hooks';
+import {useAuth, useView} from '../../hooks';
 import {Props} from '../../types';
 import {postTabs} from '../../data';
 
@@ -42,6 +42,8 @@ const PostsPage: NextPage<Props & PageProps & InitialProps, InitialProps> = ({
 	const {isSigned} = useAuth();
 
 	const [isMy, setMy] = useState(my);
+
+	useView({page: '/posts', posts: true});
 
 	const onTab = () => (tab: string) => setMy(tab === 'my');
 

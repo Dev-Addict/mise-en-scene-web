@@ -28,6 +28,7 @@ export const CHANNEL_POSTS_QUERY = gql`
 				subtitle
 				description
 				id
+				view
 			}
 			results
 		}

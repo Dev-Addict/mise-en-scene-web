@@ -3,12 +3,14 @@ import {convertFromRaw, EditorState} from 'draft-js';
 
 import {Generics, RatingContainer} from './post-components.component';
 import {YourIdea} from './your-idea.component';
-import {Editor, Filler, Image, Rating, Text} from '../../../shared';
-import {Post as PostModel, Size} from '../../../../types';
+import {Editor, Filler, Image, Rating, Row, Text} from '../../../shared';
+import {Post as PostModel, Size, Theme, ThemeMode} from '../../../../types';
 import {useAuth, useDate, useThemeImage} from '../../../../hooks';
 import {AnnouncementProvider} from '../../../contexts';
 import {Announce} from '../../announce';
 import {Announcements} from '../../user';
+import {PostChannel} from './post-channel.component';
+import {useTheme} from 'styled-components';
 
 interface Props {
 	post: PostModel;
@@ -27,11 +29,15 @@ export const Post: FC<Props> = ({
 		rating,
 		raters,
 		publishedAt,
+		channelData,
+		view,
 	},
 	post,
 	setPost,
 	preview = false,
 }) => {
+	const {mode} = useTheme() as Theme;
+
 	const logo = useThemeImage('/assets/logo/mes-$mode.svg');
 
 	const {isSigned} = useAuth();
@@ -46,7 +52,11 @@ export const Post: FC<Props> = ({
 		<div>
 			<Image image={coverData || undefined} defaultSrc={logo} />
 			<Generics>
-				<Text size={Size.SMALL} text={time} />
+				<Row>
+					<Text size={Size.TINY} text={time} />
+					&nbsp;-&nbsp;
+					<Text size={Size.TINY} text={`${view || 0} بازدید`} />
+				</Row>
 				<RatingContainer>
 					<Text
 						size={Size.SMALL}
@@ -58,17 +68,26 @@ export const Post: FC<Props> = ({
 			<Text size={Size.HUGE} text={title} />
 			<Text text={subtitle || undefined} size={Size.LARGE} />
 			<Text text={description || undefined} lowOpacity />
+			{channelData && <PostChannel channel={channelData} setPost={setPost} />}
 			<Editor value={body} readOnly />
 			<Filler minHeight={50} />
 			{!preview && (
 				<>
 					<YourIdea post={post} setPost={setPost} />
 					<Filler minHeight={50} />
+					<div
+						id={
+							mode === ThemeMode.LIGHT
+								? 'pos-article-text-24057'
+								: 'pos-article-text-24056'
+						}
+					/>
+					<Filler minHeight={50} />
 					<Text size={Size.BIG} text="گفت و گو" />
 					<Filler minHeight={20} />
 					<AnnouncementProvider filter={{reply: id}}>
 						{isSigned && <Announce reply={id} />}
-						<Announcements />
+						<Announcements reply={false} />
 					</AnnouncementProvider>
 				</>
 			)}

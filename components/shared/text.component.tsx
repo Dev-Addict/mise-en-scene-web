@@ -81,11 +81,14 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 	children?: never;
 	text?: string;
 	danger?: boolean;
+	rtl?: boolean;
 }
 
-export const Text: FC<Props> = ({text = '', ...props}) => {
-	const rtl = /^[^A-Za-zÀ-ÖØ-öø-ʸ̀-֐ࠀ-῿Ⰰ-﬜﷾-﹯﻽-￿]*[֑-߿יִ-﷽ﹰ-ﻼ]/.test(text);
-
+export const Text: FC<Props> = ({
+	text = '',
+	rtl = /^[^A-Za-zÀ-ÖØ-öø-ʸ̀-֐ࠀ-῿Ⰰ-﬜﷾-﹯﻽-￿]*[֑-߿יִ-﷽ﹰ-ﻼ]/.test(text),
+	...props
+}) => {
 	const renderText = () =>
 		text.split(/[\s]((https?)?\w+\.\w{2,})[\s]/gi).map((part) =>
 			/(https?)?\w+\.\w{2,}/gi.test(part) ? (

@@ -23,4 +23,6 @@ export interface Post {
 	rating?: number;
 	raters?: number;
 	myRating?: None<PostRating>;
+	view?: number;
+	seen?: boolean;
 }

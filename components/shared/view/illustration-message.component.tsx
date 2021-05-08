@@ -1,10 +1,9 @@
 import React, {FC} from 'react';
-import Image from 'next/image';
 import styled from 'styled-components';
-
-import {Text} from '../../shared';
-import {useErrorValue, useWindowSize} from '../../../hooks';
+import {useWindowSize} from '../../../hooks';
+import {Text} from '../text.component';
 import {Size} from '../../../types';
+import Image from 'next/image';
 
 interface ContainerProps {
 	height: number;
@@ -47,19 +46,18 @@ const Illustration = styled.div`
 `;
 
 interface Props {
-	code: number;
-	title?: string;
+	message: string;
+	image: string;
+	extra?: number;
 }
 
-export const ErrorMessage: FC<Props> = ({code, title}) => {
+export const IllustrationMessage: FC<Props> = ({message, image, extra = 0}) => {
 	const {height, width} = useWindowSize();
 
 	const size = Math.min(
-		height > 600 ? height - 200 : height / 2 - 40,
+		height > 600 ? height - 200 - extra : height / 2 - 40 - extra,
 		width - (width > 600 ? 120 : 40)
 	);
-
-	const {image, message} = useErrorValue(code, title);
 
 	return (
 		<Container height={height}>

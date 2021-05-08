@@ -9,4 +9,5 @@ export * from './movie';
 export * from './notification';
 export * from './post';
 export * from './user';
+export * from './view';
 export * from './any.model';

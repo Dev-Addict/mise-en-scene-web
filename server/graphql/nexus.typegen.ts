@@ -178,6 +178,19 @@ export interface NexusGenInputs {
   ValidateResetPasswordTokenData: { // input type
     resetToken: string; // String!
   }
+  VerifyEmailData: { // input type
+    verifyToken: string; // String!
+  }
+  VerifyEmailRequestData: { // input type
+    email: NexusGenScalars['Email']; // Email!
+  }
+  ViewData: { // input type
+    channel?: string | null; // ID
+    conversations?: boolean | null; // Boolean
+    page: string; // String!
+    post?: string | null; // ID
+    posts?: boolean | null; // Boolean
+  }
   VoteData: { // input type
     option: number; // Int!
     poll: string; // ID!
@@ -186,8 +199,10 @@ export interface NexusGenInputs {
 
 export interface NexusGenEnums {
   ChannelAdminPermission: "CREATE_NEW_ADMIN" | "DELETE_POST" | "EDIT_ADMINS_PERMISSIONS" | "EDIT_OTHERS_POST" | "POST" | "REMOVE_ADMIN"
+  Device: "DESKTOP" | "PHONE" | "TABLET" | "TV" | "UNKNOWN"
   Gender: "CUSTOM" | "FEMALE" | "MALE"
   NotificationType: "COMMENT" | "DISLIKE" | "FOLLOW" | "LIKE" | "POST" | "RE_ANNOUNCEMENT" | "UNFOLLOW"
+  OS: "ANDROID" | "BADA" | "BLACKBERRYOS_OS" | "CHROME_OS" | "FIRE_OS" | "IPAD_OS" | "IPHONE_OS" | "IPOD_OS" | "LINUX" | "MAC_OS" | "RASPBERRY_OS" | "SAMSUNG_OS" | "UNKNOWN" | "WINDOWS" | "WINDOWS_PHONE"
 }
 
 export interface NexusGenScalars {
@@ -359,6 +374,8 @@ export interface NexusGenObjects {
     id: string; // ID!
     lastname?: NexusGenScalars['Name'] | null; // Name
     username: NexusGenScalars['Username']; // Username!
+    verified: boolean; // Boolean!
+    verifiedEmail: boolean; // Boolean!
   }
   UserFollow: { // root type
     follower: string; // ID!
@@ -370,6 +387,29 @@ export interface NexusGenObjects {
     limit: number; // Int!
     page: number; // Int!
     results: number; // Int!
+  }
+  View: { // root type
+    authed: boolean; // Boolean!
+    bot: boolean; // Boolean!
+    channel?: string | null; // ID
+    city: string; // String!
+    conversations: boolean; // Boolean!
+    country: string; // String!
+    device: NexusGenEnums['Device']; // Device!
+    ended: boolean; // Boolean!
+    id: string; // ID!
+    ip: string; // String!
+    latitude: string; // String!
+    longitude: string; // String!
+    os: NexusGenEnums['OS']; // OS!
+    page: string; // String!
+    post?: string | null; // ID
+    posts: boolean; // Boolean!
+    timeSpent: number; // Int!
+    user?: string | null; // ID
+    version: string; // String!
+    viewEnd: NexusGenScalars['Date']; // Date!
+    viewStart: NexusGenScalars['Date']; // Date!
   }
 }
 
@@ -556,6 +596,9 @@ export interface NexusGenFieldTypes {
     uploadImage: NexusGenRootTypes['Image'] | null; // Image
     validateResetEmailToken: NexusGenRootTypes['User'] | null; // User
     validateResetPasswordToken: NexusGenRootTypes['User'] | null; // User
+    verifyEmail: NexusGenRootTypes['AuthResponse'] | null; // AuthResponse
+    verifyEmailRequest: NexusGenRootTypes['User'] | null; // User
+    view: NexusGenRootTypes['View'] | null; // View
     vote: NexusGenRootTypes['AnnouncementPollResult'] | null; // AnnouncementPollResult
   }
   Notification: { // field return type
@@ -593,10 +636,12 @@ export interface NexusGenFieldTypes {
     published: boolean; // Boolean!
     publishedAt: NexusGenScalars['Date']; // Date!
     raters: number; // Int!
-    rating: number; // Int!
+    rating: number; // Float!
+    seen: boolean; // Boolean!
     subtitle: string | null; // String
     tags: string[]; // [String!]!
     title: string; // String!
+    view: number; // Int!
   }
   PostRating: { // field return type
     id: string; // ID!
@@ -651,6 +696,8 @@ export interface NexusGenFieldTypes {
     lastname: NexusGenScalars['Name'] | null; // Name
     notifications: number; // Int!
     username: NexusGenScalars['Username']; // Username!
+    verified: boolean; // Boolean!
+    verifiedEmail: boolean; // Boolean!
   }
   UserFollow: { // field return type
     follower: string; // ID!
@@ -664,6 +711,32 @@ export interface NexusGenFieldTypes {
     limit: number; // Int!
     page: number; // Int!
     results: number; // Int!
+  }
+  View: { // field return type
+    authed: boolean; // Boolean!
+    bot: boolean; // Boolean!
+    channel: string | null; // ID
+    channelData: NexusGenRootTypes['Channel'] | null; // Channel
+    city: string; // String!
+    conversations: boolean; // Boolean!
+    country: string; // String!
+    device: NexusGenEnums['Device']; // Device!
+    ended: boolean; // Boolean!
+    id: string; // ID!
+    ip: string; // String!
+    latitude: string; // String!
+    longitude: string; // String!
+    os: NexusGenEnums['OS']; // OS!
+    page: string; // String!
+    post: string | null; // ID
+    postData: NexusGenRootTypes['Post'] | null; // Post
+    posts: boolean; // Boolean!
+    timeSpent: number; // Int!
+    user: string | null; // ID
+    userData: NexusGenRootTypes['User'] | null; // User
+    version: string; // String!
+    viewEnd: NexusGenScalars['Date']; // Date!
+    viewStart: NexusGenScalars['Date']; // Date!
   }
 }
 
@@ -840,6 +913,9 @@ export interface NexusGenFieldTypeNames {
     uploadImage: 'Image'
     validateResetEmailToken: 'User'
     validateResetPasswordToken: 'User'
+    verifyEmail: 'AuthResponse'
+    verifyEmailRequest: 'User'
+    view: 'View'
     vote: 'AnnouncementPollResult'
   }
   Notification: { // field return type name
@@ -877,10 +953,12 @@ export interface NexusGenFieldTypeNames {
     published: 'Boolean'
     publishedAt: 'Date'
     raters: 'Int'
-    rating: 'Int'
+    rating: 'Float'
+    seen: 'Boolean'
     subtitle: 'String'
     tags: 'String'
     title: 'String'
+    view: 'Int'
   }
   PostRating: { // field return type name
     id: 'ID'
@@ -935,6 +1013,8 @@ export interface NexusGenFieldTypeNames {
     lastname: 'Name'
     notifications: 'Int'
     username: 'Username'
+    verified: 'Boolean'
+    verifiedEmail: 'Boolean'
   }
   UserFollow: { // field return type name
     follower: 'ID'
@@ -948,6 +1028,32 @@ export interface NexusGenFieldTypeNames {
     limit: 'Int'
     page: 'Int'
     results: 'Int'
+  }
+  View: { // field return type name
+    authed: 'Boolean'
+    bot: 'Boolean'
+    channel: 'ID'
+    channelData: 'Channel'
+    city: 'String'
+    conversations: 'Boolean'
+    country: 'String'
+    device: 'Device'
+    ended: 'Boolean'
+    id: 'ID'
+    ip: 'String'
+    latitude: 'String'
+    longitude: 'String'
+    os: 'OS'
+    page: 'String'
+    post: 'ID'
+    postData: 'Post'
+    posts: 'Boolean'
+    timeSpent: 'Int'
+    user: 'ID'
+    userData: 'User'
+    version: 'String'
+    viewEnd: 'Date'
+    viewStart: 'Date'
   }
 }
 
@@ -1056,6 +1162,15 @@ export interface NexusGenArgTypes {
     }
     validateResetPasswordToken: { // args
       data: NexusGenInputs['ValidateResetPasswordTokenData']; // ValidateResetPasswordTokenData!
+    }
+    verifyEmail: { // args
+      data: NexusGenInputs['VerifyEmailData']; // VerifyEmailData!
+    }
+    verifyEmailRequest: { // args
+      data: NexusGenInputs['VerifyEmailRequestData']; // VerifyEmailRequestData!
+    }
+    view: { // args
+      data: NexusGenInputs['ViewData']; // ViewData!
     }
     vote: { // args
       data: NexusGenInputs['VoteData']; // VoteData!

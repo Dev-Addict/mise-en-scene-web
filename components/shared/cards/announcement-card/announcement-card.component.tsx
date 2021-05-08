@@ -22,12 +22,14 @@ interface Props {
 	announcement: Announcement;
 	border?: boolean;
 	reAnnouncement?: boolean;
+	reply?: boolean;
 }
 
 export const AnnouncementCard: FC<Props> = ({
 	announcement,
 	border = false,
 	reAnnouncement = false,
+	reply = true,
 }) => {
 	const [localAnnouncement, setLocalAnnouncement] = useState(announcement);
 	const {
@@ -79,9 +81,9 @@ export const AnnouncementCard: FC<Props> = ({
 					</LeftSideContainer>
 				</UserDetails>
 				{renderText()}
-				{replyData && (
+				{reply && replyData && (
 					<ReplyContainer>
-						<PostCard post={replyData} />
+						<PostCard post={replyData} single />
 					</ReplyContainer>
 				)}
 				{reAnnouncementData && (

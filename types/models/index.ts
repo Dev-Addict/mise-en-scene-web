@@ -5,3 +5,4 @@ export * from './image';
 export * from './notification';
 export * from './post';
 export * from './user';
+export * from './view';

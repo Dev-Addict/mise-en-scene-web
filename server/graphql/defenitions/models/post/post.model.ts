@@ -1,3 +1,4 @@
+import {Types} from 'mongoose';
 import {objectType} from 'nexus';
 
 import {DateScalar, JSONScalar} from '../../scalars';
@@ -6,7 +7,6 @@ import {Image} from '../image';
 import {readJson} from '../../../utils';
 import {PostRating} from './post-rating.model';
 import {protect} from '../../../../utils';
-import {Types} from 'mongoose';
 
 export const Post = objectType({
 	name: 'Post',
@@ -47,7 +47,7 @@ export const Post = objectType({
 				return <any>ChannelAdmin.findById(admin);
 			},
 		});
-		t.nonNull.int('rating', {
+		t.nonNull.float('rating', {
 			async resolve({id}, _args, {models: {PostRating}}) {
 				return (
 					(
@@ -78,16 +78,31 @@ export const Post = objectType({
 		t.field('myRating', {
 			type: PostRating,
 			async resolve({id}, _args, {req, models: {PostRating, User}}) {
-				const user = req.user || (await protect(req, User));
+				const user = req.user || (await protect(req, User, false));
 
-				return user
-					? <any>(
-							PostRating.findOne({
-								post: Types.ObjectId(id) as any,
-								user: user._id,
-							})
-					  )
-					: undefined;
+				return user ? <any>PostRating.findOne({
+							post: Types.ObjectId(id) as any,
+							user: user._id,
+					  }) : undefined;
+			},
+		});
+		t.nonNull.int('view', {
+			resolve({id}, _args, {models: {View}}) {
+				return View.countDocuments({
+					post: id,
+					ended: true,
+					timeSpent: {$gte: 60000},
+				});
+			},
+		});
+		t.nonNull.boolean('seen', {
+			resolve({id}, _args, {req, models: {View}}) {
+				return View.exists({
+					post: id,
+					ended: true,
+					timeSpent: {$gte: 60000},
+					user: req.user?.id,
+				});
 			},
 		});
 	},

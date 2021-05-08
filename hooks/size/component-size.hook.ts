@@ -20,13 +20,13 @@ export const useComponentSize = (ref: RefObject<HTMLElement>) => {
 		}
 
 		ref.current?.addEventListener('resize', handleResize);
-		window.addEventListener('resize', handleResize);
+		global.window && window.addEventListener('resize', handleResize);
 
 		handleResize();
 
 		return () => {
 			ref.current?.removeEventListener('resize', handleResize);
-			window.removeEventListener('resize', handleResize);
+			global.window && window.removeEventListener('resize', handleResize);
 		};
 	}, [ref.current]);
 
