@@ -74,9 +74,11 @@ export const HomeBody: FC<Props> = ({
 						text="نظرات خود را با ما به اشتراک بزارید و آغاز کننده یک گفت و گو باشید!"
 					/>
 					<Filler minHeight={20} />
-					<Button primary circular outline>
-						آغاز گفت و گو
-					</Button>
+					<Link href="/conversations">
+						<Button primary circular outline>
+							آغاز گفت و گو
+						</Button>
+					</Link>
 				</Conversations>
 				<Filler minHeight={50} />
 				<Text size={Size.HUGE} text="پر بازدید ترین پست های هفته" />

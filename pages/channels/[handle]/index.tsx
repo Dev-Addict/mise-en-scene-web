@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {NextPage} from 'next';
-import {useRouter} from 'next/router';
 import Cookie from 'js-cookie';
 
 import {Channel, ErrorPage, Header, Meta} from '../../../components';
 import {findChannel} from '../../../helpers';
 import {Channel as ChannelModel, Props} from '../../../types';
-import {useAuth} from '../../../hooks';
 import {cookieParser} from '../../../utils';
 
 interface InitialProps {
@@ -17,16 +15,7 @@ const ChannelPage: NextPage<Props & InitialProps, InitialProps> = ({
 	setTheme,
 	channel,
 }) => {
-	const router = useRouter();
-	const {asPath} = router;
-
 	const [localChannel, setLocalChannel] = useState(channel);
-
-	const {isSigned, isLoading} = useAuth();
-
-	useEffect(() => {
-		if (!isLoading && !isSigned) router.push(`/sign?callback=${asPath}`);
-	}, [asPath, isSigned, isLoading]);
 
 	useEffect(() => {
 		setLocalChannel(channel);

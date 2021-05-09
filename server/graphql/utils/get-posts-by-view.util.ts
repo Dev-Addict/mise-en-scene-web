@@ -11,7 +11,7 @@ export const getPostsByView = async (
 	page = 1,
 	limit = 10
 ) => {
-	let viewStart: {[key: string]: any};
+	let viewStart: {[key: string]: any} | undefined;
 
 	switch (sort) {
 		case PostSort.VIEW_DAY:
@@ -31,7 +31,7 @@ export const getPostsByView = async (
 			break;
 		case PostSort.RATING:
 		default:
-			viewStart = {};
+			viewStart = undefined;
 	}
 
 	const topView = await View.aggregate([

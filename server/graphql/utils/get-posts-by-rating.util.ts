@@ -11,7 +11,7 @@ export const getPostsByRating = async (
 	page = 1,
 	limit = 10
 ) => {
-	let ratedAt: {[key: string]: any};
+	let ratedAt: {[key: string]: any} | undefined;
 
 	switch (sort) {
 		case PostSort.RATING_DAY:
@@ -31,7 +31,7 @@ export const getPostsByRating = async (
 			break;
 		case PostSort.RATING:
 		default:
-			ratedAt = {};
+			ratedAt = undefined;
 	}
 
 	const topRating = await PostRating.aggregate([
@@ -86,6 +86,6 @@ export const getPostsByRating = async (
 		docs: posts,
 		results: total,
 		page,
-		limit
+		limit,
 	};
 };

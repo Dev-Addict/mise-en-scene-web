@@ -39,6 +39,9 @@ const BottomDetail = styled.div`
 	left: 50%;
 	transform: translateX(-50%);
 	background-color: ${({theme: {background}}) => background};
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
 	padding: 5px 10px;
 	border-radius: 10px;
 	display: flex;
