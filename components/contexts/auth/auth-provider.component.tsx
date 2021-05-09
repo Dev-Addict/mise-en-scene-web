@@ -16,7 +16,8 @@ import {
 	verifyEmail,
 	verifyEmailRequest,
 } from './helpers';
-import {User} from '../../../types';
+import {Process, User} from '../../../types';
+import {useAppState} from '../../../hooks';
 
 export const AuthProvider: FC = ({children}) => {
 	const [user, setUser] = useState<User | null>(null);
@@ -24,8 +25,12 @@ export const AuthProvider: FC = ({children}) => {
 	const [isLoading, setLoading] = useState(true);
 	const [token, setToken] = useState<string | undefined>(undefined);
 
+	const {addProcess, removeProcess} = useAppState();
+
 	useEffect(() => {
-		const loadUser = async () => {
+		(async () => {
+			addProcess(Process.AUTH);
+
 			const token = Cookie.get('auth-token');
 
 			if (token) {
@@ -46,9 +51,9 @@ export const AuthProvider: FC = ({children}) => {
 			}
 
 			setLoading(false);
-		};
 
-		loadUser().then().catch();
+			removeProcess(Process.AUTH);
+		})();
 	}, []);
 
 	const markNotificationsRead = () => () => {

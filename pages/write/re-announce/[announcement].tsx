@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {NextPage} from 'next';
 import {useRouter} from 'next/router';
 import styled from 'styled-components';
@@ -11,9 +11,8 @@ import {
 	Header,
 	Meta,
 } from '../../../components';
-import {Announcement, Props} from '../../../types';
-import {useAuth, useWindowSize} from '../../../hooks';
-import {cookieParser} from '../../../utils';
+import {Announcement, Process, Props} from '../../../types';
+import {useAppState, useAuth, useWindowSize} from '../../../hooks';
 import {getAnnouncement} from '../../../helpers';
 
 interface ContainerProps {
@@ -32,18 +31,18 @@ const Container = styled.div<ContainerProps>`
 	}
 `;
 
-interface InitialProps {
-	announcement?: Announcement;
-}
-
-const ReAnnounce: NextPage<Props & InitialProps, InitialProps> = ({
-	setTheme,
-	announcement,
-}) => {
+const ReAnnounce: NextPage<Props> = ({setTheme}) => {
 	const router = useRouter();
 	const {asPath} = router;
+	const {id} = router.query;
+
+	const [announcement, setAnnouncement] = useState<undefined | Announcement>(
+		undefined
+	);
 
 	const {isSigned, isLoading, user} = useAuth();
+
+	const {addProcess, removeProcess} = useAppState();
 
 	const {height} = useWindowSize();
 
@@ -58,6 +57,18 @@ const ReAnnounce: NextPage<Props & InitialProps, InitialProps> = ({
 		if (!isLoading && !isSigned) router.push(`/sign?callback=${asPath}`);
 	}, []);
 
+	useEffect(() => {
+		const token = Cookie.get('auth-token');
+
+		(async () => {
+			addProcess(Process.RE_ANNOUNCEMENT);
+
+			setAnnouncement(await getAnnouncement(id as string, token || ''));
+
+			removeProcess(Process.RE_ANNOUNCEMENT);
+		})();
+	}, [id]);
+
 	return (
 		<div>
 			<Meta title="بازگویی گفت و گو" />
@@ -68,16 +79,6 @@ const ReAnnounce: NextPage<Props & InitialProps, InitialProps> = ({
 			</Container>
 		</div>
 	);
-};
-
-ReAnnounce.getInitialProps = async ({query: {announcement: id}, req}) => {
-	const token =
-		cookieParser(req?.headers?.cookie || '')['auth-token'] ||
-		Cookie.get('auth-token');
-
-	return {
-		announcement: await getAnnouncement(id as string, token || ''),
-	};
 };
 
 export default ReAnnounce;

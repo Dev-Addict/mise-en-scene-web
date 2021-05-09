@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {NextPage} from 'next';
+import {useRouter} from 'next/router';
 import Cookie from 'js-cookie';
 import styled from 'styled-components';
 
-import {Post as PostModel, Props} from '../../types';
+import {Post as PostModel, Process, Props} from '../../types';
 import {ErrorPage, Header, Meta, Post} from '../../components';
-import {cookieParser} from '../../utils';
-import {useView} from '../../hooks';
+import {useAppState, useView} from '../../hooks';
 import {getPost} from '../../helpers';
 
 const Container = styled.div`
@@ -21,27 +21,33 @@ const Container = styled.div`
 	}
 `;
 
-interface InitialProps {
-	post: PostModel | undefined;
-}
+const PostPage: NextPage<Props> = ({setTheme}) => {
+	const router = useRouter();
+	const {id} = router.query;
 
-const PostPage: NextPage<Props & InitialProps, InitialProps> = ({
-	setTheme,
-	post,
-}) => {
-	const [localPost, setLocalPost] = useState(post);
+	const [post, setPost] = useState<PostModel | undefined>(undefined);
+
+	const {addProcess, removeProcess} = useAppState();
 
 	useView({
-		page: `/posts/${localPost?.id}`,
-		post: localPost?.id,
-		channel: localPost?.channelData?.id,
+		page: `/posts/${post?.id}`,
+		post: post?.id,
+		channel: post?.channelData?.id,
 	});
 
 	useEffect(() => {
-		setLocalPost(post);
-	}, [post]);
+		const token = Cookie.get('auth-token');
 
-	if (!localPost)
+		(async () => {
+			addProcess(Process.POST);
+
+			setPost(await getPost(id as string, token || ''));
+
+			removeProcess(Process.POST);
+		})();
+	}, [id]);
+
+	if (!post)
 		return <ErrorPage code={404} title="پست پیدا نشد!" setTheme={setTheme} />;
 
 	return (
@@ -49,20 +55,10 @@ const PostPage: NextPage<Props & InitialProps, InitialProps> = ({
 			<Meta title="گفت و گو" />
 			<Header setTheme={setTheme} />
 			<Container>
-				<Post post={localPost} setPost={setLocalPost} />
+				<Post post={post} setPost={setPost} />
 			</Container>
 		</div>
 	);
-};
-
-PostPage.getInitialProps = async ({query: {id}, req}) => {
-	const token =
-		cookieParser(req?.headers?.cookie || '')['auth-token'] ||
-		Cookie.get('auth-token');
-
-	return {
-		post: await getPost(id as string, token || ''),
-	};
 };
 
 export default PostPage;

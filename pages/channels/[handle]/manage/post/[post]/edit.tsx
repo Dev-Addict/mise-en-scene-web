@@ -8,11 +8,11 @@ import {
 	Channel,
 	ChannelAdminPermission,
 	Post,
+	Process,
 	Props,
 } from '../../../../../../types';
-import {useAuth} from '../../../../../../hooks';
+import {useAppState, useAuth} from '../../../../../../hooks';
 import {EditPost, ErrorPage, Header, Meta} from '../../../../../../components';
-import {cookieParser} from '../../../../../../utils';
 import {findChannel, getChannelPost} from '../../../../../../helpers';
 
 const Body = styled.div`
@@ -25,37 +25,37 @@ const Body = styled.div`
 	}
 `;
 
-interface InitialProps {
-	channel?: Channel;
-	post?: Post;
-}
-
-const Edit: NextPage<Props & InitialProps, InitialProps> = ({
-	setTheme,
-	channel,
-	post,
-}) => {
+const Edit: NextPage<Props> = ({setTheme}) => {
 	const router = useRouter();
-	const {asPath} = router.query;
+	const {asPath, handle, post: postId} = router.query;
 
-	const [localChannel, setLocalChannel] = useState(channel);
-	const [localPost, setLocalPost] = useState(post);
+	const [channel, setChannel] = useState<Channel | undefined>(undefined);
+	const [post, setPost] = useState<Post | undefined>(undefined);
 
 	const {user, isLoading, isSigned} = useAuth();
+
+	const {addProcess, removeProcess} = useAppState();
+
+	useEffect(() => {
+		const token = Cookie.get('auth-token');
+
+		(async () => {
+			addProcess(Process.CHANNEL);
+			addProcess(Process.POST);
+
+			setChannel(await findChannel(handle as string, token));
+			setPost(await getChannelPost(postId as string, token));
+
+			removeProcess(Process.POST);
+			removeProcess(Process.CHANNEL);
+		})();
+	}, [handle, postId]);
 
 	useEffect(() => {
 		if (!isLoading && !isSigned) router.push(`/sign?callback=${asPath}`);
 	}, [asPath, isSigned, isLoading]);
 
-	useEffect(() => {
-		setLocalChannel(channel);
-	}, [channel]);
-
-	useEffect(() => {
-		setLocalPost(post);
-	}, [post]);
-
-	if (!localChannel)
+	if (!channel)
 		return (
 			<ErrorPage
 				code={404}
@@ -64,10 +64,10 @@ const Edit: NextPage<Props & InitialProps, InitialProps> = ({
 			/>
 		);
 
-	if (!localPost)
+	if (!post)
 		return <ErrorPage code={404} title="مطلب پیدا نشد." setTheme={setTheme} />;
 
-	if (!localChannel.verified)
+	if (!channel.verified)
 		return (
 			<ErrorPage
 				code={403}
@@ -77,10 +77,10 @@ const Edit: NextPage<Props & InitialProps, InitialProps> = ({
 		);
 
 	if (
-		localChannel.owner !== user?.id &&
+		channel.owner !== user?.id &&
 		!(
-			localChannel.myAdmin &&
-			localChannel.myAdmin?.permissions?.includes(
+			channel.myAdmin &&
+			channel.myAdmin?.permissions?.includes(
 				ChannelAdminPermission.EDIT_OTHERS_POST
 			)
 		) &&
@@ -96,27 +96,13 @@ const Edit: NextPage<Props & InitialProps, InitialProps> = ({
 
 	return (
 		<div>
-			<Meta title={`مدیدریت کانال ${localChannel.name} - ویرایش مطب`} />
+			<Meta title={`مدیدریت کانال ${channel.name} - ویرایش مطب`} />
 			<Header setTheme={setTheme} />
 			<Body>
-				<EditPost channel={localChannel} post={localPost} />
+				<EditPost channel={channel} post={post} />
 			</Body>
 		</div>
 	);
-};
-
-Edit.getInitialProps = async ({query: {handle, post: postId}, req}) => {
-	const token =
-		cookieParser(req?.headers?.cookie || '')['auth-token'] ||
-		Cookie.get('auth-token');
-
-	const channel = await findChannel(handle as string, token);
-	const post = await getChannelPost(postId as string, token);
-
-	return {
-		channel,
-		post,
-	};
 };
 
 export default Edit;

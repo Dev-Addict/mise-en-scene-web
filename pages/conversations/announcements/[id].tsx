@@ -1,10 +1,14 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {NextPage} from 'next';
 import {useRouter} from 'next/router';
 import Cookie from 'js-cookie';
 import styled from 'styled-components';
 
-import {Announcement as AnnouncementModel, Props} from '../../../types';
+import {
+	Announcement as AnnouncementModel,
+	Process,
+	Props,
+} from '../../../types';
 import {
 	Announce,
 	AnnouncementCard,
@@ -14,8 +18,7 @@ import {
 	Header,
 	Meta,
 } from '../../../components';
-import {cookieParser} from '../../../utils';
-import {useAuth} from '../../../hooks';
+import {useAppState, useAuth} from '../../../hooks';
 import {getAnnouncement} from '../../../helpers';
 
 const Container = styled.div`
@@ -30,18 +33,18 @@ const Container = styled.div`
 	}
 `;
 
-interface InitialProps {
-	announcement: AnnouncementModel | undefined;
-}
-
-const Announcement: NextPage<Props & InitialProps, InitialProps> = ({
-	setTheme,
-	announcement,
-}) => {
+const Announcement: NextPage<Props> = ({setTheme}) => {
 	const router = useRouter();
 	const {asPath} = router;
+	const {id} = router.query;
+
+	const [announcement, setAnnouncement] = useState<
+		AnnouncementModel | undefined
+	>(undefined);
 
 	const {isSigned, isLoading} = useAuth();
+
+	const {addProcess, removeProcess} = useAppState();
 
 	if (!announcement)
 		return (
@@ -50,6 +53,18 @@ const Announcement: NextPage<Props & InitialProps, InitialProps> = ({
 
 	useEffect(() => {
 		if (!isLoading && !isSigned) router.push(`/sign?callback=${asPath}`);
+	}, []);
+
+	useEffect(() => {
+		const token = Cookie.get('auth-token');
+
+		(async () => {
+			addProcess(Process.ANNOUNCEMENT);
+
+			setAnnouncement(await getAnnouncement(id as string, token || ''));
+
+			removeProcess(Process.ANNOUNCEMENT);
+		})();
 	}, []);
 
 	return (
@@ -71,16 +86,6 @@ const Announcement: NextPage<Props & InitialProps, InitialProps> = ({
 			</Container>
 		</div>
 	);
-};
-
-Announcement.getInitialProps = async ({query: {id}, req}) => {
-	const token =
-		cookieParser(req?.headers?.cookie || '')['auth-token'] ||
-		Cookie.get('auth-token');
-
-	return {
-		announcement: await getAnnouncement(id as string, token || ''),
-	};
 };
 
 export default Announcement;

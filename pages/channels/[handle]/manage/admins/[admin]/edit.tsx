@@ -4,77 +4,61 @@ import {useRouter} from 'next/router';
 import Cookie from 'js-cookie';
 
 import {EditAdminView, Meta} from '../../../../../../components';
-import {Channel, Props, User} from '../../../../../../types';
+import {Channel, Process, Props, User} from '../../../../../../types';
 import {findChannel, findUser} from '../../../../../../helpers';
-import {cookieParser} from '../../../../../../utils';
-import {useAuth} from '../../../../../../hooks';
+import {useAppState, useAuth} from '../../../../../../hooks';
 
-interface InitialProps {
-	channel?: Channel;
-	admin?: User;
-}
-
-const EditAdmin: NextPage<Props & InitialProps, InitialProps> = ({
-	admin,
-	channel,
-	setTheme,
-}) => {
+const EditAdmin: NextPage<Props> = ({setTheme}) => {
 	const router = useRouter();
 	const {asPath} = router;
+	const {handle, admin: authKey} = router.query;
 
-	const [localChannel, setLocalChannel] = useState(channel);
-	const [localAdmin, setLocalAdmin] = useState(admin);
+	const [channel, setChannel] = useState<Channel | undefined>(undefined);
+	const [admin, setAdmin] = useState<User | undefined>(undefined);
 
 	const {isSigned, isLoading} = useAuth();
+
+	const {addProcess, removeProcess} = useAppState();
+
+	useEffect(() => {
+		const token = Cookie.get('auth-token');
+
+		(async () => {
+			addProcess(Process.CHANNEL);
+			addProcess(Process.ADMIN);
+
+			setChannel(await findChannel(handle as string, token));
+			setAdmin(
+				await findUser(
+					{
+						$or: [
+							{
+								username: authKey,
+							},
+							{
+								email: authKey,
+							},
+						],
+					},
+					token
+				)
+			);
+
+			addProcess(Process.ADMIN);
+			removeProcess(Process.CHANNEL);
+		})();
+	}, [handle, authKey]);
 
 	useEffect(() => {
 		if (!isLoading && !isSigned) router.push(`/sign?callback=${asPath}`);
 	}, [asPath, isSigned, isLoading]);
 
-	useEffect(() => {
-		setLocalChannel(channel);
-	}, [channel]);
-
-	useEffect(() => {
-		setLocalAdmin(admin);
-	}, [admin]);
-
 	return (
 		<div>
 			<Meta title={`ویرایش مدیر ${channel?.name}`} />
-			<EditAdminView
-				admin={localAdmin}
-				channel={localChannel}
-				setTheme={setTheme}
-			/>
+			<EditAdminView admin={admin} channel={channel} setTheme={setTheme} />
 		</div>
 	);
-};
-
-EditAdmin.getInitialProps = async ({query: {handle, admin: authKey}, req}) => {
-	const token =
-		cookieParser(req?.headers?.cookie || '')['auth-token'] ||
-		Cookie.get('auth-token');
-
-	const channel = await findChannel(handle as string, token);
-	const admin = await findUser(
-		{
-			$or: [
-				{
-					username: authKey,
-				},
-				{
-					email: authKey,
-				},
-			],
-		},
-		token
-	);
-
-	return {
-		channel,
-		admin,
-	};
 };
 
 export default EditAdmin;

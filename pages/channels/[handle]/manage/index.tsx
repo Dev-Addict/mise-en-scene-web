@@ -5,22 +5,15 @@ import Cookie from 'js-cookie';
 
 import {Channel, ErrorPage, Header, Meta} from '../../../../components';
 import {findChannel} from '../../../../helpers';
-import {Channel as ChannelModel, Props} from '../../../../types';
-import {useAuth} from '../../../../hooks';
-import {cookieParser} from '../../../../utils';
+import {Channel as ChannelModel, Process, Props} from '../../../../types';
+import {useAppState, useAuth} from '../../../../hooks';
 
-interface InitialProps {
-	channel?: ChannelModel;
-}
-
-const ManageChannel: NextPage<Props & InitialProps, InitialProps> = ({
-	setTheme,
-	channel,
-}) => {
+const ManageChannel: NextPage<Props> = ({setTheme}) => {
 	const router = useRouter();
 	const {asPath} = router;
+	const {handle} = router.query;
 
-	const [localChannel, setLocalChannel] = useState(channel);
+	const [channel, setChannel] = useState<ChannelModel | undefined>(undefined);
 
 	const {isSigned, isLoading, user} = useAuth();
 
@@ -28,11 +21,21 @@ const ManageChannel: NextPage<Props & InitialProps, InitialProps> = ({
 		if (!isLoading && !isSigned) router.push(`/sign?callback=${asPath}`);
 	}, [asPath, isSigned, isLoading]);
 
-	useEffect(() => {
-		setLocalChannel(channel);
-	}, [channel]);
+	const {addProcess, removeProcess} = useAppState();
 
-	if (!localChannel)
+	useEffect(() => {
+		const token = Cookie.get('auth-token');
+
+		(async () => {
+			addProcess(Process.CHANNEL);
+
+			setChannel(await findChannel(handle as string, token));
+
+			removeProcess(Process.CHANNEL);
+		})();
+	}, [handle]);
+
+	if (!channel)
 		return (
 			<ErrorPage
 				code={404}
@@ -41,7 +44,7 @@ const ManageChannel: NextPage<Props & InitialProps, InitialProps> = ({
 			/>
 		);
 
-	if (!localChannel.verified)
+	if (!channel.verified)
 		return (
 			<ErrorPage
 				code={403}
@@ -50,7 +53,7 @@ const ManageChannel: NextPage<Props & InitialProps, InitialProps> = ({
 			/>
 		);
 
-	if (localChannel.owner !== user?.id && !localChannel.myAdmin)
+	if (channel.owner !== user?.id && !channel.myAdmin)
 		return (
 			<ErrorPage
 				code={403}
@@ -61,23 +64,11 @@ const ManageChannel: NextPage<Props & InitialProps, InitialProps> = ({
 
 	return (
 		<div>
-			<Meta title={`مدیدریت کانال ${localChannel.name}`} />
+			<Meta title={`مدیدریت کانال ${channel.name}`} />
 			<Header setTheme={setTheme} />
-			<Channel channel={localChannel} manage setChannel={setLocalChannel} />
+			<Channel channel={channel} manage setChannel={setChannel} />
 		</div>
 	);
-};
-
-ManageChannel.getInitialProps = async ({query: {handle}, req}) => {
-	const token =
-		cookieParser(req?.headers?.cookie || '')['auth-token'] ||
-		Cookie.get('auth-token');
-
-	const channel = await findChannel(handle as string, token);
-
-	return {
-		channel,
-	};
 };
 
 export default ManageChannel;

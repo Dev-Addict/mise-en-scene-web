@@ -11,6 +11,7 @@ import {
 	Loading,
 	OverallHead,
 	SocketProvider,
+	StateProvider,
 } from '../components';
 import {ThemeMode} from '../types';
 import {darkTheme, lightTheme} from '../data';
@@ -26,20 +27,20 @@ const App = ({Component, pageProps}: AppProps) => {
 
 	return (
 		<ApolloProvider client={apolloClient}>
-			<AuthProvider>
-				<ThemeProvider
-					theme={theme === ThemeMode.DARK ? darkTheme : lightTheme}>
-					<SocketProvider>
-						<CopyProvider>
-							<OverallHead />
-							<GlobalStyle />
-							<Component {...pageProps} setTheme={setTheme} />
-							<FloatingPen />
-							<Loading />
-						</CopyProvider>
-					</SocketProvider>
-				</ThemeProvider>
-			</AuthProvider>
+			<ThemeProvider theme={theme === ThemeMode.DARK ? darkTheme : lightTheme}>
+				<StateProvider>
+					<AuthProvider>
+						<SocketProvider>
+							<CopyProvider>
+								<OverallHead />
+								<GlobalStyle />
+								<Component {...pageProps} setTheme={setTheme} />
+								<FloatingPen />
+							</CopyProvider>
+						</SocketProvider>
+					</AuthProvider>
+				</StateProvider>
+			</ThemeProvider>
 		</ApolloProvider>
 	);
 };

@@ -4,10 +4,14 @@ import {useRouter} from 'next/router';
 import Cookie from 'js-cookie';
 import styled from 'styled-components';
 
-import {Channel, Post as PostModel, Props} from '../../../../../../types';
-import {useAuth} from '../../../../../../hooks';
+import {
+	Channel,
+	Post as PostModel,
+	Process,
+	Props,
+} from '../../../../../../types';
+import {useAppState, useAuth} from '../../../../../../hooks';
 import {ErrorPage, Header, Meta, Post} from '../../../../../../components';
-import {cookieParser} from '../../../../../../utils';
 import {findChannel, getChannelPost} from '../../../../../../helpers';
 
 const Body = styled.div`
@@ -20,21 +24,12 @@ const Body = styled.div`
 	}
 `;
 
-interface InitialProps {
-	channel?: Channel;
-	post?: PostModel;
-}
-
-const Preview: NextPage<Props & InitialProps, InitialProps> = ({
-	setTheme,
-	channel,
-	post,
-}) => {
+const Preview: NextPage<Props> = ({setTheme}) => {
 	const router = useRouter();
-	const {asPath} = router.query;
+	const {asPath, handle, post: postId} = router.query;
 
-	const [localChannel, setLocalChannel] = useState(channel);
-	const [localPost, setLocalPost] = useState(post);
+	const [channel, setChannel] = useState<Channel | undefined>(undefined);
+	const [post, setPost] = useState<PostModel | undefined>(undefined);
 
 	const {user, isLoading, isSigned} = useAuth();
 
@@ -42,15 +37,24 @@ const Preview: NextPage<Props & InitialProps, InitialProps> = ({
 		if (!isLoading && !isSigned) router.push(`/sign?callback=${asPath}`);
 	}, [asPath, isSigned, isLoading]);
 
-	useEffect(() => {
-		setLocalChannel(channel);
-	}, [channel]);
+	const {addProcess, removeProcess} = useAppState();
 
 	useEffect(() => {
-		setLocalPost(post);
-	}, [post]);
+		const token = Cookie.get('auth-token');
 
-	if (!localChannel)
+		(async () => {
+			addProcess(Process.CHANNEL);
+			addProcess(Process.POST);
+
+			setChannel(await findChannel(handle as string, token));
+			setPost(await getChannelPost(postId as string, token));
+
+			removeProcess(Process.POST);
+			removeProcess(Process.CHANNEL);
+		})();
+	}, [handle, postId]);
+
+	if (!channel)
 		return (
 			<ErrorPage
 				code={404}
@@ -59,10 +63,10 @@ const Preview: NextPage<Props & InitialProps, InitialProps> = ({
 			/>
 		);
 
-	if (!localPost)
+	if (!post)
 		return <ErrorPage code={404} title="مطلب پیدا نشد." setTheme={setTheme} />;
 
-	if (!localChannel.verified)
+	if (!channel.verified)
 		return (
 			<ErrorPage
 				code={403}
@@ -71,7 +75,7 @@ const Preview: NextPage<Props & InitialProps, InitialProps> = ({
 			/>
 		);
 
-	if (localChannel.owner !== user?.id && !localChannel.myAdmin)
+	if (channel.owner !== user?.id && !channel.myAdmin)
 		return (
 			<ErrorPage
 				code={403}
@@ -82,27 +86,13 @@ const Preview: NextPage<Props & InitialProps, InitialProps> = ({
 
 	return (
 		<div>
-			<Meta title={`مدیدریت کانال ${localChannel.name} - ویرایش مطب`} />
+			<Meta title={`مدیدریت کانال ${channel.name} - ویرایش مطب`} />
 			<Header setTheme={setTheme} />
 			<Body>
-				<Post post={localPost} setPost={setLocalPost} preview />
+				<Post post={post} setPost={setPost} preview />
 			</Body>
 		</div>
 	);
-};
-
-Preview.getInitialProps = async ({query: {handle, post: postId}, req}) => {
-	const token =
-		cookieParser(req?.headers?.cookie || '')['auth-token'] ||
-		Cookie.get('auth-token');
-
-	const channel = await findChannel(handle as string, token);
-	const post = await getChannelPost(postId as string, token);
-
-	return {
-		channel,
-		post,
-	};
 };
 
 export default Preview;

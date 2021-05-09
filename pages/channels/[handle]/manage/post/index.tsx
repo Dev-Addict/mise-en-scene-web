@@ -6,9 +6,13 @@ import Cookie from 'js-cookie';
 
 import {ErrorPage, Header, Meta, PostBody} from '../../../../../components';
 import {findChannel} from '../../../../../helpers';
-import {Channel, ChannelAdminPermission, Props} from '../../../../../types';
-import {useAuth} from '../../../../../hooks';
-import {cookieParser} from '../../../../../utils';
+import {
+	Channel,
+	ChannelAdminPermission,
+	Process,
+	Props,
+} from '../../../../../types';
+import {useAppState, useAuth} from '../../../../../hooks';
 
 const Body = styled.div`
 	margin: auto;
@@ -20,30 +24,34 @@ const Body = styled.div`
 	}
 `;
 
-interface InitialProps {
-	channel?: Channel;
-}
-
-const Post: NextPage<Props & InitialProps, InitialProps> = ({
-	setTheme,
-	channel,
-}) => {
+const Post: NextPage<Props> = ({setTheme}) => {
 	const router = useRouter();
 	const {asPath} = router;
+	const {handle} = router.query;
 
-	const [localChannel, setLocalChannel] = useState(channel);
+	const [channel, setChannel] = useState<Channel | undefined>(undefined);
 
 	const {isSigned, isLoading, user} = useAuth();
+
+	const {addProcess, removeProcess} = useAppState();
+
+	useEffect(() => {
+		const token = Cookie.get('auth-token');
+
+		(async () => {
+			addProcess(Process.CHANNEL);
+
+			setChannel(await findChannel(handle as string, token));
+
+			removeProcess(Process.CHANNEL);
+		})();
+	}, [handle]);
 
 	useEffect(() => {
 		if (!isLoading && !isSigned) router.push(`/sign?callback=${asPath}`);
 	}, [asPath, isSigned, isLoading]);
 
-	useEffect(() => {
-		setLocalChannel(channel);
-	}, [channel]);
-
-	if (!localChannel)
+	if (!channel)
 		return (
 			<ErrorPage
 				code={404}
@@ -52,7 +60,7 @@ const Post: NextPage<Props & InitialProps, InitialProps> = ({
 			/>
 		);
 
-	if (!localChannel.verified)
+	if (!channel.verified)
 		return (
 			<ErrorPage
 				code={404}
@@ -61,7 +69,7 @@ const Post: NextPage<Props & InitialProps, InitialProps> = ({
 			/>
 		);
 
-	if (localChannel.owner !== user?.id && !localChannel.myAdmin)
+	if (channel.owner !== user?.id && !channel.myAdmin)
 		return (
 			<ErrorPage
 				code={403}
@@ -71,8 +79,8 @@ const Post: NextPage<Props & InitialProps, InitialProps> = ({
 		);
 
 	if (
-		localChannel.myAdmin &&
-		localChannel.myAdmin.permissions?.includes(ChannelAdminPermission.POST)
+		channel.myAdmin &&
+		channel.myAdmin.permissions?.includes(ChannelAdminPermission.POST)
 	)
 		return (
 			<ErrorPage
@@ -84,25 +92,13 @@ const Post: NextPage<Props & InitialProps, InitialProps> = ({
 
 	return (
 		<div>
-			<Meta title={`مدیدریت کانال ${localChannel.name} - نوشتن مطب`} />
+			<Meta title={`مدیدریت کانال ${channel.name} - نوشتن مطب`} />
 			<Header setTheme={setTheme} />
 			<Body>
-				<PostBody channel={localChannel} />
+				<PostBody channel={channel} />
 			</Body>
 		</div>
 	);
-};
-
-Post.getInitialProps = async ({query: {handle}, req}) => {
-	const token =
-		cookieParser(req?.headers?.cookie || '')['auth-token'] ||
-		Cookie.get('auth-token');
-
-	const channel = await findChannel(handle as string, token);
-
-	return {
-		channel,
-	};
 };
 
 export default Post;

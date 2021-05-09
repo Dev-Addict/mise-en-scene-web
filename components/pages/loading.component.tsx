@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {FC} from 'react';
 import styled, {css, useTheme} from 'styled-components';
 
 import {movieLoaderDark, movieLoaderLight} from '../../assets';
 import {StyledProps, Theme, ThemeMode} from '../../types';
-import {useAuth} from '../../hooks';
 import {Animation} from '../shared';
-import {setInterval} from 'timers';
+import {OpenModalStyle} from '../style';
 
 interface ContainerProps {
 	isActive?: boolean;
@@ -46,28 +45,19 @@ const Header = styled.div`
 	margin: 20px 0;
 `;
 
-export const Loading = () => {
+interface Props {
+	active?: boolean;
+}
+
+export const Loading: FC<Props> = ({active}) => {
 	const {mode} = useTheme() as Theme;
-
-	const [update, setUpdate] = useState(0);
-
-	const {isLoading} = useAuth();
 
 	const animationData =
 		mode === ThemeMode.LIGHT ? movieLoaderLight : movieLoaderDark;
 
-	useEffect(() => {
-		const intervalId = setInterval(() => {
-			setUpdate(update + 1);
-		}, 300);
-
-		return () => {
-			clearInterval(intervalId);
-		};
-	}, []);
-
 	return (
-		<Container isActive={global.window && isLoading}>
+		<Container isActive={active}>
+			<OpenModalStyle open={active} />
 			<Animation data={animationData} />
 			<Title>میزانسن</Title>
 			<Header>در حال بارگذاری...</Header>
