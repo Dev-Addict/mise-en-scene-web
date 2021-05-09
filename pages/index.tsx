@@ -1,5 +1,5 @@
 import React from 'react';
-import {NextPage} from 'next';
+import {NextPage, GetServerSideProps} from 'next';
 import Cookie from 'js-cookie';
 
 import {Footer, Header, HomeBody, Meta} from '../components';
@@ -30,48 +30,50 @@ const Home: NextPage<Props & InitialProps, InitialProps> = ({
 	);
 };
 
-Home.getInitialProps = async ({req}) => {
+export const getServerSideProps: GetServerSideProps = async ({req}) => {
 	const token =
 		cookieParser(req?.headers?.cookie || '')['auth-token'] ||
 		Cookie.get('auth-token');
 
 	return {
-		topPosts: await getTopPosts(token),
-		topDayViewPosts: await getPosts(
-			{
-				limit: 5,
-				sort: PostSort.VIEW_DAY,
-			},
-			token
-		),
-		topWeekViewPosts: await getPosts(
-			{
-				limit: 5,
-				sort: PostSort.VIEW_WEEK,
-			},
-			token
-		),
-		topDayRatingPosts: await getPosts(
-			{
-				limit: 5,
-				sort: PostSort.RATING_DAY,
-			},
-			token
-		),
-		topWeekRatingPosts: await getPosts(
-			{
-				limit: 5,
-				sort: PostSort.RATING_WEEK,
-			},
-			token
-		),
-		lastPosts: await getPosts(
-			{
-				limit: 5,
-				sort: PostSort.LAST,
-			},
-			token
-		),
+		props: {
+			topPosts: await getTopPosts(token),
+			topDayViewPosts: await getPosts(
+				{
+					limit: 5,
+					sort: PostSort.VIEW_DAY,
+				},
+				token
+			),
+			topWeekViewPosts: await getPosts(
+				{
+					limit: 5,
+					sort: PostSort.VIEW_WEEK,
+				},
+				token
+			),
+			topDayRatingPosts: await getPosts(
+				{
+					limit: 5,
+					sort: PostSort.RATING_DAY,
+				},
+				token
+			),
+			topWeekRatingPosts: await getPosts(
+				{
+					limit: 5,
+					sort: PostSort.RATING_WEEK,
+				},
+				token
+			),
+			lastPosts: await getPosts(
+				{
+					limit: 5,
+					sort: PostSort.LAST,
+				},
+				token
+			),
+		},
 	};
 };
 
