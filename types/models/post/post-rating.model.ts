@@ -8,4 +8,5 @@ export interface PostRating {
 	user?: string;
 	userData?: User;
 	rating?: number;
+	ratedAt?: Date;
 }

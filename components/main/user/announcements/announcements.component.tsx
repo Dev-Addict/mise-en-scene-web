@@ -2,10 +2,15 @@ import React, {FC} from 'react';
 import {useTheme} from 'styled-components';
 
 import {movieLoaderDark, movieLoaderLight} from '../../../../assets';
-import {Animation, AnnouncementCard, Button, Text} from '../../../shared';
+import {
+	AdInjector,
+	Animation,
+	AnnouncementCard,
+	Button,
+	Text,
+} from '../../../shared';
 import {useAnnouncements} from '../../../../hooks';
 import {Size, Theme, ThemeMode} from '../../../../types';
-import {AdInjector} from '../../../shared/ads/ad-injector.component';
 
 interface Props {
 	reply?: boolean;

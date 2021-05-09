@@ -14,6 +14,7 @@ interface TextProps {
 	active?: boolean;
 	rtl?: boolean;
 	danger?: boolean;
+	shadow?: boolean;
 }
 
 export const TextBase = styled.div<StyledProps & TextProps>`
@@ -68,6 +69,12 @@ export const TextBase = styled.div<StyledProps & TextProps>`
 		css`
 			color: ${error};
 		`}
+
+  ${({shadow, theme: {background}}) =>
+		shadow &&
+		css`
+			text-shadow: 0 0 3px ${background};
+		`}
 `;
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
@@ -82,6 +89,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 	text?: string;
 	danger?: boolean;
 	rtl?: boolean;
+	shadow?: boolean;
 }
 
 export const Text: FC<Props> = ({

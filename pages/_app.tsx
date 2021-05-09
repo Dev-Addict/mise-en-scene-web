@@ -16,17 +16,10 @@ import {ThemeMode} from '../types';
 import {darkTheme, lightTheme} from '../data';
 import {apolloClient} from '../api';
 import {AuthProvider} from '../components';
-import {
-	useForceUpdate,
-	useModeTheme,
-	useOnlineRouter,
-	useProgressBar,
-} from '../hooks';
+import {useModeTheme, useOnlineRouter, useProgressBar} from '../hooks';
 
 const App = ({Component, pageProps}: AppProps) => {
 	const [theme, setTheme] = useState(useModeTheme());
-
-	const isMounted = useForceUpdate();
 
 	useProgressBar();
 	useOnlineRouter();
@@ -36,19 +29,15 @@ const App = ({Component, pageProps}: AppProps) => {
 			<AuthProvider>
 				<ThemeProvider
 					theme={theme === ThemeMode.DARK ? darkTheme : lightTheme}>
-					{isMounted ? (
-						<SocketProvider>
-							<CopyProvider>
-								<OverallHead />
-								<GlobalStyle />
-								<Component {...pageProps} setTheme={setTheme} />
-								<FloatingPen />
-								<Loading />
-							</CopyProvider>
-						</SocketProvider>
-					) : (
-						<></>
-					)}
+					<SocketProvider>
+						<CopyProvider>
+							<OverallHead />
+							<GlobalStyle />
+							<Component {...pageProps} setTheme={setTheme} />
+							<FloatingPen />
+							<Loading />
+						</CopyProvider>
+					</SocketProvider>
 				</ThemeProvider>
 			</AuthProvider>
 		</ApolloProvider>

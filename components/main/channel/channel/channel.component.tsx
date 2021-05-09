@@ -5,7 +5,7 @@ import {Channel as ChannelModel} from '../../../../types';
 import {ChannelDetail} from './channel-detail.component';
 import {ManagerPosts} from './manager-posts.component';
 import {AdminsControl} from './admins-control.component';
-import {Posts} from '../../post';
+import {Posts, SelectPostSort} from '../../post';
 import {PostProvider} from '../../../contexts';
 import {Filler} from '../../../shared';
 
@@ -56,6 +56,7 @@ export const Channel: FC<Props> = ({channel, manage, setChannel}) => {
 				<Body>
 					{manage && <AdminsControl channel={channel} />}
 					{manage && <ManagerPosts channel={channel} />}
+					<SelectPostSort />
 					<Posts />
 					<Filler minHeight={80} />
 				</Body>

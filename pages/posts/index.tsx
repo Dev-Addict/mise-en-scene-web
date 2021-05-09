@@ -7,6 +7,7 @@ import {Header, Meta, PostProvider, Posts, Tabs} from '../../components';
 import {useAuth, useView} from '../../hooks';
 import {Props} from '../../types';
 import {postTabs} from '../../data';
+import {SelectPostSort} from '../../components/main/post/select-post-sort.component';
 
 const Body = styled.div`
 	width: 700px;
@@ -61,6 +62,7 @@ const PostsPage: NextPage<Props & PageProps & InitialProps, InitialProps> = ({
 				<Meta title={isMy ? 'پست های من' : 'همه پست ها'} />
 				<Header setTheme={setTheme} />
 				<Body>
+					<SelectPostSort />
 					<Posts />
 				</Body>
 				<Controller>

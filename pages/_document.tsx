@@ -1,4 +1,4 @@
-import {ReactElement} from 'react';
+import React from 'react';
 import NDocument, {
 	Html,
 	Head,
@@ -8,21 +8,31 @@ import NDocument, {
 } from 'next/document';
 import {ServerStyleSheet} from 'styled-components';
 
-interface Props {
-	styleTags: Array<ReactElement<{}>>;
-}
-
-class Document extends NDocument<Props> {
-	static async getInitialProps({renderPage}: DocumentContext) {
+class Document extends NDocument {
+	static async getInitialProps(ctx: DocumentContext) {
 		const sheet = new ServerStyleSheet();
+		const originalRenderPage = ctx.renderPage;
 
-		const page = renderPage((App) => (props) =>
-			sheet.collectStyles(<App {...props} />)
-		);
+		try {
+			ctx.renderPage = () =>
+				originalRenderPage({
+					enhanceApp: (App) => (props) =>
+						sheet.collectStyles(<App {...props} />),
+				});
 
-		const styleTags = sheet.getStyleElement();
-
-		return {...page, styleTags};
+			const initialProps = await NDocument.getInitialProps(ctx);
+			return {
+				...initialProps,
+				styles: (
+					<>
+						{initialProps.styles}
+						{sheet.getStyleElement()}
+					</>
+				),
+			};
+		} finally {
+			sheet.seal();
+		}
 	}
 
 	render(): JSX.Element {
@@ -31,6 +41,7 @@ class Document extends NDocument<Props> {
 		return (
 			<Html lang="ir-fa">
 				<Head>
+					{this.props.styles}
 					<link rel="preconnect" href="https://fonts.gstatic.com" />
 					<link
 						href="https://fonts.googleapis.com/css2?family=Lalezar&display=swap"
@@ -42,7 +53,6 @@ class Document extends NDocument<Props> {
 							.getFullYear()
 							.toString()}0${now.getMonth()}0${now.getDate()}0${now.getHours()}`}
 					/>
-					{this.props.styleTags}
 				</Head>
 				<body>
 					<Main />

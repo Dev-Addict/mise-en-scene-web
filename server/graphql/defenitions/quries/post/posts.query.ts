@@ -1,29 +1,36 @@
 import {queryField} from 'nexus';
 
 import {JSONScalar} from '../../scalars';
-import {findModels} from '../../../utils';
-import {IPost} from '../../../../models';
 import {PostsResponse} from '../../types';
+import {PostSortEnum} from '../../enums';
+import {getPosts} from '../../../utils';
+import {PostSort} from '../../../../../types';
 
 export const PostsQuery = queryField('posts', {
 	type: PostsResponse,
 	args: {
 		page: 'Int',
 		limit: 'Int',
-		sort: JSONScalar,
+		sort: PostSortEnum,
 		filter: JSONScalar,
 	},
-	resolve(_root, {page, limit, sort, filter}, {models: {Post}}) {
+	resolve(
+		_root,
+		{page, limit, sort, filter},
+		{models: {Post, PostRating, View}}
+	) {
 		filter = filter || {};
 		filter.published = true;
 
 		return <any>(
-			findModels<IPost>(
+			getPosts(
 				Post,
+				PostRating,
+				View,
+				sort as PostSort,
+				filter,
 				page || 1,
-				limit || 10,
-				sort || '-publishedAt',
-				filter
+				limit || 10
 			)
 		);
 	},

@@ -92,6 +92,7 @@ export const Post = objectType({
 					post: id,
 					ended: true,
 					timeSpent: {$gte: 60000},
+					bot: false,
 				});
 			},
 		});
@@ -102,6 +103,7 @@ export const Post = objectType({
 					ended: true,
 					timeSpent: {$gte: 60000},
 					user: req.user?.id,
+					bot: false,
 				});
 			},
 		});

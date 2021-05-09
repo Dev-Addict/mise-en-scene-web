@@ -12,12 +12,12 @@ interface ContainerProps {
 }
 
 const Container = styled.div<ContainerProps>`
-	width: 800px;
+	width: 700px;
 	margin: 10px auto;
 	display: flex;
 	flex-direction: column;
 
-	@media only screen and (max-width: 1000px) {
+	@media only screen and (max-width: 800px) {
 		width: auto;
 		margin: 10px 20px;
 	}

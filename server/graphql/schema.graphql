@@ -380,9 +380,23 @@ type PostRating {
   id: ID!
   post: ID!
   postData: Post!
+  ratedAt: Date!
   rating: Int!
   user: ID!
   userData: User!
+}
+
+enum PostSort {
+  FIRST
+  LAST
+  RATING
+  RATING_DAY
+  RATING_MONTH
+  RATING_WEEK
+  VIEW
+  VIEW_DAY
+  VIEW_MONTH
+  VIEW_WEEK
 }
 
 type PostsResponse {
@@ -406,8 +420,9 @@ type Query {
   myPosts(filter: JSON, limit: Int, page: Int, sort: JSON): PostsResponse
   ownedChannels(filter: JSON, limit: Int, page: Int, sort: JSON): ChannelsResponse
   post(id: ID!): Post
-  posts(filter: JSON, limit: Int, page: Int, sort: JSON): PostsResponse
+  posts(filter: JSON, limit: Int, page: Int, sort: PostSort): PostsResponse
   self: User!
+  topPosts: [Post!]!
   trendingGifs(limit: Int, page: Int): [Gif!]!
   userById(id: ID!): User
   users(filter: JSON, limit: Int, page: Int, sort: JSON): UsersResponse

@@ -1,5 +1,6 @@
 export * from './check-box';
 export * from './clear-input';
+export * from './dropdown';
 export * from './editor';
 export * from './emoji-picker';
 export * from './file';

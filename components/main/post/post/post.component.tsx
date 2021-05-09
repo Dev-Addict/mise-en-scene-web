@@ -3,7 +3,15 @@ import {convertFromRaw, EditorState} from 'draft-js';
 
 import {Generics, RatingContainer} from './post-components.component';
 import {YourIdea} from './your-idea.component';
-import {Editor, Filler, Image, Rating, Row, Text} from '../../../shared';
+import {
+	Editor,
+	Filler,
+	Image,
+	Rating,
+	Row,
+	Text,
+	YnView,
+} from '../../../shared';
 import {Post as PostModel, Size, Theme, ThemeMode} from '../../../../types';
 import {useAuth, useDate, useThemeImage} from '../../../../hooks';
 import {AnnouncementProvider} from '../../../contexts';
@@ -53,9 +61,9 @@ export const Post: FC<Props> = ({
 			<Image image={coverData || undefined} defaultSrc={logo} />
 			<Generics>
 				<Row>
-					<Text size={Size.TINY} text={time} />
+					<Text size={Size.SMALL} text={time} />
 					&nbsp;-&nbsp;
-					<Text size={Size.TINY} text={`${view || 0} بازدید`} />
+					<Text size={Size.SMALL} text={`${view || 0} بازدید`} />
 				</Row>
 				<RatingContainer>
 					<Text
@@ -75,11 +83,11 @@ export const Post: FC<Props> = ({
 				<>
 					<YourIdea post={post} setPost={setPost} />
 					<Filler minHeight={50} />
-					<div
+					<YnView
 						id={
 							mode === ThemeMode.LIGHT
-								? 'pos-article-text-24057'
-								: 'pos-article-text-24056'
+								? 'pos-article-display-24166'
+								: 'pos-article-display-24167'
 						}
 					/>
 					<Filler minHeight={50} />

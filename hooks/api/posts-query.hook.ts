@@ -10,14 +10,15 @@ import {
 	POSTS_QUERY,
 	MY_POSTS_QUERY,
 } from '../../api';
-import {Post} from '../../types';
+import {Post, PostSort} from '../../types';
 
 export const usePostsQuery = (
 	filter: {},
 	page: number,
 	setPage: Dispatch<SetStateAction<number>>,
 	myPage: number,
-	setMyPage: Dispatch<SetStateAction<number>>
+	setMyPage: Dispatch<SetStateAction<number>>,
+	sort: PostSort
 ) => {
 	const [posts, setPosts] = useState<Post[]>([]);
 	const [myPosts, setMyPosts] = useState<Post[]>([]);
@@ -31,7 +32,7 @@ export const usePostsQuery = (
 		variables: {
 			filter,
 			page,
-			sort: {publishedAt: -1, updatedAt: -1},
+			sort: sort,
 		},
 		context: {
 			headers: {
@@ -88,6 +89,14 @@ export const usePostsQuery = (
 			myRefetch();
 		}
 	}, [myPosts]);
+
+	useEffect(() => {
+		(async () => {
+			setPosts([]);
+			setPage(1);
+			await refetch();
+		})();
+	}, [sort]);
 
 	const reload = () => async () => {
 		setPage(1);

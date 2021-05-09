@@ -41,6 +41,7 @@ export const FloatingPen = () => {
 		'/sign',
 		'/write',
 		`/users/${user?.username || 'no'}`,
+		'/',
 	];
 
 	return (

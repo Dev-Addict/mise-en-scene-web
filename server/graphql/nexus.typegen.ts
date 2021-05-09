@@ -203,6 +203,7 @@ export interface NexusGenEnums {
   Gender: "CUSTOM" | "FEMALE" | "MALE"
   NotificationType: "COMMENT" | "DISLIKE" | "FOLLOW" | "LIKE" | "POST" | "RE_ANNOUNCEMENT" | "UNFOLLOW"
   OS: "ANDROID" | "BADA" | "BLACKBERRYOS_OS" | "CHROME_OS" | "FIRE_OS" | "IPAD_OS" | "IPHONE_OS" | "IPOD_OS" | "LINUX" | "MAC_OS" | "RASPBERRY_OS" | "SAMSUNG_OS" | "UNKNOWN" | "WINDOWS" | "WINDOWS_PHONE"
+  PostSort: "FIRST" | "LAST" | "RATING" | "RATING_DAY" | "RATING_MONTH" | "RATING_WEEK" | "VIEW" | "VIEW_DAY" | "VIEW_MONTH" | "VIEW_WEEK"
 }
 
 export interface NexusGenScalars {
@@ -353,6 +354,7 @@ export interface NexusGenObjects {
   PostRating: { // root type
     id: string; // ID!
     post: string; // ID!
+    ratedAt: NexusGenScalars['Date']; // Date!
     rating: number; // Int!
     user: string; // ID!
   }
@@ -647,6 +649,7 @@ export interface NexusGenFieldTypes {
     id: string; // ID!
     post: string; // ID!
     postData: NexusGenRootTypes['Post']; // Post!
+    ratedAt: NexusGenScalars['Date']; // Date!
     rating: number; // Int!
     user: string; // ID!
     userData: NexusGenRootTypes['User']; // User!
@@ -673,6 +676,7 @@ export interface NexusGenFieldTypes {
     post: NexusGenRootTypes['Post'] | null; // Post
     posts: NexusGenRootTypes['PostsResponse'] | null; // PostsResponse
     self: NexusGenRootTypes['User']; // User!
+    topPosts: NexusGenRootTypes['Post'][]; // [Post!]!
     trendingGifs: NexusGenRootTypes['Gif'][]; // [Gif!]!
     userById: NexusGenRootTypes['User'] | null; // User
     users: NexusGenRootTypes['UsersResponse'] | null; // UsersResponse
@@ -964,6 +968,7 @@ export interface NexusGenFieldTypeNames {
     id: 'ID'
     post: 'ID'
     postData: 'Post'
+    ratedAt: 'Date'
     rating: 'Int'
     user: 'ID'
     userData: 'User'
@@ -990,6 +995,7 @@ export interface NexusGenFieldTypeNames {
     post: 'Post'
     posts: 'PostsResponse'
     self: 'User'
+    topPosts: 'Post'
     trendingGifs: 'Gif'
     userById: 'User'
     users: 'UsersResponse'
@@ -1241,7 +1247,7 @@ export interface NexusGenArgTypes {
       filter?: NexusGenScalars['JSON'] | null; // JSON
       limit?: number | null; // Int
       page?: number | null; // Int
-      sort?: NexusGenScalars['JSON'] | null; // JSON
+      sort?: NexusGenEnums['PostSort'] | null; // PostSort
     }
     trendingGifs: { // args
       limit?: number | null; // Int

@@ -8,4 +8,5 @@ export * from './movie-age-rating.enum';
 export * from './notification-type.enum';
 export * from './os.enum';
 export * from './platform.enum';
+export * from './post-sort.enum';
 export * from './size.enum';

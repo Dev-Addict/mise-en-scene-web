@@ -1,6 +1,6 @@
-import {createContext} from 'react';
+import {createContext, Dispatch, SetStateAction} from 'react';
 
-import {Post} from '../../../types';
+import {Post, PostSort} from '../../../types';
 
 export interface PostContextType {
 	posts: Post[];
@@ -8,6 +8,8 @@ export interface PostContextType {
 	loadMore: () => void;
 	reload: () => void;
 	results?: number;
+	setSort: Dispatch<SetStateAction<PostSort>>;
+	sort: PostSort;
 }
 
 export const PostContext = createContext<PostContextType>({
@@ -16,4 +18,6 @@ export const PostContext = createContext<PostContextType>({
 	loadMore: () => {},
 	reload: () => {},
 	results: undefined,
+	setSort: () => {},
+	sort: PostSort.LAST,
 });

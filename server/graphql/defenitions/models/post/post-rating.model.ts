@@ -2,6 +2,7 @@ import {objectType} from 'nexus';
 
 import {Post} from './post.model';
 import {User} from '../user';
+import {DateScalar} from '../../scalars';
 
 export const PostRating = objectType({
 	name: 'PostRating',
@@ -22,5 +23,6 @@ export const PostRating = objectType({
 			},
 		});
 		t.nonNull.int('rating');
+		t.nonNull.field('ratedAt', {type: DateScalar});
 	},
 });

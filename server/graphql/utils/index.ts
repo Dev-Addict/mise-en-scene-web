@@ -4,3 +4,7 @@ export * from './helpers';
 export * from './compile-error.util';
 export * from './find-models.util';
 export * from './format-error.util';
+export * from './get-posts.util';
+export * from './get-posts-by-ids.util';
+export * from './get-posts-by-rating.util';
+export * from './get-posts-by-view.util';

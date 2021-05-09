@@ -1,10 +1,10 @@
 import {gql} from '@apollo/client';
 
-import {Post} from '../../../types';
+import {Post, PostSort} from '../../../types';
 
 export const POSTS_QUERY = gql`
-	query Posts($filter: JSON, $page: Int, $sort: JSON) {
-		posts(filter: $filter, page: $page, sort: $sort) {
+	query Posts($filter: JSON, $page: Int, $sort: PostSort, $limit: Int) {
+		posts(filter: $filter, page: $page, sort: $sort, limit: $limit) {
 			results
 			docs {
 				id
@@ -40,6 +40,7 @@ export interface PostsQueryData {
 
 export interface PostsQueryVariables {
 	filter?: {[key: string]: any};
-	sort?: {[key: string]: any};
+	sort?: PostSort;
 	page?: number;
+	limit?: number;
 }
