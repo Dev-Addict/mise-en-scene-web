@@ -16,7 +16,7 @@ import {useAppState, useUserDisplayName} from '../../hooks';
 
 const User: NextPage<Props> = ({setTheme}) => {
 	const router = useRouter();
-	const username = router.query;
+	const {username} = router.query;
 
 	const [user, setUser] = useState<UserModel | undefined>(undefined);
 
