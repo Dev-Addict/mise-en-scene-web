@@ -34,11 +34,10 @@ const Container = styled.div<ContainerProps>`
 const ReAnnounce: NextPage<Props> = ({setTheme}) => {
 	const router = useRouter();
 	const {asPath} = router;
-	const {id} = router.query;
+	const {announcement: announcementId} = router.query;
 
-	const [announcement, setAnnouncement] = useState<undefined | Announcement>(
-		undefined
-	);
+	const [announcement, setAnnouncement] =
+		useState<undefined | Announcement>(undefined);
 
 	const {isSigned, isLoading, user} = useAuth();
 
@@ -63,11 +62,13 @@ const ReAnnounce: NextPage<Props> = ({setTheme}) => {
 		(async () => {
 			addProcess(Process.RE_ANNOUNCEMENT);
 
-			setAnnouncement(await getAnnouncement(id as string, token || ''));
+			setAnnouncement(
+				await getAnnouncement(announcementId as string, token || '')
+			);
 
 			removeProcess(Process.RE_ANNOUNCEMENT);
 		})();
-	}, [id]);
+	}, [announcementId]);
 
 	return (
 		<div>

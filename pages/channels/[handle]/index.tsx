@@ -1,32 +1,20 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {NextPage} from 'next';
-import {useRouter} from 'next/router';
 import Cookie from 'js-cookie';
 
 import {Channel, ErrorPage, Header, Meta} from '../../../components';
 import {findChannel} from '../../../helpers';
-import {Channel as ChannelModel, Process, Props} from '../../../types';
-import {useAppState} from '../../../hooks';
+import {Channel as ChannelModel, Props} from '../../../types';
+import {cookieParser} from '../../../utils';
 
-const ChannelPage: NextPage<Props> = ({setTheme}) => {
-	const router = useRouter();
-	const {handle} = router.query;
+interface InitialProps {
+	channel?: ChannelModel;
+}
 
+const ChannelPage: NextPage<Props & InitialProps, InitialProps> = ({
+	setTheme,
+}) => {
 	const [channel, setChannel] = useState<ChannelModel | undefined>(undefined);
-
-	const {addProcess, removeProcess} = useAppState();
-
-	useEffect(() => {
-		const token = Cookie.get('auth-token');
-
-		(async () => {
-			addProcess(Process.CHANNEL);
-
-			setChannel(await findChannel(handle as string, token));
-
-			removeProcess(Process.CHANNEL);
-		})();
-	}, [handle]);
 
 	if (!channel)
 		return (
@@ -53,6 +41,18 @@ const ChannelPage: NextPage<Props> = ({setTheme}) => {
 			<Channel channel={channel} setChannel={setChannel} />
 		</div>
 	);
+};
+
+ChannelPage.getInitialProps = async ({query: {handle}, req}) => {
+	const token =
+		cookieParser(req?.headers?.cookie || '')['auth-token'] ||
+		Cookie.get('auth-token');
+
+	const channel = await findChannel(handle as string, token);
+
+	return {
+		channel,
+	};
 };
 
 export default ChannelPage;

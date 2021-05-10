@@ -111,6 +111,7 @@ export const MY_ANNOUNCEMENTS_QUERY = gql`
 					publishedAt
 					subtitle
 					rating
+					view
 				}
 			}
 		}
