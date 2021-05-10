@@ -45,11 +45,6 @@ const ReAnnounce: NextPage<Props> = ({setTheme}) => {
 
 	const {height} = useWindowSize();
 
-	if (!announcement)
-		return (
-			<ErrorPage code={404} title="گفت و گو پیدا نشد!" setTheme={setTheme} />
-		);
-
 	const onAnnounce = () => () => router.push(`/users/${user?.username}`);
 
 	useEffect(() => {
@@ -69,6 +64,11 @@ const ReAnnounce: NextPage<Props> = ({setTheme}) => {
 			removeProcess(Process.RE_ANNOUNCEMENT);
 		})();
 	}, [announcementId]);
+
+	if (!announcement)
+		return (
+			<ErrorPage code={404} title="گفت و گو پیدا نشد!" setTheme={setTheme} />
+		);
 
 	return (
 		<div>
