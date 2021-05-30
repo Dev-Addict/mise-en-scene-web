@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import {Formik, FormikProps} from 'formik';
+import {Formik, FormikHelpers, FormikProps} from 'formik';
 
 import {
 	Body,
@@ -13,7 +13,6 @@ import {
 } from '../sign-components.component';
 import {Button, Errors} from '../../../shared';
 import {Color} from '../../../../data';
-import {FormikHelpers} from 'formik/dist/types';
 import {useThemeImage} from '../../../../hooks';
 import {SignInInputs} from './sign-in-inputs.component';
 import {signInValidator} from '../../validators';

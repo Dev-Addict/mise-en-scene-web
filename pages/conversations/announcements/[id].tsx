@@ -38,18 +38,12 @@ const Announcement: NextPage<Props> = ({setTheme}) => {
 	const {asPath} = router;
 	const {id} = router.query;
 
-	const [announcement, setAnnouncement] = useState<
-		AnnouncementModel | undefined
-	>(undefined);
+	const [announcement, setAnnouncement] =
+		useState<AnnouncementModel | undefined>(undefined);
 
 	const {isSigned, isLoading} = useAuth();
 
 	const {addProcess, removeProcess} = useAppState();
-
-	if (!announcement)
-		return (
-			<ErrorPage code={404} title="گفت و گو پیدا نشد!" setTheme={setTheme} />
-		);
 
 	useEffect(() => {
 		if (!isLoading && !isSigned) router.push(`/sign?callback=${asPath}`);
@@ -66,6 +60,11 @@ const Announcement: NextPage<Props> = ({setTheme}) => {
 			removeProcess(Process.ANNOUNCEMENT);
 		})();
 	}, []);
+
+	if (!announcement)
+		return (
+			<ErrorPage code={404} title="گفت و گو پیدا نشد!" setTheme={setTheme} />
+		);
 
 	return (
 		<div>

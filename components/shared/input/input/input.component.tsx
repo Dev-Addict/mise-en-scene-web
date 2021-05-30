@@ -81,8 +81,8 @@ export const Input: FC<InputHTMLAttributes<HTMLInputElement> & Props> = ({
 					ref={textInputRef}
 					type={localType}
 					autoComplete="off"
-					{...props}
 					disabled={disabled || !editable}
+					{...props}
 				/>
 				{icon && (
 					<Icon>
